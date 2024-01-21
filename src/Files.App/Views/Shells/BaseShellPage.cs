@@ -354,7 +354,7 @@ namespace Files.App.Views.Shells
 			if (e.ChosenSuggestion is SuggestionModel item && !string.IsNullOrWhiteSpace(item.ItemPath))
 				await NavigationHelpers.OpenPath(item.ItemPath, this);
 			else if (e.ChosenSuggestion is null && !string.IsNullOrWhiteSpace(sender.Query))
-				SubmitSearch(sender.Query, userSettingsService.GeneralSettingsService.SearchUnindexedItems);
+				SubmitSearch(sender.Query);
 		}
 
 		protected async void ShellPage_TextChanged(ISearchBox sender, SearchBoxTextChangedEventArgs e)
@@ -369,7 +369,6 @@ namespace Files.App.Views.Shells
 					Query = sender.Query,
 					Folder = FilesystemViewModel.WorkingDirectory,
 					MaxItemCount = 10,
-					SearchUnindexedItems = userSettingsService.GeneralSettingsService.SearchUnindexedItems
 				};
 
 				sender.SetSuggestions((await search.SearchAsync()).Select(suggestion => new SuggestionModel(suggestion)));
@@ -468,14 +467,8 @@ namespace Files.App.Views.Shells
 			if (string.IsNullOrWhiteSpace(singleItemOverride))
 			{
 				var components = StorageFileExtensions.GetDirectoryPathComponents(newWorkingDir);
-				var lastCommonItemIndex = ToolbarViewModel.PathComponents
-					.Select((value, index) => new { value, index })
-					.LastOrDefault(x => x.index < components.Count && x.value.Path == components[x.index].Path)?.index ?? 0;
-
-				while (ToolbarViewModel.PathComponents.Count > lastCommonItemIndex)
-					ToolbarViewModel.PathComponents.RemoveAt(lastCommonItemIndex);
-
-				foreach (var component in components.Skip(lastCommonItemIndex))
+				ToolbarViewModel.PathComponents.Clear();
+				foreach (var component in components)
 					ToolbarViewModel.PathComponents.Add(component);
 			}
 			else
@@ -487,11 +480,10 @@ namespace Files.App.Views.Shells
 			}
 		}
 
-		public void SubmitSearch(string query, bool searchUnindexedItems)
+		public void SubmitSearch(string query)
 		{
 			FilesystemViewModel.CancelSearch();
 			InstanceViewModel.CurrentSearchQuery = query;
-			InstanceViewModel.SearchedUnindexedItems = searchUnindexedItems;
 
 			var args = new NavigationArguments()
 			{
@@ -499,7 +491,6 @@ namespace Files.App.Views.Shells
 				IsSearchResultPage = true,
 				SearchPathParam = FilesystemViewModel.WorkingDirectory,
 				SearchQuery = query,
-				SearchUnindexedItems = searchUnindexedItems,
 			};
 
 			if (this is ColumnShellPage)
@@ -548,7 +539,6 @@ namespace Files.App.Views.Shells
 					Query = InstanceViewModel.CurrentSearchQuery ?? (string)TabItemParameter.NavigationParameter,
 					Folder = FilesystemViewModel.WorkingDirectory,
 					ThumbnailSize = InstanceViewModel.FolderSettings.GetIconSize(),
-					SearchUnindexedItems = InstanceViewModel.SearchedUnindexedItems
 				};
 
 				await FilesystemViewModel.SearchAsync(searchInstance);
@@ -674,8 +664,11 @@ namespace Files.App.Views.Shells
 
 						if (itemToSelect is not null && ContentPage is not null)
 						{
-							ContentPage.ItemManipulationModel.SetSelectedItem(itemToSelect);
-							ContentPage.ItemManipulationModel.ScrollIntoView(itemToSelect);
+							if (userSettingsService.FoldersSettingsService.ScrollToPreviousFolderWhenNavigatingUp)
+							{
+								ContentPage.ItemManipulationModel.SetSelectedItem(itemToSelect);
+								ContentPage.ItemManipulationModel.ScrollIntoView(itemToSelect);
+							}
 						}
 					}
 					break;

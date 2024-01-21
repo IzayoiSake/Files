@@ -36,7 +36,7 @@ namespace Files.App.Views.Layouts
 		/// </summary>
 		public int GridViewItemMinWidth =>
 			FolderSettings.LayoutMode == FolderLayoutModes.TilesView
-				? Constants.Browser.GridViewBrowser.TilesView
+				? 260
 				: FolderSettings.GridViewSize;
 
 		public bool IsPointerOver
@@ -178,23 +178,29 @@ namespace Files.App.Views.Layouts
 		override public void StartRenameItem()
 		{
 			RenamingItem = SelectedItem;
-			if (RenamingItem is null)
+			if (RenamingItem is null || FolderSettings is null)
 				return;
 
 			int extensionLength = RenamingItem.FileExtension?.Length ?? 0;
 
-			GridViewItem gridViewItem = FileList.ContainerFromItem(RenamingItem) as GridViewItem;
-			if (gridViewItem is null)
+			if (FileList.ContainerFromItem(RenamingItem) is not GridViewItem gridViewItem)
 				return;
 
-			TextBox textBox = null;
+			if (gridViewItem.FindDescendant("ItemName") is not TextBlock textBlock)
+				return;
+
+			TextBox? textBox = null;
 
 			// Handle layout differences between tiles browser and photo album
 			if (FolderSettings.LayoutMode == FolderLayoutModes.GridView)
 			{
-				Popup popup = gridViewItem.FindDescendant("EditPopup") as Popup;
-				TextBlock textBlock = gridViewItem.FindDescendant("ItemName") as TextBlock;
+				if (gridViewItem.FindDescendant("EditPopup") is not Popup popup)
+					return;
+
 				textBox = popup.Child as TextBox;
+				if (textBox is null)
+					return;
+
 				textBox.Text = textBlock.Text;
 				textBlock.Opacity = 0;
 				popup.IsOpen = true;
@@ -202,8 +208,10 @@ namespace Files.App.Views.Layouts
 			}
 			else
 			{
-				TextBlock textBlock = gridViewItem.FindDescendant("ItemName") as TextBlock;
 				textBox = gridViewItem.FindDescendant("TileViewTextBoxItemName") as TextBox;
+				if (textBox is null)
+					return;
+
 				textBox.Text = textBlock.Text;
 				OldItemName = textBlock.Text;
 				textBlock.Visibility = Visibility.Collapsed;
@@ -221,8 +229,8 @@ namespace Files.App.Views.Layouts
 			textBox.LostFocus += RenameTextBox_LostFocus;
 			textBox.KeyDown += RenameTextBox_KeyDown;
 
-			int selectedTextLength = SelectedItem.Name.Length;
-			if (!SelectedItem.IsShortcut && UserSettingsService.FoldersSettingsService.ShowFileExtensions)
+			int selectedTextLength = RenamingItem.Name.Length;
+			if (!RenamingItem.IsShortcut && UserSettingsService.FoldersSettingsService.ShowFileExtensions)
 				selectedTextLength -= extensionLength;
 
 			textBox.Select(0, selectedTextLength);
@@ -253,20 +261,27 @@ namespace Files.App.Views.Layouts
 			{
 				Popup? popup = gridViewItem.FindDescendant("EditPopup") as Popup;
 				TextBlock? textBlock = gridViewItem.FindDescendant("ItemName") as TextBlock;
-				popup!.IsOpen = false;
-				textBlock!.Opacity = (textBlock.DataContext as ListedItem)!.Opacity;
+
+				if (popup is not null)
+					popup.IsOpen = false;
+
+				if (textBlock is not null)
+					textBlock.Opacity = (textBlock.DataContext as ListedItem)!.Opacity;
 			}
 			else if (FolderSettings.LayoutMode == FolderLayoutModes.TilesView)
 			{
 				TextBlock? textBlock = gridViewItem.FindDescendant("ItemName") as TextBlock;
+
 				textBox.Visibility = Visibility.Collapsed;
-				textBlock!.Visibility = Visibility.Visible;
+
+				if (textBlock is not null)
+					textBlock.Visibility = Visibility.Visible;
 			}
 
 			// Unsubscribe from events
 			if (textBox is not null)
 			{
-				textBox!.LostFocus -= RenameTextBox_LostFocus;
+				textBox.LostFocus -= RenameTextBox_LostFocus;
 				textBox.KeyDown -= RenameTextBox_KeyDown;
 			}
 
@@ -374,10 +389,8 @@ namespace Files.App.Views.Layouts
 			foreach (ListedItem listedItem in filesAndFolders)
 			{
 				listedItem.ItemPropertiesInitialized = false;
-				if (FileList.ContainerFromItem(listedItem) is null)
-					return;
-
-				await ParentShellPageInstance.FilesystemViewModel.LoadExtendedItemPropertiesAsync(listedItem, currentIconSize);
+				if (FileList.ContainerFromItem(listedItem) is not null)
+					await ParentShellPageInstance.FilesystemViewModel.LoadExtendedItemPropertiesAsync(listedItem, currentIconSize);
 			}
 
 			if (ParentShellPageInstance.FilesystemViewModel.EnabledGitProperties is not GitProperties.None)
@@ -430,15 +443,17 @@ namespace Files.App.Views.Layouts
 						if (FolderSettings.LayoutMode == FolderLayoutModes.GridView)
 						{
 							Popup popup = gridViewItem.FindDescendant("EditPopup") as Popup;
-							var textBox = popup.Child as TextBox;
+							var textBox = popup?.Child as TextBox;
 
-							await CommitRenameAsync(textBox);
+							if (textBox is not null)
+								await CommitRenameAsync(textBox);
 						}
 						else
 						{
 							var textBox = gridViewItem.FindDescendant("TileViewTextBoxItemName") as TextBox;
 
-							await CommitRenameAsync(textBox);
+							if (textBox is not null)
+								await CommitRenameAsync(textBox);
 						}
 					}
 				}

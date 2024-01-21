@@ -124,6 +124,7 @@ namespace Files.App.Helpers
 					.AddSingleton<IPageContext, PageContext>()
 					.AddSingleton<IContentPageContext, ContentPageContext>()
 					.AddSingleton<IDisplayPageContext, DisplayPageContext>()
+					.AddSingleton<IHomePageContext, HomePageContext>()
 					.AddSingleton<IWindowContext, WindowContext>()
 					.AddSingleton<IMultitaskingContext, MultitaskingContext>()
 					.AddSingleton<ITagsContext, TagsContext>()
@@ -323,6 +324,22 @@ namespace Files.App.Helpers
 				.Wait(100);
 			}
 			Process.GetCurrentProcess().Kill();
+		}
+
+		/// <summary>
+		///	Checks if the taskbar is set to auto-hide.
+		/// </summary>
+		public static bool IsAutoHideTaskbarEnabled()
+		{
+			const string registryKey = @"Software\Microsoft\Windows\CurrentVersion\Explorer\StuckRects3";
+			const string valueName = "Settings";
+
+			using var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(registryKey);
+
+			var value = key?.GetValue(valueName) as byte[];
+
+			// The least significant bit of the 9th byte controls the auto-hide setting																		
+			return value != null && ((value[8] & 0x01) == 1);
 		}
 
 		/// <summary>

@@ -61,14 +61,12 @@ namespace Files.App.ViewModels
 		// Commands
 
 		public ICommand NavigateToNumberedTabKeyboardAcceleratorCommand { get; }
-		public ICommand OpenNewWindowAcceleratorCommand { get; }
 
 		// Constructor
 
 		public MainPageViewModel()
 		{
 			NavigateToNumberedTabKeyboardAcceleratorCommand = new RelayCommand<KeyboardAcceleratorInvokedEventArgs>(ExecuteNavigateToNumberedTabKeyboardAcceleratorCommand);
-			OpenNewWindowAcceleratorCommand = new AsyncRelayCommand<KeyboardAcceleratorInvokedEventArgs>(ExecuteOpenNewWindowAcceleratorCommand);
 		}
 
 		// Methods
@@ -238,13 +236,6 @@ namespace Files.App.ViewModels
 				App.AppModel.TabStripSelectedIndex = indexToSelect;
 
 			e.Handled = true;
-		}
-
-		private async Task ExecuteOpenNewWindowAcceleratorCommand(KeyboardAcceleratorInvokedEventArgs? e)
-		{
-			await Launcher.LaunchUriAsync(new Uri("files-uwp:"));
-
-			e!.Handled = true;
 		}
 
 	}

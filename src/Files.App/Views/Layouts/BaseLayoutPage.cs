@@ -362,7 +362,6 @@ namespace Files.App.Views.Layouts
 						IsSearchResultPage = navigationArguments.IsSearchResultPage,
 						SearchPathParam = navigationArguments.SearchPathParam,
 						SearchQuery = navigationArguments.SearchQuery,
-						SearchUnindexedItems = navigationArguments.SearchUnindexedItems,
 						IsLayoutSwitch = true,
 						AssociatedTabInstance = ParentShellPageInstance
 					});
@@ -469,7 +468,6 @@ namespace Files.App.Views.Layouts
 						Query = navigationArguments.SearchQuery,
 						Folder = navigationArguments.SearchPathParam,
 						ThumbnailSize = InstanceViewModel!.FolderSettings.GetIconSize(),
-						SearchUnindexedItems = navigationArguments.SearchUnindexedItems
 					};
 
 					_ = ParentShellPageInstance.FilesystemViewModel.SearchAsync(searchInstance);
@@ -682,7 +680,7 @@ namespace Files.App.Views.Layouts
 
 		public void UpdateSelectionSize()
 		{
-			var items = (selectedItems?.Any() ?? false) ? selectedItems : GetAllItems();
+			var items = (selectedItems?.Any() ?? false) ? selectedItems : SafetyExtensions.IgnoreExceptions(GetAllItems, App.Logger);
 			if (items is null)
 				return;
 
@@ -1296,19 +1294,21 @@ namespace Files.App.Views.Layouts
 
 			if (ParentShellPageInstance.FilesystemViewModel.FilesAndFolders.IsGrouped)
 			{
-				CollectionViewSource = new()
+				var newSource = new CollectionViewSource()
 				{
 					IsSourceGrouped = true,
 					Source = ParentShellPageInstance.FilesystemViewModel.FilesAndFolders.GroupedCollection
 				};
+				CollectionViewSource = newSource;
 			}
 			else
 			{
-				CollectionViewSource = new()
+				var newSource = new CollectionViewSource()
 				{
 					IsSourceGrouped = false,
 					Source = ParentShellPageInstance.FilesystemViewModel.FilesAndFolders
 				};
+				CollectionViewSource = newSource;
 			}
 		}
 

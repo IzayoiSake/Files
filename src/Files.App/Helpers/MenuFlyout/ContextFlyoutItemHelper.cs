@@ -1,10 +1,9 @@
 // Copyright (c) 2023 Files Community
 // Licensed under the MIT License. See the LICENSE.
 
-using Files.App.ViewModels.Layouts;
-using Files.Shared.Helpers;
 using Files.App.Helpers.ContextFlyouts;
 using Files.App.ViewModels.Layouts;
+using Files.Shared.Helpers;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System.IO;
@@ -245,6 +244,10 @@ namespace Files.App.Helpers
 								{
 									IsToggle = true
 								}.Build(),
+								new ContextMenuFlyoutItemViewModelBuilder(commands.GroupByDateModifiedDay)
+								{
+									IsToggle = true
+								}.Build(),
 							},
 						},
 						new ContextMenuFlyoutItemViewModel()
@@ -261,6 +264,10 @@ namespace Files.App.Helpers
 									IsToggle = true
 								}.Build(),
 								new ContextMenuFlyoutItemViewModelBuilder(commands.GroupByDateCreatedMonth)
+								{
+									IsToggle = true
+								}.Build(),
+								new ContextMenuFlyoutItemViewModelBuilder(commands.GroupByDateCreatedDay)
 								{
 									IsToggle = true
 								}.Build(),
@@ -298,6 +305,10 @@ namespace Files.App.Helpers
 									IsToggle = true
 								}.Build(),
 								new ContextMenuFlyoutItemViewModelBuilder(commands.GroupByDateDeletedMonth)
+								{
+									IsToggle = true
+								}.Build(),
+								new ContextMenuFlyoutItemViewModelBuilder(commands.GroupByDateDeletedDay)
 								{
 									IsToggle = true
 								}.Build(),
@@ -440,15 +451,19 @@ namespace Files.App.Helpers
 				}.Build(),
 				new ContextMenuFlyoutItemViewModelBuilder(commands.CopyPath)
 				{
-					IsVisible = itemsSelected && !currentInstanceViewModel.IsPageTypeRecycleBin,
+					IsVisible = userSettingsService.GeneralSettingsService.ShowCopyPath
+						&& itemsSelected
+						&&!currentInstanceViewModel.IsPageTypeRecycleBin,
 				}.Build(),
 				new ContextMenuFlyoutItemViewModelBuilder(commands.CreateFolderWithSelection)
 				{
-					IsVisible = itemsSelected
+					IsVisible = userSettingsService.GeneralSettingsService.ShowCreateFolderWithSelection && itemsSelected
 				}.Build(),
 				new ContextMenuFlyoutItemViewModelBuilder(commands.CreateShortcut)
 				{
-					IsVisible = itemsSelected && (!selectedItems.FirstOrDefault()?.IsShortcut ?? false)
+					IsVisible = userSettingsService.GeneralSettingsService.ShowCreateShortcut
+						&& itemsSelected
+						&& (!selectedItems.FirstOrDefault()?.IsShortcut ?? false)
 						&& !currentInstanceViewModel.IsPageTypeRecycleBin,
 				}.Build(),
 				new ContextMenuFlyoutItemViewModelBuilder(commands.Rename)
@@ -503,7 +518,7 @@ namespace Files.App.Helpers
 						new ContextMenuFlyoutItemViewModelBuilder(commands.CompressIntoZip).Build(),
 						new ContextMenuFlyoutItemViewModelBuilder(commands.CompressIntoSevenZip).Build(),
 					},
-					ShowItem = itemsSelected && CompressHelper.CanCompress(selectedItems)
+					ShowItem = userSettingsService.GeneralSettingsService.ShowCompressionOptions && itemsSelected && CompressHelper.CanCompress(selectedItems)
 				},
 				new ContextMenuFlyoutItemViewModel
 				{
@@ -520,7 +535,7 @@ namespace Files.App.Helpers
 						new ContextMenuFlyoutItemViewModelBuilder(commands.DecompressArchiveHere).Build(),
 						new ContextMenuFlyoutItemViewModelBuilder(commands.DecompressArchiveToChildFolder).Build(),
 					},
-					ShowItem = CompressHelper.CanDecompress(selectedItems)
+					ShowItem = userSettingsService.GeneralSettingsService.ShowCompressionOptions && CompressHelper.CanDecompress(selectedItems)
 				},
 				new ContextMenuFlyoutItemViewModel()
 				{

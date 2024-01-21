@@ -13,12 +13,6 @@ namespace Files.App.Services.Settings
 			RegisterSettingsContext(settingsSharingContext);
 		}
 
-		public bool SearchUnindexedItems
-		{
-			get => Get(false);
-			set => Set(value);
-		}
-
 		public bool OpenSpecificPageOnStartup
 		{
 			get => Get(false);
@@ -68,6 +62,12 @@ namespace Files.App.Services.Settings
 		}
 
 		public List<string> LastCrashedTabList
+		{
+			get => Get<List<string>>(null);
+			set => Set(value);
+		}
+
+		public List<string> PathHistoryList
 		{
 			get => Get<List<string>>(null);
 			set => Set(value);
@@ -187,6 +187,12 @@ namespace Files.App.Services.Settings
 			set => Set(value);
 		}
 
+		public bool ShowCompressionOptions
+		{
+			get => Get(true);
+			set => Set(value);
+		}
+
 		public bool ShowSendToMenu
 		{
 			get => Get(true);
@@ -206,6 +212,24 @@ namespace Files.App.Services.Settings
 		}
 
 		public bool ShowOpenInNewPane
+		{
+			get => Get(true);
+			set => Set(value);
+		}
+
+		public bool ShowCopyPath
+		{
+			get => Get(true);
+			set => Set(value);
+		}
+		
+		public bool ShowCreateFolderWithSelection
+		{
+			get => Get(true);
+			set => Set(value);
+		}
+
+		public bool ShowCreateShortcut
 		{
 			get => Get(true);
 			set => Set(value);
@@ -243,7 +267,6 @@ namespace Files.App.Services.Settings
 		{
 			switch (e.SettingName)
 			{
-				case nameof(SearchUnindexedItems):
 				case nameof(OpenSpecificPageOnStartup):
 				case nameof(ContinueLastSessionOnStartUp):
 				case nameof(OpenNewTabOnStartup):
@@ -267,6 +290,10 @@ namespace Files.App.Services.Settings
 				case nameof(ShowOpenInNewTab):
 				case nameof(ShowOpenInNewWindow):
 				case nameof(ShowOpenInNewPane):
+				case nameof(ShowCopyPath):
+				case nameof(ShowCreateFolderWithSelection):
+				case nameof(ShowCreateShortcut):
+				case nameof(ShowCompressionOptions):
 				case nameof(LeaveAppRunning):
 				case nameof(ConflictsResolveOption):
 				case nameof(ShowHashesDictionary):
