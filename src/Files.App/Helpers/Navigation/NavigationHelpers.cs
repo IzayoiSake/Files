@@ -139,30 +139,15 @@ namespace Files.App.Helpers
 				iconSource.ImageSource = new BitmapImage(new Uri(Constants.FluentIconsPaths.HomeIcon));
 			}
 			else if (currentPath.Equals(Constants.UserEnvironmentPaths.DesktopPath, StringComparison.OrdinalIgnoreCase))
-			{
 				tabLocationHeader = "Desktop".GetLocalizedResource();
-			}
 			else if (currentPath.Equals(Constants.UserEnvironmentPaths.DownloadsPath, StringComparison.OrdinalIgnoreCase))
-			{
 				tabLocationHeader = "Downloads".GetLocalizedResource();
-			}
 			else if (currentPath.Equals(Constants.UserEnvironmentPaths.RecycleBinPath, StringComparison.OrdinalIgnoreCase))
-			{
 				tabLocationHeader = "RecycleBin".GetLocalizedResource();
-
-				// Use 48 for higher resolution, the other items look fine with 16.
-				var iconData = await FileThumbnailHelper.LoadIconFromPathAsync(currentPath, 48u, Windows.Storage.FileProperties.ThumbnailMode.ListView, Windows.Storage.FileProperties.ThumbnailOptions.UseCurrentScale, true);
-				if (iconData is not null)
-					iconSource.ImageSource = await iconData.ToBitmapAsync();
-			}
 			else if (currentPath.Equals(Constants.UserEnvironmentPaths.MyComputerPath, StringComparison.OrdinalIgnoreCase))
-			{
 				tabLocationHeader = "ThisPC".GetLocalizedResource();
-			}
 			else if (currentPath.Equals(Constants.UserEnvironmentPaths.NetworkFolderPath, StringComparison.OrdinalIgnoreCase))
-			{
 				tabLocationHeader = "SidebarNetworkDrives".GetLocalizedResource();
-			}
 			else if (App.LibraryManager.TryGetLibrary(currentPath, out LibraryLocationItem library))
 			{
 				var libName = System.IO.Path.GetFileNameWithoutExtension(library.Path).GetLocalizedResource();
@@ -205,9 +190,15 @@ namespace Files.App.Helpers
 
 			if (iconSource.ImageSource is null)
 			{
-				var iconData = await FileThumbnailHelper.LoadIconFromPathAsync(currentPath, 16u, Windows.Storage.FileProperties.ThumbnailMode.ListView, Windows.Storage.FileProperties.ThumbnailOptions.UseCurrentScale, true);
-				if (iconData is not null)
-					iconSource.ImageSource = await iconData.ToBitmapAsync();
+				var result = await FileThumbnailHelper.GetIconAsync(
+					currentPath,
+					Constants.ShellIconSizes.Small,
+					true,
+					false,
+					IconOptions.ReturnIconOnly | IconOptions.UseCurrentScale);
+
+				if (result.IconData is not null)
+					iconSource.ImageSource = await result.IconData.ToBitmapAsync();
 			}
 
 			return (tabLocationHeader, iconSource, toolTipText);

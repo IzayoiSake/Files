@@ -97,10 +97,9 @@ namespace Files.App.Data.Commands
 		IRichCommand LayoutDecreaseSize { get; }
 		IRichCommand LayoutIncreaseSize { get; }
 		IRichCommand LayoutDetails { get; }
+		IRichCommand LayoutList { get; }
 		IRichCommand LayoutTiles { get; }
-		IRichCommand LayoutGridSmall { get; }
-		IRichCommand LayoutGridMedium { get; }
-		IRichCommand LayoutGridLarge { get; }
+		IRichCommand LayoutGrid { get; }
 		IRichCommand LayoutColumns { get; }
 		IRichCommand LayoutAdaptive { get; }
 

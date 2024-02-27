@@ -48,7 +48,7 @@ namespace Files.App.Views.Shells
 
 		protected readonly ICommandManager commands = Ioc.Default.GetRequiredService<ICommandManager>();
 
-		public ToolbarViewModel ToolbarViewModel { get; } = new ToolbarViewModel();
+		public AddressToolbarViewModel ToolbarViewModel { get; } = new AddressToolbarViewModel();
 
 		public IBaseLayoutPage SlimContentPage => ContentPage;
 
@@ -270,16 +270,20 @@ namespace Files.App.Views.Shells
 				}
 			}
 
+			var contentPage = ContentPage;
+			if (contentPage is null)
+				return;
+
 			if (!GitHelpers.IsExecutingGitAction)
 			{
-				ContentPage.DirectoryPropertiesViewModel.UpdateGitInfo(
+				contentPage.DirectoryPropertiesViewModel.UpdateGitInfo(
 					InstanceViewModel.IsGitRepository,
 					InstanceViewModel.GitRepositoryPath,
 					headBranch);
 			}
 
-			ContentPage.DirectoryPropertiesViewModel.DirectoryItemCount = $"{FilesystemViewModel.FilesAndFolders.Count} {directoryItemCountLocalization}";
-			ContentPage.UpdateSelectionSize();
+			contentPage.DirectoryPropertiesViewModel.DirectoryItemCount = $"{FilesystemViewModel.FilesAndFolders.Count} {directoryItemCountLocalization}";
+			contentPage.UpdateSelectionSize();
 		}
 
 		protected async void FilesystemViewModel_GitDirectoryUpdated(object sender, EventArgs e)
@@ -349,7 +353,7 @@ namespace Files.App.Views.Shells
 			}
 		}
 
-		protected async void ShellPage_QuerySubmitted(ISearchBox sender, SearchBoxQuerySubmittedEventArgs e)
+		protected async void ShellPage_QuerySubmitted(ISearchBoxViewModel sender, SearchBoxQuerySubmittedEventArgs e)
 		{
 			if (e.ChosenSuggestion is SuggestionModel item && !string.IsNullOrWhiteSpace(item.ItemPath))
 				await NavigationHelpers.OpenPath(item.ItemPath, this);
@@ -357,7 +361,7 @@ namespace Files.App.Views.Shells
 				SubmitSearch(sender.Query);
 		}
 
-		protected async void ShellPage_TextChanged(ISearchBox sender, SearchBoxTextChangedEventArgs e)
+		protected async void ShellPage_TextChanged(ISearchBoxViewModel sender, SearchBoxTextChangedEventArgs e)
 		{
 			if (e.Reason != SearchBoxTextChangeReason.UserInput)
 				return;
@@ -459,20 +463,31 @@ namespace Files.App.Views.Shells
 				await DisplayFilesystemConsentDialogAsync();
 		}
 
+		private volatile CancellationTokenSource? cts;
+
 		// Ensure that the path bar gets updated for user interaction
 		// whenever the path changes.We will get the individual directories from
 		// the updated, most-current path and add them to the UI.
-		public void UpdatePathUIToWorkingDirectory(string newWorkingDir, string singleItemOverride = null)
+		public async Task UpdatePathUIToWorkingDirectoryAsync(string newWorkingDir, string singleItemOverride = null)
 		{
 			if (string.IsNullOrWhiteSpace(singleItemOverride))
 			{
-				var components = StorageFileExtensions.GetDirectoryPathComponents(newWorkingDir);
+				cts = new CancellationTokenSource();
+
+				var components = await StorageFileExtensions.GetDirectoryPathComponentsWithDisplayNameAsync(newWorkingDir);
+
+				// Cancel if overrided by single item
+				if (cts.IsCancellationRequested)
+					return;
+
 				ToolbarViewModel.PathComponents.Clear();
 				foreach (var component in components)
 					ToolbarViewModel.PathComponents.Add(component);
 			}
 			else
 			{
+				cts?.Cancel();
+
 				// Clear the path UI
 				ToolbarViewModel.PathComponents.Clear();
 				ToolbarViewModel.IsSingleItemOverride = true;
@@ -493,10 +508,12 @@ namespace Files.App.Views.Shells
 				SearchQuery = query,
 			};
 
-			if (this is ColumnShellPage)
+			var layout = InstanceViewModel.FolderSettings.GetLayoutType(FilesystemViewModel.WorkingDirectory);
+
+			if (layout == typeof(ColumnsLayoutPage))
 				NavigateToPath(FilesystemViewModel.WorkingDirectory, typeof(DetailsLayoutPage), args);
 			else
-				ItemDisplay.Navigate(InstanceViewModel.FolderSettings.GetLayoutType(FilesystemViewModel.WorkingDirectory), args);
+				NavigateToPath(FilesystemViewModel.WorkingDirectory, layout, args);
 		}
 
 		public void NavigateWithArguments(Type sourcePageType, NavigationArguments navArgs)
@@ -506,9 +523,11 @@ namespace Files.App.Views.Shells
 
 		public void NavigateToPath(string navigationPath, NavigationArguments? navArgs = null)
 		{
-			var layout = navigationPath.StartsWith("tag:")
-				? typeof(DetailsLayoutPage)
-				: FolderSettings.GetLayoutType(navigationPath);
+			var layout = FolderSettings.GetLayoutType(navigationPath);
+
+			// Don't use Columns Layout for displaying tags
+			if (navigationPath.StartsWith("tag:") && layout == typeof(ColumnsLayoutPage))
+				layout = typeof(DetailsLayoutPage);
 
 			NavigateToPath(navigationPath, layout, navArgs);
 		}
@@ -538,7 +557,7 @@ namespace Files.App.Views.Shells
 				{
 					Query = InstanceViewModel.CurrentSearchQuery ?? (string)TabItemParameter.NavigationParameter,
 					Folder = FilesystemViewModel.WorkingDirectory,
-					ThumbnailSize = InstanceViewModel.FolderSettings.GetIconSize(),
+					ThumbnailSize = InstanceViewModel.FolderSettings.GetRoundedIconSize(),
 				};
 
 				await FilesystemViewModel.SearchAsync(searchInstance);
@@ -606,7 +625,7 @@ namespace Files.App.Views.Shells
 
 		public void RemoveLastPageFromBackStack()
 		{
-			ItemDisplay.BackStack.Remove(ItemDisplay.BackStack.Last());
+			ItemDisplay.BackStack.Remove(ItemDisplay.BackStack.LastOrDefault());
 		}
 
 		public void RaiseContentChanged(IShellPage instance, CustomTabViewItemParameter args)
@@ -660,7 +679,7 @@ namespace Files.App.Views.Shells
 						if (folderToSelect.EndsWith('\\'))
 							folderToSelect = folderToSelect.Remove(folderToSelect.Length - 1, 1);
 
-						var itemToSelect = FilesystemViewModel.FilesAndFolders.Where((item) => item.ItemPath == folderToSelect).FirstOrDefault();
+						var itemToSelect = FilesystemViewModel.FilesAndFolders.ToList().Where((item) => item.ItemPath == folderToSelect).FirstOrDefault();
 
 						if (itemToSelect is not null && ContentPage is not null)
 						{

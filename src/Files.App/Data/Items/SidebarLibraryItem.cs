@@ -1,7 +1,7 @@
 // Copyright (c) 2023 Files Community
 // Licensed under the MIT License. See the LICENSE.
 
-namespace Files.App.Utils.Library
+namespace Files.App.Data.Items
 {
 	public class LibraryLocationItem : LocationItem
 	{
@@ -46,10 +46,16 @@ namespace Files.App.Utils.Library
 
 		public async Task LoadLibraryIconAsync()
 		{
-			IconData = await FileThumbnailHelper.LoadIconWithoutOverlayAsync(Path, Constants.DefaultIconSizes.Large, false, true);
+			var result = await FileThumbnailHelper.GetIconAsync(
+				Path,
+				Constants.ShellIconSizes.Small,
+				false,
+				false,
+				IconOptions.ReturnIconOnly | IconOptions.UseCurrentScale);
 
-			if (IconData is not null)
-				Icon = await IconData.ToBitmapAsync();
+			var bitmapImage = await result.IconData.ToBitmapAsync();
+			if (bitmapImage is not null)
+				Icon = bitmapImage;
 		}
 
 		public override int GetHashCode() => Path.GetHashCode(System.StringComparison.OrdinalIgnoreCase);

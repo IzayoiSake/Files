@@ -20,10 +20,6 @@ namespace Files.App
 {
 	public sealed partial class MainWindow : WindowEx
 	{
-		private readonly IApplicationService ApplicationService;
-
-		private MainPageViewModel mainPageViewModel;
-
 		private static MainWindow? _Instance;
 		public static MainWindow Instance => _Instance ??= new();
 
@@ -31,8 +27,6 @@ namespace Files.App
 
 		private MainWindow()
 		{
-			ApplicationService = new ApplicationService();
-
 			WindowHandle = this.GetWindowHandle();
 
 			InitializeComponent();
@@ -50,7 +44,7 @@ namespace Files.App
 			MinWidth = 516;
 
 			AppWindow.Title = "Files";
-			AppWindow.SetIcon(Path.Combine(Package.Current.InstalledLocation.Path, ApplicationService.AppIcoPath));
+			AppWindow.SetIcon(AppLifecycleHelper.AppIconPath);
 			AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
 			AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
 			AppWindow.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
