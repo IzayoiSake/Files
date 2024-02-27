@@ -1,6 +1,7 @@
 // Copyright (c) 2023 Files Community
 // Licensed under the MIT License. See the LICENSE.
 
+using Files.App.Helpers.Application;
 using Microsoft.UI.Xaml.Controls;
 
 namespace Files.App.UserControls.TabBar
@@ -109,7 +110,7 @@ namespace Files.App.UserControls.TabBar
 				disposableContent?.Dispose();
 			try
 			{
-				AppLifecycleHelper.UpDate();
+				TabsManageHelper.UpDate();
 			}
 			catch
 			{ }

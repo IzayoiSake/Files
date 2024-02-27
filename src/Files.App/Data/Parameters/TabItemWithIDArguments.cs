@@ -16,7 +16,7 @@ namespace Files.App.Data.Parameters
 
 		public TabItemWithIDArguments()
 		{
-			instanceId = AppLifecycleHelper.instanceId;
+			instanceId = Process.GetCurrentProcess().Id.ToString();
 			var defaultArg = new CustomTabViewItemParameter() { InitialPageType = typeof(PaneHolderPage), NavigationParameter = "Home" };
 			customTabItemParameterStr = defaultArg.Serialize();
 		}
@@ -31,7 +31,7 @@ namespace Files.App.Data.Parameters
 			var tabArgs = new TabItemWithIDArguments();
 			var tempArgs = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(obj);
 
-			tabArgs.instanceId = tempArgs.ContainsKey("instanceId") ? tempArgs["instanceId"].GetString() : AppLifecycleHelper.instanceId;
+			tabArgs.instanceId = tempArgs.ContainsKey("instanceId") ? tempArgs["instanceId"].GetString() : Process.GetCurrentProcess().Id.ToString();
 			// Handle customTabItemParameterStr separately
 			tabArgs.customTabItemParameterStr = tempArgs["customTabItemParameterStr"].GetString();
 			return tabArgs;
@@ -40,7 +40,7 @@ namespace Files.App.Data.Parameters
 		public static TabItemWithIDArguments CreateFromTabItemArg(CustomTabViewItemParameter tabItemArg)
 		{
 			var tabItemWithIDArg = new TabItemWithIDArguments();
-			tabItemWithIDArg.instanceId = AppLifecycleHelper.instanceId;
+			tabItemWithIDArg.instanceId = Process.GetCurrentProcess().Id.ToString();
 			// Serialize CustomTabViewItemParameter and store the JSON string
 			tabItemWithIDArg.customTabItemParameterStr = tabItemArg.Serialize();
 			return tabItemWithIDArg;

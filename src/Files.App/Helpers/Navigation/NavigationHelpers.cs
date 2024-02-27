@@ -10,6 +10,7 @@ using Windows.Storage.Search;
 using Windows.System;
 using Newtonsoft.Json.Linq;
 using System.Text.Json;
+using Files.App.Helpers.Application;
 
 namespace Files.App.Helpers
 {
@@ -245,7 +246,7 @@ namespace Files.App.Helpers
 				return;
 
 			await UpdateTabInfoAsync(matchingTabItem, e.NavigationParameter);
-			await AppLifecycleHelper.UpDate();
+			await TabsManageHelper.UpDate();
 		}
 
 		public static Task<bool> OpenPathInNewWindowAsync(string? path)

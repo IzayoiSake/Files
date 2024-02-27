@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System.Windows.Input;
 using Windows.System;
 using Files.App.Helpers;
+using Files.App.Helpers.Application;
 
 namespace Files.App.ViewModels
 {
@@ -128,7 +129,7 @@ namespace Files.App.ViewModels
 						UserSettingsService.GeneralSettingsService.LastAppsTabsWithIDList is not null)
 						)
 					{
-						var isRestored = AppLifecycleHelper.RestoreLastAppsTabs(this);
+						var isRestored = TabsManageHelper.RestoreLastAppsTabs(this);
 						var lastSessionTabList = UserSettingsService.GeneralSettingsService.LastSessionTabList.ToList();
 						var defaultArg = new CustomTabViewItemParameter() { InitialPageType = typeof(PaneHolderPage), NavigationParameter = "Home" };
 						var defaultArgStrList = new List<string>() { defaultArg.Serialize() };
