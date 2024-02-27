@@ -21,7 +21,6 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI.Notifications;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
-using Files.App.Helpers.Application;
 
 namespace Files.App.Helpers
 {

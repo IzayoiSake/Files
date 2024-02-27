@@ -10,7 +10,6 @@ using Windows.Storage.Search;
 using Windows.System;
 using Newtonsoft.Json.Linq;
 using System.Text.Json;
-using Files.App.Helpers.Application;
 
 namespace Files.App.Helpers
 {

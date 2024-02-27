@@ -6,7 +6,6 @@ using Microsoft.UI.Xaml.Navigation;
 using System.Windows.Input;
 using Windows.System;
 using Files.App.Helpers;
-using Files.App.Helpers.Application;
 
 namespace Files.App.ViewModels
 {
