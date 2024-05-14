@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class RefreshItemsAction : ObservableObject, IAction
+	internal sealed class RefreshItemsAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -32,7 +32,7 @@ namespace Files.App.Actions
 			context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public async Task ExecuteAsync()
+		public async Task ExecuteAsync(object? parameter = null)
 		{
 			if (context.ShellPage is null)
 				return;

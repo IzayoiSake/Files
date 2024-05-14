@@ -6,7 +6,7 @@ using Microsoft.UI.Dispatching;
 
 namespace Files.App.ViewModels.Properties
 {
-	internal class LibraryProperties : BaseProperties
+	internal sealed class LibraryProperties : BaseProperties
 	{
 		public LibraryItem Library { get; private set; }
 
@@ -46,8 +46,8 @@ namespace Files.App.ViewModels.Properties
 
 		public async override Task GetSpecialPropertiesAsync()
 		{
-			ViewModel.IsReadOnly = NativeFileOperationsHelper.HasFileAttribute(Library.ItemPath, System.IO.FileAttributes.ReadOnly);
-			ViewModel.IsHidden = NativeFileOperationsHelper.HasFileAttribute(Library.ItemPath, System.IO.FileAttributes.Hidden);
+			ViewModel.IsReadOnly = Win32Helper.HasFileAttribute(Library.ItemPath, System.IO.FileAttributes.ReadOnly);
+			ViewModel.IsHidden = Win32Helper.HasFileAttribute(Library.ItemPath, System.IO.FileAttributes.Hidden);
 
 			var result = await FileThumbnailHelper.GetIconAsync(
 				Library.ItemPath,
@@ -141,25 +141,23 @@ namespace Files.App.ViewModels.Properties
 			switch (e.PropertyName)
 			{
 				case "IsReadOnly":
-					if (ViewModel.IsReadOnly)
+					if (ViewModel.IsReadOnly is not null)
 					{
-						NativeFileOperationsHelper.SetFileAttribute(Library.ItemPath, System.IO.FileAttributes.ReadOnly);
-					}
-					else
-					{
-						NativeFileOperationsHelper.UnsetFileAttribute(Library.ItemPath, System.IO.FileAttributes.ReadOnly);
+						if ((bool)ViewModel.IsReadOnly)
+							Win32Helper.SetFileAttribute(Library.ItemPath, System.IO.FileAttributes.ReadOnly);
+						else
+							Win32Helper.UnsetFileAttribute(Library.ItemPath, System.IO.FileAttributes.ReadOnly);
 					}
 
 					break;
 
 				case "IsHidden":
-					if (ViewModel.IsHidden)
+					if (ViewModel.IsHidden is not null)
 					{
-						NativeFileOperationsHelper.SetFileAttribute(Library.ItemPath, System.IO.FileAttributes.Hidden);
-					}
-					else
-					{
-						NativeFileOperationsHelper.UnsetFileAttribute(Library.ItemPath, System.IO.FileAttributes.Hidden);
+						if ((bool)ViewModel.IsHidden)
+							Win32Helper.SetFileAttribute(Library.ItemPath, System.IO.FileAttributes.Hidden);
+						else
+							Win32Helper.UnsetFileAttribute(Library.ItemPath, System.IO.FileAttributes.Hidden);
 					}
 
 					break;

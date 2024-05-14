@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class DuplicateCurrentTabAction : IAction
+	internal sealed class DuplicateCurrentTabAction : IAction
 	{
 		private readonly IMultitaskingContext context;
 
@@ -18,7 +18,7 @@ namespace Files.App.Actions
 			context = Ioc.Default.GetRequiredService<IMultitaskingContext>();
 		}
 
-		public async Task ExecuteAsync()
+		public async Task ExecuteAsync(object? parameter = null)
 		{
 			var arguments = context.CurrentTabItem.NavigationParameter;
 

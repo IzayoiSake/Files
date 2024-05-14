@@ -14,12 +14,12 @@ using Visibility = Microsoft.UI.Xaml.Visibility;
 
 namespace Files.App.Utils.Library
 {
-	public class LibraryManager : IDisposable
+	public sealed class LibraryManager : IDisposable
 	{
 		public EventHandler<NotifyCollectionChangedEventArgs>? DataChanged;
 
 		private FileSystemWatcher librariesWatcher;
-		private readonly List<LibraryLocationItem> libraries = new();
+		private readonly List<LibraryLocationItem> libraries = [];
 		private static readonly Lazy<LibraryManager> lazy = new(() => new LibraryManager());
 
 		public static LibraryManager Default
@@ -90,7 +90,7 @@ namespace Files.App.Utils.Library
 					App.Logger.LogWarning(e, null);
 				}
 
-				return new();
+				return [];
 			});
 
 			return libraries.Select(lib => new LibraryLocationItem(lib)).ToList();

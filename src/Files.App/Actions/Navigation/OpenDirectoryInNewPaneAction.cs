@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class OpenDirectoryInNewPaneAction : ObservableObject, IAction
+	internal sealed class OpenDirectoryInNewPaneAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -28,7 +28,7 @@ namespace Files.App.Actions
 			context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			NavigationHelpers.OpenInSecondaryPane(
 				context.ShellPage,

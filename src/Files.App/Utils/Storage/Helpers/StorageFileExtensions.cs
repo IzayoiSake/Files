@@ -96,7 +96,7 @@ namespace Files.App.Utils.Storage
 
 		public static List<PathBoxItem> GetDirectoryPathComponents(string value)
 		{
-			List<PathBoxItem> pathBoxItems = new();
+			List<PathBoxItem> pathBoxItems = [];
 
 			if (value.Contains('/', StringComparison.Ordinal))
 			{
@@ -144,7 +144,7 @@ namespace Files.App.Utils.Storage
 				{
 					BaseStorageFolder folder = await FilesystemTasks.Wrap(() => DangerousGetFolderFromPathAsync(item.Path));
 
-					if (folder is not null)
+					if (!string.IsNullOrEmpty(folder?.DisplayName))
 						item.Title = folder.DisplayName;
 				}
 			}
@@ -297,7 +297,7 @@ namespace Files.App.Utils.Storage
 			{
 				title = "SidebarNetworkDrives".GetLocalizedResource();
 			}
-			else if (component.Contains(':', StringComparison.Ordinal))
+			else if (component.EndsWith(':'))
 			{
 				var drivesViewModel = Ioc.Default.GetRequiredService<DrivesViewModel>();
 

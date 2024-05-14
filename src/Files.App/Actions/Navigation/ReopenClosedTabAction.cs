@@ -5,7 +5,7 @@ using Files.App.UserControls.TabBar;
 
 namespace Files.App.Actions
 {
-	internal class ReopenClosedTabAction : ObservableObject, IAction
+	internal sealed class ReopenClosedTabAction : ObservableObject, IAction
 	{
 		private readonly IMultitaskingContext context;
 
@@ -31,7 +31,7 @@ namespace Files.App.Actions
 			BaseTabBar.StaticPropertyChanged += BaseMultitaskingControl_StaticPropertyChanged;
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			context.Control!.ReopenClosedTabAsync();
 

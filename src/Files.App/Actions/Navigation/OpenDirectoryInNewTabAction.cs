@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class OpenDirectoryInNewTabAction : ObservableObject, IAction
+	internal sealed class OpenDirectoryInNewTabAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -22,7 +22,7 @@ namespace Files.App.Actions
 			context.ShellPage is not null &&
 			context.ShellPage.SlimContentPage is not null &&
 			context.SelectedItems.Count <= 5 &&
-			context.SelectedItems.Where(x => x.IsFolder == true).Count() == context.SelectedItems.Count &&
+			context.SelectedItems.Count(x => x.IsFolder) == context.SelectedItems.Count &&
 			userSettingsService.GeneralSettingsService.ShowOpenInNewTab;
 
 		public OpenDirectoryInNewTabAction()
@@ -33,7 +33,7 @@ namespace Files.App.Actions
 			context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public async Task ExecuteAsync()
+		public async Task ExecuteAsync(object? parameter = null)
 		{
 			if (context.ShellPage?.SlimContentPage?.SelectedItems is null)
 				return;

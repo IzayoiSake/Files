@@ -7,9 +7,9 @@ using System.Collections.Immutable;
 
 namespace Files.App.Data.Contexts
 {
-	internal class HomePageContext : ObservableObject, IHomePageContext
+	public sealed class HomePageContext : ObservableObject, IHomePageContext
 	{
-		private static readonly IImmutableList<WidgetFileTagCardItem> emptyTaggedItems = Enumerable.Empty<WidgetFileTagCardItem>().ToImmutableList();
+		private static readonly ImmutableList<WidgetFileTagCardItem> emptyTaggedItems = Enumerable.Empty<WidgetFileTagCardItem>().ToImmutableList();
 
 		public bool IsAnyItemRightClicked => rightClickedItem is not null;
 
@@ -29,7 +29,7 @@ namespace Files.App.Data.Contexts
 		public HomePageContext()
 		{
 			BaseWidgetViewModel.RightClickedItemChanged += HomePageWidget_RightClickedItemChanged;
-			FileTagsWidget.SelectedTaggedItemsChanged += FileTagsWidget_SelectedTaggedItemsChanged;
+			FileTagsWidgetViewModel.SelectedTaggedItemsChanged += FileTagsWidget_SelectedTaggedItemsChanged;
 		}
 
 		private void FileTagsWidget_SelectedTaggedItemsChanged(object? sender, IEnumerable<WidgetFileTagCardItem> e)

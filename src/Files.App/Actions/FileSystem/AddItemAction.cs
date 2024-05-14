@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class AddItemAction : ObservableObject, IAction
+	internal sealed class AddItemAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -34,7 +34,7 @@ namespace Files.App.Actions
 			context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public async Task ExecuteAsync()
+		public async Task ExecuteAsync(object? parameter = null)
 		{
 			await dialogService.ShowDialogAsync(viewModel);
 

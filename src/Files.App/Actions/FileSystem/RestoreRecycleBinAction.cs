@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class RestoreRecycleBinAction : BaseUIAction, IAction
+	internal sealed class RestoreRecycleBinAction : BaseUIAction, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -28,7 +28,7 @@ namespace Files.App.Actions
 			context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public async Task ExecuteAsync()
+		public async Task ExecuteAsync(object? parameter = null)
 		{
 			if (context.ShellPage is not null)
 				await RecycleBinHelpers.RestoreSelectionRecycleBinAsync(context.ShellPage);

@@ -216,8 +216,8 @@
   <data name="Appearance" xml:space="preserve">
     <value>Aparência</value>
   </data>
-  <data name="Background" xml:space="preserve">
-    <value>Fundo</value>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>Cor de fundo</value>
   </data>
   <data name="Advanced" xml:space="preserve">
     <value>Avançado</value>
@@ -273,8 +273,8 @@
   <data name="Delete" xml:space="preserve">
     <value>Eliminar</value>
   </data>
-  <data name="PinToFavorites" xml:space="preserve">
-    <value>Afixar nos favoritos</value>
+  <data name="PinFolderToSidebar" xml:space="preserve">
+    <value>Afixar na barra lateral</value>
   </data>
   <data name="WelcomeDialog.Title" xml:space="preserve">
     <value>Obrigado por utilizar Files!</value>
@@ -338,6 +338,9 @@
   </data>
   <data name="SetAsLockscreen" xml:space="preserve">
     <value>Definir como fundo de ecrã de bloqueio</value>
+  </data>
+  <data name="SetAsAppBackground" xml:space="preserve">
+    <value>Definir como fundo da aplicação</value>
   </data>
   <data name="AccessDeniedDeleteDialog.Text" xml:space="preserve">
     <value>Não foi possível eliminar este item</value>
@@ -882,6 +885,12 @@
   <data name="PropertyEncodingBitrate" xml:space="preserve">
     <value>Taxa de dados</value>
   </data>
+  <data name="PropertyPreviewAudioEncodingBitrate" xml:space="preserve">
+    <value>Taxa de codificação de áudio</value>
+  </data>
+  <data name="PropertyPreviewVideoEncodingBitrate" xml:space="preserve">
+    <value>Taxa de codificação de vídeo</value>
+  </data>
   <data name="Compression" xml:space="preserve">
     <value>Compressão</value>
   </data>
@@ -1029,8 +1038,8 @@
   <data name="OpenInNewPane" xml:space="preserve">
     <value>Abrir em novo painel</value>
   </data>
-  <data name="Folders" xml:space="preserve">
-    <value>Pastas</value>
+  <data name="FilesAndFolders" xml:space="preserve">
+    <value>Ficheiros e pastas</value>
   </data>
   <data name="NavToolbarDetails.ToolTipService.ToolTip" xml:space="preserve">
     <value>Detalhes (Ctrl+Shift+1)</value>
@@ -1071,8 +1080,8 @@
   <data name="PropertyItemName" xml:space="preserve">
     <value>Nome do item</value>
   </data>
-  <data name="UnpinFromFavorites" xml:space="preserve">
-    <value>Desafixar dos favoritos</value>
+  <data name="UnpinFolderFromSidebar" xml:space="preserve">
+    <value>Desafixar da barra lateral</value>
   </data>
   <data name="SidebarNetworkDrives" xml:space="preserve">
     <value>Unidades de rede</value>
@@ -1158,8 +1167,8 @@
   <data name="DrivesWidgetOptionsFlyoutMapNetDriveMenuItem.Text" xml:space="preserve">
     <value>Mapear unidade de rede</value>
   </data>
-  <data name="SidebarFavorites" xml:space="preserve">
-    <value>Favoritos</value>
+  <data name="Pinned" xml:space="preserve">
+    <value>Fixada</value>
   </data>
   <data name="SidebarLibraries" xml:space="preserve">
     <value>Bibliotecas</value>
@@ -1698,12 +1707,6 @@
   <data name="CredentialDialogUserName.PlaceholderText" xml:space="preserve">
     <value>Nome de utilizador</value>
   </data>
-  <data name="DrivesWidgetAutomationProperties.Name" xml:space="preserve">
-    <value>Widget Unidades</value>
-  </data>
-  <data name="RecentFilesWidgetAutomationProperties.Name" xml:space="preserve">
-    <value>Widget Ficheiros recentes</value>
-  </data>
   <data name="NoSearchResultsFound" xml:space="preserve">
     <value>Nenhum item encontrado</value>
   </data>
@@ -1797,65 +1800,59 @@
   <data name="None" xml:space="preserve">
     <value>Nenhum</value>
   </data>
-  <data name="HighDpiOption_UseDPIOnLogin" xml:space="preserve">
+  <data name="CompatibilityOnWindowsLogin" xml:space="preserve">
     <value>Ao iniciar sessão no Windows</value>
   </data>
-  <data name="HighDpiOption_UseDPIOnProgramStart" xml:space="preserve">
-    <value>Ao iniciar o programa</value>
+  <data name="CompatibilityOnProgramStart" xml:space="preserve">
+    <value>Ao iniciar este programa</value>
   </data>
-  <data name="HighDpiOverride_System" xml:space="preserve">
+  <data name="System" xml:space="preserve">
     <value>Sistema</value>
   </data>
-  <data name="HighDpiOverride_SystemAdvanced" xml:space="preserve">
-    <value>Sistema (avançado)</value>
+  <data name="CompatibilitySystemEnhanced" xml:space="preserve">
+    <value>Sistema (melhorado)</value>
   </data>
-  <data name="OSCompatibility_Windows7" xml:space="preserve">
-    <value>Windows 7</value>
+  <data name="CompatibilityReducedColorModeColor16bit" xml:space="preserve">
+    <value>Cores 16-bit (65 536)</value>
   </data>
-  <data name="OSCompatibility_Windows8" xml:space="preserve">
-    <value>Windows 8</value>
+  <data name="CompatibilityReducedColorModeColor8bit" xml:space="preserve">
+    <value>Cores 8-bit (256)</value>
   </data>
-  <data name="OSCompatibility_WindowsVista" xml:space="preserve">
-    <value>Windows Vista</value>
+  <data name="CompatibilityDisableFullscreenOptimizations" xml:space="preserve">
+    <value>Desativar otimizações em ecrã completo</value>
   </data>
-  <data name="OSCompatibility_WindowsVistaSP1" xml:space="preserve">
-    <value>Windows Vista SP1</value>
+  <data name="CompatibilityRunIn640x480Resolution" xml:space="preserve">
+    <value>Executar com a resolução 640 x 480</value>
   </data>
-  <data name="OSCompatibility_WindowsVistaSP2" xml:space="preserve">
-    <value>Windows Vista SP2</value>
+  <data name="CompatibilityOverrideHighDPIBehavior" xml:space="preserve">
+    <value>Substituir comportamento de escala elevada DPI</value>
   </data>
-  <data name="ReducedColorMode_Color16Bit" xml:space="preserve">
-    <value>Cores de 16 Bits (65536)</value>
+  <data name="CompatibilityReducedColorMode" xml:space="preserve">
+    <value>Modo de cor reduzida</value>
   </data>
-  <data name="ReducedColorMode_Color8Bit" xml:space="preserve">
-    <value>Cores de 8 Bits (256)</value>
-  </data>
-  <data name="CompatibilityMode" xml:space="preserve">
-    <value>Modo de compatibilidade</value>
-  </data>
-  <data name="DisableFullscreenOptimizations" xml:space="preserve">
-    <value>Desativar otimizações de ecrã inteiro</value>
-  </data>
-  <data name="ExecuteAt640X480" xml:space="preserve">
-    <value>Executar na resolução de ecrã 640 x 480</value>
-  </data>
-  <data name="OverrideDPIScalingBehaviour" xml:space="preserve">
-    <value>Substituir comportamento de escala de DPI elevado</value>
-  </data>
-  <data name="ReducedColorMode" xml:space="preserve">
-    <value>Modo de cores reduzido</value>
-  </data>
-  <data name="RegisterForRestart" xml:space="preserve">
-    <value>Registar para reiniciar</value>
+  <data name="CompatibilityRegisterThisProgramForRestart" xml:space="preserve">
+    <value>Registar este programa para reiniciar</value>
   </data>
   <data name="RunAsAdministrator" xml:space="preserve">
     <value>Executar como administrador</value>
   </data>
-  <data name="RunCompatibilityTroubleShooter" xml:space="preserve">
+  <data name="CompatibilityRunTroubleshooter" xml:space="preserve">
     <value>Executar resolução de problemas de compatibilidade</value>
   </data>
-  <data name="UseMainMonitorDPISettings" xml:space="preserve">
+  <data name="CompatibilityUseDPISettings" xml:space="preserve">
     <value>Utilizar definições de DPI do monitor principal</value>
+  </data>
+  <data name="CompatibilityDoNotAdjustDPI" xml:space="preserve">
+    <value>Não ajustar DPI</value>
+  </data>
+  <data name="CompatibilityDoNotOverrideDPI" xml:space="preserve">
+    <value>Não substituir DPI</value>
+  </data>
+  <data name="CompatibilityMode" xml:space="preserve">
+    <value>Modo de compatibilidade</value>
+  </data>
+  <data name="CompatibilityNoReducedColor" xml:space="preserve">
+    <value>Sem cor reduzida</value>
   </data>
   <data name="ThirdPartyLicenses" xml:space="preserve">
     <value>Licenças de terceiros</value>
@@ -1895,9 +1892,6 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Tipo</value>
-  </data>
-  <data name="IconGrid" xml:space="preserve">
-    <value>Grelha de ícones</value>
   </data>
   <data name="Bytes" xml:space="preserve">
     <value>Bytes</value>
@@ -2027,9 +2021,6 @@
   </data>
   <data name="TypeColumn" xml:space="preserve">
     <value>Coluna Tipo</value>
-  </data>
-  <data name="DetailsLayoutColumns" xml:space="preserve">
-    <value>Colunas no modo de detalhes</value>
   </data>
   <data name="Lockscreen" xml:space="preserve">
     <value>Ecrã de bloqueio</value>
@@ -2460,11 +2451,11 @@
   <data name="UnpinFromStartDescription" xml:space="preserve">
     <value>Desafixar itens do menu Iniciar</value>
   </data>
-  <data name="PinItemToFavoritesDescription" xml:space="preserve">
-    <value>Fixar pastas nos favoritos</value>
+  <data name="PinFolderToSidebarDescription" xml:space="preserve">
+    <value>Afixar pasta na barra lateral</value>
   </data>
-  <data name="UnpinItemFromFavoritesDescription" xml:space="preserve">
-    <value>Desafixar pastas dos favoritos</value>
+  <data name="UnpinFolderFromSidebarDescription" xml:space="preserve">
+    <value>Desafixar pasta da barra lateral</value>
   </data>
   <data name="SetAsWallpaperBackgroundDescription" xml:space="preserve">
     <value>Definir imagem selecionada como fundo do ambiente de trabalho</value>
@@ -2474,6 +2465,9 @@
   </data>
   <data name="SetAsLockscreenBackgroundDescription" xml:space="preserve">
     <value>Definir imagem selecionada como fundo do ecrã de bloqueio</value>
+  </data>
+  <data name="SetAsAppBackgroundDescription" xml:space="preserve">
+    <value>Utilizar imagem selecionada como fundo da aplicação</value>
   </data>
   <data name="InstallFontDescription" xml:space="preserve">
     <value>Instalar tipos de letra selecionados</value>
@@ -2542,7 +2536,7 @@
     <value>Trocar para a vista de mosaicos</value>
   </data>
   <data name="LayoutListDescription" xml:space="preserve">
-    <value>Alternar para vista de lista</value>
+    <value>Trocar para vista de lista</value>
   </data>
   <data name="List" xml:space="preserve">
     <value>Lista</value>
@@ -2551,7 +2545,7 @@
     <value>Grelha</value>
   </data>
   <data name="LayoutGridDescription" xml:space="preserve">
-    <value>Mudar para vista em grelha</value>
+    <value>Trocar para vista em grelha</value>
   </data>
   <data name="LayoutColumnsDescription" xml:space="preserve">
     <value>Trocar para a vista de colunas</value>
@@ -3277,7 +3271,7 @@
     <value>A aplicação está a ser executada no modo de administrador</value>
   </data>
   <data name="FilesRunningAsAdminContent" xml:space="preserve">
-    <value>Devido a limitações da plataforma, arrastar e largar não está disponível se executar a aplicação como administrador.</value>
+    <value>Devido a uma limitação com Windows e WinAppSdk, arrastar e soltar não está disponível ao executar Arquivos como administrador. Se você deseja usar arrastar e soltar, você pode contornar essa limitação abrindo UAC (Controle de Conta do Usuário) no menu inicial e selecionando o terceiro nível e reiniciando o Windows. Caso contrário, você pode continuar usando Arquivos sem arrastar e soltar.</value>
   </data>
   <data name="SettingsLeaveAppRunning" xml:space="preserve">
     <value>Manter aplicação em segundo plano ao fechar a janela</value>
@@ -3671,7 +3665,7 @@
     <value>Tamanhos adicionais ainda não estão disponíveis para o modo Mosaico.</value>
   </data>
   <data name="Compact" xml:space="preserve">
-    <value>Compact</value>
+    <value>Compacto</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Small" xml:space="preserve">
@@ -3683,23 +3677,23 @@
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+" xml:space="preserve">
-    <value>Medium +</value>
+    <value>Médio +</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium++" xml:space="preserve">
-    <value>Medium ++</value>
+    <value>Médio ++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+++" xml:space="preserve">
-    <value>Medium +++</value>
+    <value>Médio +++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium++++" xml:space="preserve">
-    <value>Medium ++++</value>
+    <value>Médio ++++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+++++" xml:space="preserve">
-    <value>Medium +++++</value>
+    <value>Médio +++++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large" xml:space="preserve">
@@ -3707,19 +3701,99 @@
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large+" xml:space="preserve">
-    <value>Large +</value>
+    <value>Grande +</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large++" xml:space="preserve">
-    <value>Large ++</value>
+    <value>Grande ++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large+++" xml:space="preserve">
-    <value>Large +++</value>
+    <value>Grande +++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="ExtraLarge" xml:space="preserve">
-    <value>Extra large</value>
+    <value>Muito grande</value>
     <comment>Used to describe layout sizes</comment>
+  </data>
+  <data name="DetailsView" xml:space="preserve">
+    <value>Vista de detalhes</value>
+  </data>
+  <data name="LayoutType" xml:space="preserve">
+    <value>Tipo de esquema</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Ações</value>
+  </data>
+  <data name="Commands" xml:space="preserve">
+    <value>Comandos</value>
+  </data>
+  <data name="AddCommand" xml:space="preserve">
+    <value>Adicionar comando</value>
+  </data>
+  <data name="RestoreDefaults" xml:space="preserve">
+    <value>Repor predefinições</value>
+  </data>
+  <data name="ChooseAnAction" xml:space="preserve">
+    <value>Escolha uma ação</value>
+  </data>
+  <data name="RestoreDefaultKeybindingsConfirmation" xml:space="preserve">
+    <value>Tem a certeza de que pretende repor as combinações de teclas padrão? Esta ação não pode ser anulada.</value>
+  </data>
+  <data name="KeybindingAlreadyUsedNotification" xml:space="preserve">
+    <value>Esta combinação de teclas já está a ser utilizada. Escolha uma combinação de teclas diferente para continuar.</value>
+  </data>
+  <data name="Customized" xml:space="preserve">
+    <value>Personalizado</value>
+  </data>
+  <data name="AdaptiveLayoutDisabledNotification" xml:space="preserve">
+    <value>O esquema adaptativo não está disponível quando as preferências são sincronizadas e o esquema padrão foi alterado para Detalhes.</value>
+  </data>
+  <data name="BackgroundImage" xml:space="preserve">
+    <value>Imagem de fundo</value>
+  </data>
+  <data name="Bottom" xml:space="preserve">
+    <value>Baixo</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Center" xml:space="preserve">
+    <value>Centro</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Fill" xml:space="preserve">
+    <value>Preencher</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="HorizontalAlignment" xml:space="preserve">
+    <value>Alinhamento horizontal</value>
+  </data>
+  <data name="ImageFit" xml:space="preserve">
+    <value>Ajustar à imagem</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>Esquerda</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Opacity" xml:space="preserve">
+    <value>Opacidade</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>Direita</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Top" xml:space="preserve">
+    <value>Cima</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Uniform" xml:space="preserve">
+    <value>Uniforme</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="UniformToFill" xml:space="preserve">
+    <value>Preenchimento uniforme</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="VerticalAlignment" xml:space="preserve">
+    <value>Alinhamento vertical</value>
   </data>
 </root>

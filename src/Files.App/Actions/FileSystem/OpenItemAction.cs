@@ -6,7 +6,7 @@ using Windows.Storage;
 
 namespace Files.App.Actions
 {
-	internal class OpenItemAction : ObservableObject, IAction
+	internal sealed class OpenItemAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -37,7 +37,7 @@ namespace Files.App.Actions
 			context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			if (context.ShellPage is not null)
 				return NavigationHelpers.OpenSelectedItemsAsync(context.ShellPage);
@@ -52,7 +52,7 @@ namespace Files.App.Actions
 		}
 	}
 
-	internal class OpenItemWithApplicationPickerAction : ObservableObject, IAction
+	internal sealed class OpenItemWithApplicationPickerAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -62,9 +62,8 @@ namespace Files.App.Actions
 		public string Description
 			=> "OpenItemWithApplicationPickerDescription".GetLocalizedResource();
 
-		// TODO add back icon when https://github.com/microsoft/microsoft-ui-xaml/issues/9409 is resolved
-		//public RichGlyph Glyph
-		//	=> new(opacityStyle: "ColorIconOpenWith");
+		public RichGlyph Glyph
+			=> new(opacityStyle: "ColorIconOpenWith");
 
 		public bool IsExecutable =>
 			context.HasSelection &&
@@ -79,7 +78,7 @@ namespace Files.App.Actions
 			context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			if (context.ShellPage is null)
 				return Task.CompletedTask;
@@ -94,7 +93,7 @@ namespace Files.App.Actions
 		}
 	}
 
-	internal class OpenParentFolderAction : ObservableObject, IAction
+	internal sealed class OpenParentFolderAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -119,7 +118,7 @@ namespace Files.App.Actions
 			context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public async Task ExecuteAsync()
+		public async Task ExecuteAsync(object? parameter = null)
 		{
 			if (context.ShellPage is null)
 				return;
@@ -133,7 +132,7 @@ namespace Files.App.Actions
 			context.ShellPage.NavigateWithArguments(context.ShellPage.InstanceViewModel.FolderSettings.GetLayoutType(folderPath), new NavigationArguments()
 			{
 				NavPathParam = folderPath,
-				SelectItems = new[] { item.ItemNameRaw },
+				SelectItems = [item.ItemNameRaw],
 				AssociatedTabInstance = context.ShellPage
 			});
 		}

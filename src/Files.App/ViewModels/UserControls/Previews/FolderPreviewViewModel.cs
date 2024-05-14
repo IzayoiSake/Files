@@ -8,7 +8,7 @@ using Windows.Storage.FileProperties;
 
 namespace Files.App.ViewModels.Previews
 {
-	public class FolderPreviewViewModel
+	public sealed class FolderPreviewViewModel
 	{
 		private static readonly IDateTimeFormatter dateTimeFormatter = Ioc.Default.GetRequiredService<IDateTimeFormatter>();
 
@@ -41,13 +41,13 @@ namespace Files.App.ViewModels.Previews
 
 			var info = await Folder.GetBasicPropertiesAsync();
 
-			Item.FileDetails = new()
-			{
+			Item.FileDetails =
+			[
 				GetFileProperty("PropertyItemCount", items.Count),
 				GetFileProperty("PropertyDateModified", info.DateModified),
 				GetFileProperty("PropertyDateCreated", info.DateCreated),
 				GetFileProperty("PropertyParsingPath", Folder.Path),
-			};
+			];
 
 			if (GitHelpers.IsRepositoryEx(Item.ItemPath, out var repoPath) &&
 				!string.IsNullOrEmpty(repoPath))

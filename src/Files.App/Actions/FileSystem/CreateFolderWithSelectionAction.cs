@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class CreateFolderWithSelectionAction : ObservableObject, IAction
+	internal sealed class CreateFolderWithSelectionAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -27,7 +27,7 @@ namespace Files.App.Actions
 			context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			return UIFilesystemHelpers.CreateFolderWithSelectionAsync(context.ShellPage!);
 		}

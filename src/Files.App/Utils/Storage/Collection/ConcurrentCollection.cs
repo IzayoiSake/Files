@@ -5,11 +5,11 @@ namespace Files.App.Helpers
 {
 	[DebuggerTypeProxy(typeof(CollectionDebugView<>))]
 	[DebuggerDisplay("Count = {Count}")]
-	public class ConcurrentCollection<T> : ICollection<T>, IList<T>, ICollection, IList
+	public sealed class ConcurrentCollection<T> : ICollection<T>, IList<T>, ICollection, IList
 	{
 		private readonly object syncRoot = new object();
 		
-		private readonly List<T> collection = new List<T>();
+		private readonly List<T> collection = [];
 
 		public int Count
 		{
@@ -243,7 +243,7 @@ namespace Files.App.Helpers
 
 		public void OrderOne(Func<List<T>, IEnumerable<T>> func, T item)
 		{
-			IList<T> result;
+			List<T> result;
 
 			lock (syncRoot)
 			{

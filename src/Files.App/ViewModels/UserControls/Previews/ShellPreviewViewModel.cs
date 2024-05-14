@@ -1,18 +1,22 @@
-﻿using DirectN;
-using Files.App.ViewModels.Properties;
+﻿using Files.App.ViewModels.Properties;
 using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Hosting;
 using System.Runtime.InteropServices;
 using System.Text;
 using Vanara.PInvoke;
+using Windows.Win32;
+using Windows.Win32.Graphics.Direct3D;
+using Windows.Win32.Graphics.Direct3D11;
+using Windows.Win32.Graphics.Dxgi;
+using Windows.Win32.Graphics.DirectComposition;
 using WinRT;
 using static Vanara.PInvoke.ShlwApi;
 using static Vanara.PInvoke.User32;
 
 namespace Files.App.ViewModels.Previews
 {
-	public class ShellPreviewViewModel : BasePreviewModel
+	public sealed class ShellPreviewViewModel : BasePreviewModel
 	{
 		public ShellPreviewViewModel(ListedItem item)
 			: base(item)
@@ -20,7 +24,7 @@ namespace Files.App.ViewModels.Previews
 		}
 
 		public async override Task<List<FileProperty>> LoadPreviewAndDetailsAsync()
-			=> new List<FileProperty>();
+			=> [];
 
 		private const string IPreviewHandlerIid = "{8895b1c6-b41f-4c1c-a562-0d564250836f}";
 		private static readonly Guid QueryAssociationsClsid = new Guid(0xa07034fd, 0x6caa, 0x4954, 0xac, 0x3f, 0x97, 0xa2, 0x72, 0x16, 0xf9, 0x8a);
@@ -112,46 +116,46 @@ namespace Files.App.ViewModels.Previews
 			_ = ChildWindowToXaml(parent, presenter);
 		}
 
-		private bool ChildWindowToXaml(IntPtr parent, UIElement presenter)
+		private unsafe bool ChildWindowToXaml(IntPtr parent, UIElement presenter)
 		{
 			D3D_DRIVER_TYPE[] driverTypes =
-			{
+			[
 				D3D_DRIVER_TYPE.D3D_DRIVER_TYPE_HARDWARE,
 				D3D_DRIVER_TYPE.D3D_DRIVER_TYPE_WARP,
-			};
+			];
 
 			ID3D11Device? d3d11Device = null;
 			ID3D11DeviceContext? d3d11DeviceContext = null;
-			D3D_FEATURE_LEVEL featureLevelSupported;
 
 			foreach (var driveType in driverTypes)
 			{
-				var hr = D3D11Functions.D3D11CreateDevice(
+				var hr = PInvoke.D3D11CreateDevice(
 					null,
 					driveType,
-					IntPtr.Zero,
-					(uint)D3D11_CREATE_DEVICE_FLAG.D3D11_CREATE_DEVICE_BGRA_SUPPORT,
+					new(IntPtr.Zero),
+					D3D11_CREATE_DEVICE_FLAG.D3D11_CREATE_DEVICE_BGRA_SUPPORT,
 					null,
 					0,
 					7,
 					out d3d11Device,
-					out featureLevelSupported,
+					null,
 					out d3d11DeviceContext);
 
-				if (hr.IsSuccess)
+				if (hr.Succeeded)
 					break;
 			}
 
 			if (d3d11Device is null)
 				return false;
 			IDXGIDevice dxgiDevice = (IDXGIDevice)d3d11Device;
-			if (Functions.DCompositionCreateDevice(dxgiDevice, typeof(IDCompositionDevice).GUID, out var compDevicePtr).IsError)
+			if (PInvoke.DCompositionCreateDevice(dxgiDevice, typeof(IDCompositionDevice).GUID, out var compDevicePtr).Failed)
 				return false;
-			IDCompositionDevice compDevice = (IDCompositionDevice)Marshal.GetObjectForIUnknown(compDevicePtr);
+			IDCompositionDevice compDevice = (IDCompositionDevice)compDevicePtr;
 
-			if (compDevice.CreateVisual(out var childVisual).IsError ||
-				compDevice.CreateSurfaceFromHwnd(hwnd.DangerousGetHandle(), out var controlSurface).IsError ||
-				childVisual.SetContent(controlSurface).IsError)
+			compDevice.CreateVisual(out var childVisual);
+			compDevice.CreateSurfaceFromHwnd(new(hwnd.DangerousGetHandle()), out var controlSurface);
+			childVisual.SetContent(controlSurface);
+			if (childVisual is null || controlSurface is null)
 				return false;
 
 			var compositor = ElementCompositionPreview.GetElementVisual(presenter).Compositor;
@@ -169,7 +173,7 @@ namespace Files.App.ViewModels.Previews
 			Marshal.ReleaseComObject(childVisual);
 			Marshal.ReleaseComObject(controlSurface);
 			Marshal.ReleaseComObject(compDevice);
-			Marshal.Release(compDevicePtr);
+			Marshal.ReleaseComObject(compDevicePtr);
 			Marshal.ReleaseComObject(dxgiDevice);
 			Marshal.ReleaseComObject(d3d11Device);
 			Marshal.ReleaseComObject(d3d11DeviceContext);
@@ -193,11 +197,11 @@ namespace Files.App.ViewModels.Previews
 			{
 				DwmApi.DwmSetWindowAttribute(hwnd, DwmApi.DWMWINDOWATTRIBUTE.DWMWA_CLOAK, false);
 				if (isOfficePreview)
-					InteropHelpers.SetWindowLong(hwnd, WindowLongFlags.GWL_EXSTYLE, 0);
+					Win32Helper.SetWindowLong(hwnd, WindowLongFlags.GWL_EXSTYLE, 0);
 			}
 			else
 			{
-				InteropHelpers.SetWindowLong(hwnd, WindowLongFlags.GWL_EXSTYLE,
+				Win32Helper.SetWindowLong(hwnd, WindowLongFlags.GWL_EXSTYLE,
 					(nint)(WindowStylesEx.WS_EX_LAYERED | WindowStylesEx.WS_EX_COMPOSITED));
 				DwmApi.DwmSetWindowAttribute(hwnd, DwmApi.DWMWINDOWATTRIBUTE.DWMWA_CLOAK, true);
 			}

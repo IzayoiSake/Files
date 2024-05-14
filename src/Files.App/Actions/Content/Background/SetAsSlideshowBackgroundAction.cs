@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class SetAsSlideshowBackgroundAction : BaseSetAsAction
+	internal sealed class SetAsSlideshowBackgroundAction : BaseSetAsAction
 	{
 		public override string Label
 			=> "SetAsSlideshow".GetLocalizedResource();
@@ -18,7 +18,7 @@ namespace Files.App.Actions
 			base.IsExecutable &&
 			context.SelectedItems.Count > 1;
 
-		public override Task ExecuteAsync()
+		public override Task ExecuteAsync(object? parameter = null)
 		{
 			var paths = context.SelectedItems.Select(item => item.ItemPath).ToArray();
 			WallpaperHelpers.SetSlideshow(paths);

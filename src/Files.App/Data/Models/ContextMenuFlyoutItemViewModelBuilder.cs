@@ -5,7 +5,7 @@ using Windows.System;
 
 namespace Files.App.Data.Models
 {
-	public class ContextMenuFlyoutItemViewModelBuilder
+	public sealed class ContextMenuFlyoutItemViewModelBuilder
 	{
 		private static readonly ContextMenuFlyoutItemViewModel none = new()
 		{
@@ -89,7 +89,7 @@ namespace Files.App.Data.Models
 					Key = (VirtualKey)command.HotKeys[0].Key,
 					Modifiers = (VirtualKeyModifiers)command.HotKeys[0].Modifier
 				};
-				viewModel.KeyboardAcceleratorTextOverride = command.HotKeys[0].Label;
+				viewModel.KeyboardAcceleratorTextOverride = command.HotKeys[0].LocalizedLabel;
 			}
 
 			return viewModel;

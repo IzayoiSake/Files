@@ -6,7 +6,7 @@ namespace Files.App.Utils.Storage
 	/// <summary>
 	/// Represents an access control list (ACL).
 	/// </summary>
-	public class AccessControlList : ObservableObject
+	public sealed class AccessControlList : ObservableObject
 	{
 		/// <summary>
 		/// Object path.
@@ -40,14 +40,14 @@ namespace Files.App.Utils.Storage
 			IsFolder = isFolder;
 			Owner = owner;
 			IsValid = isValid;
-			AccessControlEntries = new();
+			AccessControlEntries = [];
 		}
 
 		public AccessControlList()
 		{
 			Path = string.Empty;
 			Owner = new(string.Empty);
-			AccessControlEntries = new();
+			AccessControlEntries = [];
 		}
 	}
 }

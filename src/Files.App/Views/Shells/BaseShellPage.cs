@@ -13,7 +13,6 @@ using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI.Core;
 using DispatcherQueueTimer = Microsoft.UI.Dispatching.DispatcherQueueTimer;
-using SortDirection = Files.Core.Data.Enums.SortDirection;
 
 namespace Files.App.Views.Shells
 {
@@ -251,6 +250,7 @@ namespace Files.App.Views.Shells
 			if (InstanceViewModel.GitRepositoryPath != FilesystemViewModel.GitDirectory)
 			{
 				InstanceViewModel.GitRepositoryPath = FilesystemViewModel.GitDirectory;
+				InstanceViewModel.IsGitRepository = FilesystemViewModel.IsValidGitDirectory;
 
 				InstanceViewModel.GitBranchName = headBranch is not null
 					? headBranch.Name
@@ -363,6 +363,9 @@ namespace Files.App.Views.Shells
 
 		protected async void ShellPage_TextChanged(ISearchBoxViewModel sender, SearchBoxTextChangedEventArgs e)
 		{
+			FilesystemViewModel.FilesAndFoldersFilter = sender.Query;
+			await FilesystemViewModel.ApplyFilesAndFoldersChangesAsync();
+
 			if (e.Reason != SearchBoxTextChangeReason.UserInput)
 				return;
 
@@ -655,6 +658,10 @@ namespace Files.App.Views.Shells
 					break;
 				case ItemLoadStatusChangedEventArgs.ItemLoadStatus.Complete:
 					SetLoadingIndicatorForTabs(false);
+
+					if (ContentPage is not null)
+						ContentPage.ItemManipulationModel.ScrollToTop();
+
 					ToolbarViewModel.CanRefresh = true;
 					// Select previous directory
 					if (!string.IsNullOrWhiteSpace(e.PreviousDirectory) &&
@@ -664,30 +671,36 @@ namespace Files.App.Views.Shells
 						// Remove the WorkingDir from previous dir
 						e.PreviousDirectory = e.PreviousDirectory.Replace(e.Path, string.Empty, StringComparison.Ordinal);
 
+						var isNetwork = e.Path.StartsWith("\\\\");
+						var isFtp = FtpHelpers.IsFtpPath(e.Path);
+						var separator = isFtp ? "/" : "\\";
+
 						// Get previous dir name
-						if (e.PreviousDirectory.StartsWith('\\'))
+						if (e.PreviousDirectory.StartsWith(separator))
 							e.PreviousDirectory = e.PreviousDirectory.Remove(0, 1);
-						if (e.PreviousDirectory.Contains('\\'))
-							e.PreviousDirectory = e.PreviousDirectory.Split('\\')[0];
+						if (e.PreviousDirectory.Contains(separator))
+							e.PreviousDirectory = e.PreviousDirectory.Split(separator)[0];
 
 						// Get the first folder and combine it with WorkingDir
-						string folderToSelect = string.Format("{0}\\{1}", e.Path, e.PreviousDirectory);
+						string folderToSelect = e.Path + separator + e.PreviousDirectory;
 
-						// Make sure we don't get double \\ in the e.Path
-						folderToSelect = folderToSelect.Replace("\\\\", "\\", StringComparison.Ordinal);
+						// Make sure we don't get double separators in the e.Path
+						folderToSelect = folderToSelect.Replace(separator + separator, separator, StringComparison.Ordinal);
 
-						if (folderToSelect.EndsWith('\\'))
+						if (isNetwork)
+							folderToSelect = separator + folderToSelect;
+						else if (isFtp)
+							folderToSelect = folderToSelect.Replace(":/", "://", StringComparison.Ordinal);
+
+						if (folderToSelect.EndsWith(separator))
 							folderToSelect = folderToSelect.Remove(folderToSelect.Length - 1, 1);
 
-						var itemToSelect = FilesystemViewModel.FilesAndFolders.ToList().Where((item) => item.ItemPath == folderToSelect).FirstOrDefault();
+						var itemToSelect = FilesystemViewModel.FilesAndFolders.ToList().FirstOrDefault((item) => item.ItemPath == folderToSelect);
 
-						if (itemToSelect is not null && ContentPage is not null)
+						if (itemToSelect is not null && ContentPage is not null && userSettingsService.FoldersSettingsService.ScrollToPreviousFolderWhenNavigatingUp)
 						{
-							if (userSettingsService.FoldersSettingsService.ScrollToPreviousFolderWhenNavigatingUp)
-							{
-								ContentPage.ItemManipulationModel.SetSelectedItem(itemToSelect);
-								ContentPage.ItemManipulationModel.ScrollIntoView(itemToSelect);
-							}
+							ContentPage.ItemManipulationModel.SetSelectedItem(itemToSelect);
+							ContentPage.ItemManipulationModel.ScrollIntoView(itemToSelect);
 						}
 					}
 					break;

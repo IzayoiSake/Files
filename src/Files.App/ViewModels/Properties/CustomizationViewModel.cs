@@ -6,7 +6,7 @@ using Microsoft.UI.Windowing;
 
 namespace Files.App.ViewModels.Properties
 {
-	public class CustomizationViewModel : ObservableObject
+	public sealed class CustomizationViewModel : ObservableObject
 	{
 		private static string DefaultIconDllFilePath
 			=> Path.Combine(Constants.UserEnvironmentPaths.SystemRootPath, "System32", "SHELL32.dll");
@@ -61,7 +61,7 @@ namespace Files.App.ViewModels.Properties
 			IsShortcut = item.IsShortcut;
 			_selectedItemPath = item.ItemPath;
 
-			DllIcons = new();
+			DllIcons = [];
 
 			// Get default
 			LoadIconsForPath(IconResourceItemPath);

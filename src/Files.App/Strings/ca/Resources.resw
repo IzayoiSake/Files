@@ -216,8 +216,8 @@
   <data name="Appearance" xml:space="preserve">
     <value>Aparença</value>
   </data>
-  <data name="Background" xml:space="preserve">
-    <value>Fons</value>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>Color de fons</value>
   </data>
   <data name="Advanced" xml:space="preserve">
     <value>Avançat</value>
@@ -273,8 +273,8 @@
   <data name="Delete" xml:space="preserve">
     <value>Suprimeix</value>
   </data>
-  <data name="PinToFavorites" xml:space="preserve">
-    <value>Fixa als favorits</value>
+  <data name="PinFolderToSidebar" xml:space="preserve">
+    <value>Fixar a la barra lateral</value>
   </data>
   <data name="WelcomeDialog.Title" xml:space="preserve">
     <value>Us donem la benvinguda al Files!</value>
@@ -338,6 +338,9 @@
   </data>
   <data name="SetAsLockscreen" xml:space="preserve">
     <value>Estableix com a fons de pantalla de bloqueig</value>
+  </data>
+  <data name="SetAsAppBackground" xml:space="preserve">
+    <value>Estableix com a fons de l'aplicació</value>
   </data>
   <data name="AccessDeniedDeleteDialog.Text" xml:space="preserve">
     <value>No hem pogut suprimir aquest element</value>
@@ -882,6 +885,12 @@
   <data name="PropertyEncodingBitrate" xml:space="preserve">
     <value>Taxa de bits de la codificació</value>
   </data>
+  <data name="PropertyPreviewAudioEncodingBitrate" xml:space="preserve">
+    <value>Taxa de bits de codificació d'àudio</value>
+  </data>
+  <data name="PropertyPreviewVideoEncodingBitrate" xml:space="preserve">
+    <value>Taxa de bits de codificació de vídeo</value>
+  </data>
   <data name="Compression" xml:space="preserve">
     <value>Compressió</value>
   </data>
@@ -1029,8 +1038,8 @@
   <data name="OpenInNewPane" xml:space="preserve">
     <value>Obre en un panell nou</value>
   </data>
-  <data name="Folders" xml:space="preserve">
-    <value>Carpetes</value>
+  <data name="FilesAndFolders" xml:space="preserve">
+    <value>Fitxers i carpetes</value>
   </data>
   <data name="NavToolbarDetails.ToolTipService.ToolTip" xml:space="preserve">
     <value>Detalls (Ctrl+Shift+1)</value>
@@ -1071,8 +1080,8 @@
   <data name="PropertyItemName" xml:space="preserve">
     <value>Nom de l'element</value>
   </data>
-  <data name="UnpinFromFavorites" xml:space="preserve">
-    <value>Elimina dels favorits</value>
+  <data name="UnpinFolderFromSidebar" xml:space="preserve">
+    <value>Treure de la barra lateral</value>
   </data>
   <data name="SidebarNetworkDrives" xml:space="preserve">
     <value>Unitats de xarxa</value>
@@ -1158,8 +1167,8 @@
   <data name="DrivesWidgetOptionsFlyoutMapNetDriveMenuItem.Text" xml:space="preserve">
     <value>Assigna una unitat de xarxa</value>
   </data>
-  <data name="SidebarFavorites" xml:space="preserve">
-    <value>Favorits</value>
+  <data name="Pinned" xml:space="preserve">
+    <value>Fixat</value>
   </data>
   <data name="SidebarLibraries" xml:space="preserve">
     <value>Biblioteques</value>
@@ -1698,12 +1707,6 @@
   <data name="CredentialDialogUserName.PlaceholderText" xml:space="preserve">
     <value>Nom d'usuari</value>
   </data>
-  <data name="DrivesWidgetAutomationProperties.Name" xml:space="preserve">
-    <value>Giny d'unitats</value>
-  </data>
-  <data name="RecentFilesWidgetAutomationProperties.Name" xml:space="preserve">
-    <value>Giny de fitxers recents</value>
-  </data>
   <data name="NoSearchResultsFound" xml:space="preserve">
     <value>No s'ha trobat cap element</value>
   </data>
@@ -1797,65 +1800,59 @@
   <data name="None" xml:space="preserve">
     <value>Cap</value>
   </data>
-  <data name="HighDpiOption_UseDPIOnLogin" xml:space="preserve">
-    <value>En iniciar sessió de Windows</value>
+  <data name="CompatibilityOnWindowsLogin" xml:space="preserve">
+    <value>A l'iniciar Windows</value>
   </data>
-  <data name="HighDpiOption_UseDPIOnProgramStart" xml:space="preserve">
-    <value>En iniciar el programa</value>
+  <data name="CompatibilityOnProgramStart" xml:space="preserve">
+    <value>A l'iniciar aquest programa</value>
   </data>
-  <data name="HighDpiOverride_System" xml:space="preserve">
+  <data name="System" xml:space="preserve">
     <value>Sistema</value>
   </data>
-  <data name="HighDpiOverride_SystemAdvanced" xml:space="preserve">
-    <value>Sistema (avançat)</value>
+  <data name="CompatibilitySystemEnhanced" xml:space="preserve">
+    <value>Sistema (millorat)</value>
   </data>
-  <data name="OSCompatibility_Windows7" xml:space="preserve">
-    <value>Windows 7</value>
+  <data name="CompatibilityReducedColorModeColor16bit" xml:space="preserve">
+    <value>color 16-bits (65536)</value>
   </data>
-  <data name="OSCompatibility_Windows8" xml:space="preserve">
-    <value>Windows 8</value>
+  <data name="CompatibilityReducedColorModeColor8bit" xml:space="preserve">
+    <value>color 8-bits (256)</value>
   </data>
-  <data name="OSCompatibility_WindowsVista" xml:space="preserve">
-    <value>Windows Vista</value>
+  <data name="CompatibilityDisableFullscreenOptimizations" xml:space="preserve">
+    <value>Desactivar les optimitzacions de pantalla completa</value>
   </data>
-  <data name="OSCompatibility_WindowsVistaSP1" xml:space="preserve">
-    <value>Windows Vista SP1</value>
-  </data>
-  <data name="OSCompatibility_WindowsVistaSP2" xml:space="preserve">
-    <value>Windows Vista SP2</value>
-  </data>
-  <data name="ReducedColorMode_Color16Bit" xml:space="preserve">
-    <value>Color de 16 bits (65536)</value>
-  </data>
-  <data name="ReducedColorMode_Color8Bit" xml:space="preserve">
-    <value>Color de 8 bits (256)</value>
-  </data>
-  <data name="CompatibilityMode" xml:space="preserve">
-    <value>Mode de compatibilitat</value>
-  </data>
-  <data name="DisableFullscreenOptimizations" xml:space="preserve">
-    <value>Desactiva les optimitzacions de pantalla completa</value>
-  </data>
-  <data name="ExecuteAt640X480" xml:space="preserve">
+  <data name="CompatibilityRunIn640x480Resolution" xml:space="preserve">
     <value>Executa amb una resolució de pantalla de 640x480</value>
   </data>
-  <data name="OverrideDPIScalingBehaviour" xml:space="preserve">
-    <value>Anul·la el comportament d'escalat de DPI alt</value>
+  <data name="CompatibilityOverrideHighDPIBehavior" xml:space="preserve">
+    <value>Invalida el comportament d'escalat de DPI alt</value>
   </data>
-  <data name="ReducedColorMode" xml:space="preserve">
+  <data name="CompatibilityReducedColorMode" xml:space="preserve">
     <value>Mode de color reduït</value>
   </data>
-  <data name="RegisterForRestart" xml:space="preserve">
-    <value>Registra per a reiniciar</value>
+  <data name="CompatibilityRegisterThisProgramForRestart" xml:space="preserve">
+    <value>Registrar aquest programa per a reinici</value>
   </data>
   <data name="RunAsAdministrator" xml:space="preserve">
     <value>Executa com a administrador</value>
   </data>
-  <data name="RunCompatibilityTroubleShooter" xml:space="preserve">
-    <value>Executa el solucionador de problemes de compatibilitat</value>
+  <data name="CompatibilityRunTroubleshooter" xml:space="preserve">
+    <value>Executar el solucionador de problemes de compatibilitat</value>
   </data>
-  <data name="UseMainMonitorDPISettings" xml:space="preserve">
-    <value>Utilitza la configuració de DPI del monitor principal</value>
+  <data name="CompatibilityUseDPISettings" xml:space="preserve">
+    <value>Fer servir les opcions de DPI del monitor principal</value>
+  </data>
+  <data name="CompatibilityDoNotAdjustDPI" xml:space="preserve">
+    <value>No ajustar el DPI</value>
+  </data>
+  <data name="CompatibilityDoNotOverrideDPI" xml:space="preserve">
+    <value>No invalidar el DPI</value>
+  </data>
+  <data name="CompatibilityMode" xml:space="preserve">
+    <value>Mode de compatibilitat</value>
+  </data>
+  <data name="CompatibilityNoReducedColor" xml:space="preserve">
+    <value>No color reduït</value>
   </data>
   <data name="ThirdPartyLicenses" xml:space="preserve">
     <value>Llicències de tercers</value>
@@ -1895,9 +1892,6 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Tipus</value>
-  </data>
-  <data name="IconGrid" xml:space="preserve">
-    <value>Quadrícula d'icones</value>
   </data>
   <data name="Bytes" xml:space="preserve">
     <value>Bytes</value>
@@ -1942,7 +1936,7 @@
     <value>Tanca les pestanyes a la dreta</value>
   </data>
   <data name="CloseOtherTabs" xml:space="preserve">
-    <value>Tanca altres pestanyes</value>
+    <value>Tanca les altres pestanyes</value>
   </data>
   <data name="Music" xml:space="preserve">
     <value>Música</value>
@@ -2027,9 +2021,6 @@
   </data>
   <data name="TypeColumn" xml:space="preserve">
     <value>Columna de tipus</value>
-  </data>
-  <data name="DetailsLayoutColumns" xml:space="preserve">
-    <value>Columnes de disseny de detalls</value>
   </data>
   <data name="Lockscreen" xml:space="preserve">
     <value>Pantalla de bloqueig</value>
@@ -2460,11 +2451,11 @@
   <data name="UnpinFromStartDescription" xml:space="preserve">
     <value>Desfixa els elements del menú Inici</value>
   </data>
-  <data name="PinItemToFavoritesDescription" xml:space="preserve">
-    <value>Fixa les carpetes als preferits</value>
+  <data name="PinFolderToSidebarDescription" xml:space="preserve">
+    <value>Fixa carpeta(es) a la barra lateral</value>
   </data>
-  <data name="UnpinItemFromFavoritesDescription" xml:space="preserve">
-    <value>Desfixa les carpetes dels preferits</value>
+  <data name="UnpinFolderFromSidebarDescription" xml:space="preserve">
+    <value>Treure carpeta(es) de la barra lateral</value>
   </data>
   <data name="SetAsWallpaperBackgroundDescription" xml:space="preserve">
     <value>Estableix la imatge seleccionada com a fons de l'escriptori</value>
@@ -2474,6 +2465,9 @@
   </data>
   <data name="SetAsLockscreenBackgroundDescription" xml:space="preserve">
     <value>Estableix la imatge seleccionada com a fons de pantalla de bloqueig</value>
+  </data>
+  <data name="SetAsAppBackgroundDescription" xml:space="preserve">
+    <value>Estableix la imatge seleccionada com a fons de l'aplicació</value>
   </data>
   <data name="InstallFontDescription" xml:space="preserve">
     <value>Instal·la les fonts seleccionades</value>
@@ -3277,7 +3271,7 @@
     <value>El Files s'executa com a administrador</value>
   </data>
   <data name="FilesRunningAsAdminContent" xml:space="preserve">
-    <value>A causa de les limitacions de la plataforma, arrossegar i deixar anar no està disponible quan s'executa Files com a administrador.</value>
+    <value>A causa d'una limitació amb Windows i WinAppSdk, arrossegar i deixar anar no està disponible quan s'executa el Files com a administrador. Si voleu utilitzar arrossegar i deixar anar, podeu evitar aquesta limitació obrint l'UAC (control del compte d'usuari) des del menú Inici, seleccionanar el tercer nivell i reiniciar el Windows. En cas contrari, podeu seguir utilitzant el Files sense arrossegar i deixar anar.</value>
   </data>
   <data name="SettingsLeaveAppRunning" xml:space="preserve">
     <value>Permet que l'aplicació s'executi en segon pla en tancar la finestra</value>
@@ -3671,7 +3665,7 @@
     <value>Mides addicionals encara no estan disponibles per a la Vista de Mosaics.</value>
   </data>
   <data name="Compact" xml:space="preserve">
-    <value>Compact</value>
+    <value>Compacta</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Small" xml:space="preserve">
@@ -3683,23 +3677,23 @@
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+" xml:space="preserve">
-    <value>Medium +</value>
+    <value>Mitjana +</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium++" xml:space="preserve">
-    <value>Medium ++</value>
+    <value>Mitjana ++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+++" xml:space="preserve">
-    <value>Medium +++</value>
+    <value>Mitjana +++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium++++" xml:space="preserve">
-    <value>Medium ++++</value>
+    <value>Mitjana ++++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+++++" xml:space="preserve">
-    <value>Medium +++++</value>
+    <value>Mitjana +++++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large" xml:space="preserve">
@@ -3707,19 +3701,99 @@
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large+" xml:space="preserve">
-    <value>Large +</value>
+    <value>Gran +</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large++" xml:space="preserve">
-    <value>Large ++</value>
+    <value>Gran ++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large+++" xml:space="preserve">
-    <value>Large +++</value>
+    <value>Gran +++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="ExtraLarge" xml:space="preserve">
-    <value>Extra large</value>
+    <value>Extra gran</value>
     <comment>Used to describe layout sizes</comment>
+  </data>
+  <data name="DetailsView" xml:space="preserve">
+    <value>Vista de detalls</value>
+  </data>
+  <data name="LayoutType" xml:space="preserve">
+    <value>Tipus de disseny</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Accions</value>
+  </data>
+  <data name="Commands" xml:space="preserve">
+    <value>Ordres</value>
+  </data>
+  <data name="AddCommand" xml:space="preserve">
+    <value>Afegeix una ordre</value>
+  </data>
+  <data name="RestoreDefaults" xml:space="preserve">
+    <value>Restaura els valors per defecte</value>
+  </data>
+  <data name="ChooseAnAction" xml:space="preserve">
+    <value>Trieu una acció</value>
+  </data>
+  <data name="RestoreDefaultKeybindingsConfirmation" xml:space="preserve">
+    <value>Esteu segur que voleu restaurar les vinculacions de les tecles per defecte? Aquesta acció no es pot desfer.</value>
+  </data>
+  <data name="KeybindingAlreadyUsedNotification" xml:space="preserve">
+    <value>Aquesta vinculació de tecles ja s'està utilitzant, trieu una vinculació de tecles diferent per continuar.</value>
+  </data>
+  <data name="Customized" xml:space="preserve">
+    <value>Personalitzat</value>
+  </data>
+  <data name="AdaptiveLayoutDisabledNotification" xml:space="preserve">
+    <value>El disseny adaptatiu no està disponible quan les preferències estan sincronitzades, el disseny per defecte s'ha canviat a Detalls.</value>
+  </data>
+  <data name="BackgroundImage" xml:space="preserve">
+    <value>Imatge de fons</value>
+  </data>
+  <data name="Bottom" xml:space="preserve">
+    <value>Inferior</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Center" xml:space="preserve">
+    <value>Centre</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Fill" xml:space="preserve">
+    <value>Omple</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="HorizontalAlignment" xml:space="preserve">
+    <value>Alineació horitzontal</value>
+  </data>
+  <data name="ImageFit" xml:space="preserve">
+    <value>Ajusta la imatge</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>Esquerra</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Opacity" xml:space="preserve">
+    <value>Opacitat</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>Dreta</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Top" xml:space="preserve">
+    <value>Superior</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Uniform" xml:space="preserve">
+    <value>Uniforme</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="UniformToFill" xml:space="preserve">
+    <value>Omple uniformement</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="VerticalAlignment" xml:space="preserve">
+    <value>Alineació vertical</value>
   </data>
 </root>

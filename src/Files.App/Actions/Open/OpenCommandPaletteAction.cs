@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class OpenCommandPaletteAction : IAction
+	internal sealed class OpenCommandPaletteAction : IAction
 	{
 		private readonly IContentPageContext _context;
 
@@ -21,7 +21,7 @@ namespace Files.App.Actions
 			_context = Ioc.Default.GetRequiredService<IContentPageContext>();
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			_context.ShellPage?.ToolbarViewModel.OpenCommandPalette();
 

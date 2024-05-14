@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class CreateFolderAction : BaseUIAction, IAction
+	internal sealed class CreateFolderAction : BaseUIAction, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -30,7 +30,7 @@ namespace Files.App.Actions
 			context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			if (context.ShellPage is not null)
 				UIFilesystemHelpers.CreateFileFromDialogResultTypeAsync(AddItemDialogItemType.Folder, null!, context.ShellPage);

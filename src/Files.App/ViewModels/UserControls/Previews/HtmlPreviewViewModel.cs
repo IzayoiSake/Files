@@ -5,7 +5,7 @@ using Files.App.ViewModels.Properties;
 
 namespace Files.App.ViewModels.Previews
 {
-	public class HtmlPreviewViewModel : BasePreviewModel
+	public sealed class HtmlPreviewViewModel : BasePreviewModel
 	{
 		public HtmlPreviewViewModel(ListedItem item)
 			: base(item)
@@ -16,6 +16,6 @@ namespace Files.App.ViewModels.Previews
 			=> extension is ".htm" or ".html" or ".svg";
 
 		public async override Task<List<FileProperty>> LoadPreviewAndDetailsAsync()
-			=> new List<FileProperty>();
+			=> [];
 	}
 }

@@ -216,8 +216,8 @@
   <data name="Appearance" xml:space="preserve">
     <value>Внешний вид</value>
   </data>
-  <data name="Background" xml:space="preserve">
-    <value>Фон</value>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>Цвет фона</value>
   </data>
   <data name="Advanced" xml:space="preserve">
     <value>Расширенные</value>
@@ -273,8 +273,8 @@
   <data name="Delete" xml:space="preserve">
     <value>Удаление</value>
   </data>
-  <data name="PinToFavorites" xml:space="preserve">
-    <value>Закрепить в Избранное</value>
+  <data name="PinFolderToSidebar" xml:space="preserve">
+    <value>Закрепить на боковой панели</value>
   </data>
   <data name="WelcomeDialog.Title" xml:space="preserve">
     <value>Добро пожаловать в Files!</value>
@@ -338,6 +338,9 @@
   </data>
   <data name="SetAsLockscreen" xml:space="preserve">
     <value>Сделать фоном экрана блокировки</value>
+  </data>
+  <data name="SetAsAppBackground" xml:space="preserve">
+    <value>Установить в качестве фона приложения</value>
   </data>
   <data name="AccessDeniedDeleteDialog.Text" xml:space="preserve">
     <value>Ошибка при удалении этого элемента</value>
@@ -882,6 +885,12 @@
   <data name="PropertyEncodingBitrate" xml:space="preserve">
     <value>Скорость потока</value>
   </data>
+  <data name="PropertyPreviewAudioEncodingBitrate" xml:space="preserve">
+    <value>Аудио кодирование битрейт</value>
+  </data>
+  <data name="PropertyPreviewVideoEncodingBitrate" xml:space="preserve">
+    <value>Битрейт видео кодирования</value>
+  </data>
   <data name="Compression" xml:space="preserve">
     <value>Сжатие</value>
   </data>
@@ -1029,8 +1038,8 @@
   <data name="OpenInNewPane" xml:space="preserve">
     <value>Открыть в новой панели</value>
   </data>
-  <data name="Folders" xml:space="preserve">
-    <value>Папки</value>
+  <data name="FilesAndFolders" xml:space="preserve">
+    <value>Файлы и папки</value>
   </data>
   <data name="NavToolbarDetails.ToolTipService.ToolTip" xml:space="preserve">
     <value>Таблица (Ctrl+Shift+1)</value>
@@ -1071,8 +1080,8 @@
   <data name="PropertyItemName" xml:space="preserve">
     <value>Имя</value>
   </data>
-  <data name="UnpinFromFavorites" xml:space="preserve">
-    <value>Открепить из Избранного</value>
+  <data name="UnpinFolderFromSidebar" xml:space="preserve">
+    <value>Убрать из боковой панели</value>
   </data>
   <data name="SidebarNetworkDrives" xml:space="preserve">
     <value>Сетевые диски</value>
@@ -1158,8 +1167,8 @@
   <data name="DrivesWidgetOptionsFlyoutMapNetDriveMenuItem.Text" xml:space="preserve">
     <value>Подключить сетевой диск</value>
   </data>
-  <data name="SidebarFavorites" xml:space="preserve">
-    <value>Избранное</value>
+  <data name="Pinned" xml:space="preserve">
+    <value>Закреплённые</value>
   </data>
   <data name="SidebarLibraries" xml:space="preserve">
     <value>Библиотеки</value>
@@ -1698,12 +1707,6 @@
   <data name="CredentialDialogUserName.PlaceholderText" xml:space="preserve">
     <value>Имя пользователя</value>
   </data>
-  <data name="DrivesWidgetAutomationProperties.Name" xml:space="preserve">
-    <value>Виджет Диски</value>
-  </data>
-  <data name="RecentFilesWidgetAutomationProperties.Name" xml:space="preserve">
-    <value>Виджет Недавние файлы</value>
-  </data>
   <data name="NoSearchResultsFound" xml:space="preserve">
     <value>Не найдено</value>
   </data>
@@ -1797,65 +1800,59 @@
   <data name="None" xml:space="preserve">
     <value>Никак</value>
   </data>
-  <data name="HighDpiOption_UseDPIOnLogin" xml:space="preserve">
+  <data name="CompatibilityOnWindowsLogin" xml:space="preserve">
     <value>При входе в Windows</value>
   </data>
-  <data name="HighDpiOption_UseDPIOnProgramStart" xml:space="preserve">
+  <data name="CompatibilityOnProgramStart" xml:space="preserve">
     <value>При запуске программы</value>
   </data>
-  <data name="HighDpiOverride_System" xml:space="preserve">
+  <data name="System" xml:space="preserve">
     <value>Система</value>
   </data>
-  <data name="HighDpiOverride_SystemAdvanced" xml:space="preserve">
+  <data name="CompatibilitySystemEnhanced" xml:space="preserve">
     <value>Система (продвинутый)</value>
   </data>
-  <data name="OSCompatibility_Windows7" xml:space="preserve">
-    <value>Windows 7</value>
+  <data name="CompatibilityReducedColorModeColor16bit" xml:space="preserve">
+    <value>16-битный цвет (65536)</value>
   </data>
-  <data name="OSCompatibility_Windows8" xml:space="preserve">
-    <value>Windows 8</value>
+  <data name="CompatibilityReducedColorModeColor8bit" xml:space="preserve">
+    <value>8-битный цвет (256)</value>
   </data>
-  <data name="OSCompatibility_WindowsVista" xml:space="preserve">
-    <value>Windows Vista</value>
+  <data name="CompatibilityDisableFullscreenOptimizations" xml:space="preserve">
+    <value>Отключить полноэкранную оптимизацию</value>
   </data>
-  <data name="OSCompatibility_WindowsVistaSP1" xml:space="preserve">
-    <value>Windows Vista SP1</value>
-  </data>
-  <data name="OSCompatibility_WindowsVistaSP2" xml:space="preserve">
-    <value>Windows Vista SP2</value>
-  </data>
-  <data name="ReducedColorMode_Color16Bit" xml:space="preserve">
-    <value>16-Бит Цвета (65536)</value>
-  </data>
-  <data name="ReducedColorMode_Color8Bit" xml:space="preserve">
-    <value>8-Бит Цвета (256)</value>
-  </data>
-  <data name="CompatibilityMode" xml:space="preserve">
-    <value>Режим совместимости</value>
-  </data>
-  <data name="DisableFullscreenOptimizations" xml:space="preserve">
-    <value>Отключить оптимизацию полного экрана</value>
-  </data>
-  <data name="ExecuteAt640X480" xml:space="preserve">
+  <data name="CompatibilityRunIn640x480Resolution" xml:space="preserve">
     <value>Запускать в разрешении 640 x 480</value>
   </data>
-  <data name="OverrideDPIScalingBehaviour" xml:space="preserve">
-    <value>Переопределить поведение масштабирования с высоким разрешением</value>
+  <data name="CompatibilityOverrideHighDPIBehavior" xml:space="preserve">
+    <value>Переопределить масштабирование на Hi-DPI</value>
   </data>
-  <data name="ReducedColorMode" xml:space="preserve">
-    <value>Режим пониженных цветов</value>
+  <data name="CompatibilityReducedColorMode" xml:space="preserve">
+    <value>Режим пониженной цветности</value>
   </data>
-  <data name="RegisterForRestart" xml:space="preserve">
-    <value>Зарегистрироваться для перезапуска</value>
+  <data name="CompatibilityRegisterThisProgramForRestart" xml:space="preserve">
+    <value>Регистрация программы для перезапуска</value>
   </data>
   <data name="RunAsAdministrator" xml:space="preserve">
     <value>Запустить от имени администратора</value>
   </data>
-  <data name="RunCompatibilityTroubleShooter" xml:space="preserve">
+  <data name="CompatibilityRunTroubleshooter" xml:space="preserve">
     <value>Запустить средство устранения неполадок совместимости</value>
   </data>
-  <data name="UseMainMonitorDPISettings" xml:space="preserve">
-    <value>Использовать настройки DPI главного монитора</value>
+  <data name="CompatibilityUseDPISettings" xml:space="preserve">
+    <value>Использовать масштабирование главного монитора</value>
+  </data>
+  <data name="CompatibilityDoNotAdjustDPI" xml:space="preserve">
+    <value>Не изменять DPI</value>
+  </data>
+  <data name="CompatibilityDoNotOverrideDPI" xml:space="preserve">
+    <value>Не переопределить DPI</value>
+  </data>
+  <data name="CompatibilityMode" xml:space="preserve">
+    <value>Режим совместимости</value>
+  </data>
+  <data name="CompatibilityNoReducedColor" xml:space="preserve">
+    <value>Без уменьшения цвета</value>
   </data>
   <data name="ThirdPartyLicenses" xml:space="preserve">
     <value>Лицензии третьих лиц</value>
@@ -1895,9 +1892,6 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Тип</value>
-  </data>
-  <data name="IconGrid" xml:space="preserve">
-    <value>Сетка иконок</value>
   </data>
   <data name="Bytes" xml:space="preserve">
     <value>Байты</value>
@@ -1984,7 +1978,7 @@
     <value>Столбцы по размеру содержимого</value>
   </data>
   <data name="Adaptive" xml:space="preserve">
-    <value>Automatically choose the best layout</value>
+    <value>Адаптивный макет</value>
   </data>
   <data name="AdaptiveShortcutTooltip" xml:space="preserve">
     <value>Адаптивный (Ctrl+Shift+7)</value>
@@ -2027,9 +2021,6 @@
   </data>
   <data name="TypeColumn" xml:space="preserve">
     <value>Столбец типа</value>
-  </data>
-  <data name="DetailsLayoutColumns" xml:space="preserve">
-    <value>Разметка подробного макета</value>
   </data>
   <data name="Lockscreen" xml:space="preserve">
     <value>Экран блокировки</value>
@@ -2254,7 +2245,7 @@
     <value>Загрузка...</value>
   </data>
   <data name="ContextMenuOptions" xml:space="preserve">
-    <value>Опции контекстного меню</value>
+    <value>Настройки контекстного меню</value>
   </data>
   <data name="ShowFileExtensions" xml:space="preserve">
     <value>Показывать расширения файлов</value>
@@ -2460,11 +2451,11 @@
   <data name="UnpinFromStartDescription" xml:space="preserve">
     <value>Открепить элемент(ы) из меню Пуск</value>
   </data>
-  <data name="PinItemToFavoritesDescription" xml:space="preserve">
-    <value>Закрепить папку(и) в Избранное</value>
+  <data name="PinFolderToSidebarDescription" xml:space="preserve">
+    <value>Закрепить папку(и) на боковую панель</value>
   </data>
-  <data name="UnpinItemFromFavoritesDescription" xml:space="preserve">
-    <value>Открепить папку(и) из Избранного</value>
+  <data name="UnpinFolderFromSidebarDescription" xml:space="preserve">
+    <value>Открепить папку(и) от боковой панели</value>
   </data>
   <data name="SetAsWallpaperBackgroundDescription" xml:space="preserve">
     <value>Установить как фон рабочего стола</value>
@@ -2474,6 +2465,9 @@
   </data>
   <data name="SetAsLockscreenBackgroundDescription" xml:space="preserve">
     <value>Установить как обои экрана блокировки</value>
+  </data>
+  <data name="SetAsAppBackgroundDescription" xml:space="preserve">
+    <value>Установить выбранное изображение в качестве фона приложения</value>
   </data>
   <data name="InstallFontDescription" xml:space="preserve">
     <value>Установить выбранный(е) шрифт(ы)</value>
@@ -2530,10 +2524,10 @@
     <value>Открыть папку в терминале от имени администратора</value>
   </data>
   <data name="LayoutDecreaseSizeDescription" xml:space="preserve">
-    <value>Decrease item size in the current view</value>
+    <value>Уменьшить размер элемента в текущем виде</value>
   </data>
   <data name="LayoutIncreaseSizeDescription" xml:space="preserve">
-    <value>Increase item size in the current view</value>
+    <value>Увеличить размер элемента в текущем виде</value>
   </data>
   <data name="LayoutDetailsDescription" xml:space="preserve">
     <value>Переключить на подробный вид</value>
@@ -2548,10 +2542,10 @@
     <value>Список</value>
   </data>
   <data name="Grid" xml:space="preserve">
-    <value>Grid</value>
+    <value>Сетка</value>
   </data>
   <data name="LayoutGridDescription" xml:space="preserve">
-    <value>Switch to grid view</value>
+    <value>Показать в виде сетки</value>
   </data>
   <data name="LayoutColumnsDescription" xml:space="preserve">
     <value>Режим столбцов</value>
@@ -3277,7 +3271,7 @@
     <value>Files запущены от имени администратора</value>
   </data>
   <data name="FilesRunningAsAdminContent" xml:space="preserve">
-    <value>Из-за ограничений платформы, перетаскивание недоступно при запуске Files от имени администратора.</value>
+    <value>Из-за ограничений в Windows и WinAppSdk, перетаскивание и перетаскивание не доступно при запуске файлов как администратора. Если вы хотите использовать перетаскивание, Вы можете обойти это ограничение, открыв контроль учетной записи пользователя из меню Пуск и выбрав третий уровень и перезапустив Windows. В противном случае вы можете продолжать использовать файлы без перетаскивания.</value>
   </data>
   <data name="SettingsLeaveAppRunning" xml:space="preserve">
     <value>Оставить приложение в фоновом режиме при закрытии окна</value>
@@ -3665,13 +3659,13 @@
     <value>Где были файлы?</value>
   </data>
   <data name="QuestionsAndDiscussions" xml:space="preserve">
-    <value>Questions &amp; discussions</value>
+    <value>Вопросы и обсуждение</value>
   </data>
   <data name="TilesViewSizeInfo" xml:space="preserve">
-    <value>Additional sizes are not yet available for the Tiles View.</value>
+    <value>Доп. параметры недоступны для плиточного макета.</value>
   </data>
   <data name="Compact" xml:space="preserve">
-    <value>Compact</value>
+    <value>Компактный</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Small" xml:space="preserve">
@@ -3683,23 +3677,23 @@
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+" xml:space="preserve">
-    <value>Medium +</value>
+    <value>Средний +</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium++" xml:space="preserve">
-    <value>Medium ++</value>
+    <value>Средний ++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+++" xml:space="preserve">
-    <value>Medium +++</value>
+    <value>Средний +++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium++++" xml:space="preserve">
-    <value>Medium ++++</value>
+    <value>Средний ++++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+++++" xml:space="preserve">
-    <value>Medium +++++</value>
+    <value>Средний +++++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large" xml:space="preserve">
@@ -3707,19 +3701,99 @@
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large+" xml:space="preserve">
-    <value>Large +</value>
+    <value>Большой +</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large++" xml:space="preserve">
-    <value>Large ++</value>
+    <value>Большой ++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large+++" xml:space="preserve">
-    <value>Large +++</value>
+    <value>Большой +++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="ExtraLarge" xml:space="preserve">
-    <value>Extra large</value>
+    <value>Огромный</value>
     <comment>Used to describe layout sizes</comment>
+  </data>
+  <data name="DetailsView" xml:space="preserve">
+    <value>Подробный вид</value>
+  </data>
+  <data name="LayoutType" xml:space="preserve">
+    <value>Тип макета</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Действия</value>
+  </data>
+  <data name="Commands" xml:space="preserve">
+    <value>Команды</value>
+  </data>
+  <data name="AddCommand" xml:space="preserve">
+    <value>Добавить команду</value>
+  </data>
+  <data name="RestoreDefaults" xml:space="preserve">
+    <value>Восстановить по умолчанию</value>
+  </data>
+  <data name="ChooseAnAction" xml:space="preserve">
+    <value>Выберите действие</value>
+  </data>
+  <data name="RestoreDefaultKeybindingsConfirmation" xml:space="preserve">
+    <value>Вы уверены, что хотите восстановить назначения клавиш по умолчанию? Это действие не может быть отменено.</value>
+  </data>
+  <data name="KeybindingAlreadyUsedNotification" xml:space="preserve">
+    <value>Эта клавиша уже используется, выберите другую клавишу для продолжения.</value>
+  </data>
+  <data name="Customized" xml:space="preserve">
+    <value>Настроенный</value>
+  </data>
+  <data name="AdaptiveLayoutDisabledNotification" xml:space="preserve">
+    <value>Адаптивный макет недоступен при синхронизации настроек, макет по умолчанию был изменен на Подробный.</value>
+  </data>
+  <data name="BackgroundImage" xml:space="preserve">
+    <value>Фоновое изображение</value>
+  </data>
+  <data name="Bottom" xml:space="preserve">
+    <value>Снизу</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Center" xml:space="preserve">
+    <value>По центру</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Fill" xml:space="preserve">
+    <value>Заполнение</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="HorizontalAlignment" xml:space="preserve">
+    <value>Горизонтальное выравнивание</value>
+  </data>
+  <data name="ImageFit" xml:space="preserve">
+    <value>Изображение</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>Влево</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Opacity" xml:space="preserve">
+    <value>Прозрачность</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>Вправо</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Top" xml:space="preserve">
+    <value>Сверху</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Uniform" xml:space="preserve">
+    <value>Равномерно</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="UniformToFill" xml:space="preserve">
+    <value>Равномерно заполнить</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="VerticalAlignment" xml:space="preserve">
+    <value>Вертикальное выравнивание</value>
   </data>
 </root>

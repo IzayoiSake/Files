@@ -5,7 +5,7 @@ using Windows.ApplicationModel.DataTransfer;
 
 namespace Files.App.Actions
 {
-	internal class CopyPathAction : IAction
+	internal sealed class CopyPathAction : IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -29,7 +29,7 @@ namespace Files.App.Actions
 			context = Ioc.Default.GetRequiredService<IContentPageContext>();
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			if (context.ShellPage?.SlimContentPage is not null)
 			{

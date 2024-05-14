@@ -3,11 +3,11 @@
 
 namespace Files.App.Utils.Storage
 {
-	public class StorageHistoryWrapper : IDisposable
+	public sealed class StorageHistoryWrapper : IDisposable
 	{
 		private int index = -1;
 
-		private List<IStorageHistory> histories = new();
+		private List<IStorageHistory> histories = [];
 
 		public bool CanRedo() => index + 1 < histories.Count;
 		public bool CanUndo() => index >= 0 && histories.Count > 0;

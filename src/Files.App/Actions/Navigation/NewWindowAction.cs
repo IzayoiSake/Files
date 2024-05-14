@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class NewWindowAction : IAction
+	internal sealed class NewWindowAction : IAction
 	{
 		public string Label
 			=> "NewWindow".GetLocalizedResource();
@@ -21,7 +21,7 @@ namespace Files.App.Actions
 		{
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			return NavigationHelpers.LaunchNewWindowAsync();
 		}

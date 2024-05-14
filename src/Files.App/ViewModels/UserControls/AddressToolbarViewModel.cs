@@ -12,10 +12,11 @@ using System.IO;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Text;
+using FocusManager = Microsoft.UI.Xaml.Input.FocusManager;
 
 namespace Files.App.ViewModels.UserControls
 {
-	public class AddressToolbarViewModel : ObservableObject, IAddressToolbarViewModel, IDisposable
+	public sealed class AddressToolbarViewModel : ObservableObject, IAddressToolbarViewModel, IDisposable
 	{
 		private const int MAX_SUGGESTIONS = 10;
 
@@ -59,7 +60,7 @@ namespace Files.App.ViewModels.UserControls
 
 		public event EventHandler? RefreshWidgetsRequested;
 
-		public ObservableCollection<PathBoxItem> PathComponents { get; } = new();
+		public ObservableCollection<PathBoxItem> PathComponents { get; } = [];
 
 		private bool _isCommandPaletteOpen;
 		public bool IsCommandPaletteOpen
@@ -168,7 +169,7 @@ namespace Files.App.ViewModels.UserControls
 			}
 		}
 
-		public ObservableCollection<NavigationBarSuggestionItem> NavigationBarSuggestions = new();
+		public ObservableCollection<NavigationBarSuggestionItem> NavigationBarSuggestions = [];
 
 		private CurrentInstanceViewModel instanceViewModel;
 		public CurrentInstanceViewModel InstanceViewModel
@@ -410,7 +411,8 @@ namespace Files.App.ViewModels.UserControls
 			{
 				e.DragUIOverride.IsCaptionVisible = true;
 				e.DragUIOverride.Caption = string.Format("MoveToFolderCaptionText".GetLocalizedResource(), pathBoxItem.Title);
-				e.AcceptedOperation = DataPackageOperation.Move;
+				// Some applications such as Edge can't raise the drop event by the Move flag (#14008), so we set the Copy flag as well.
+				e.AcceptedOperation = DataPackageOperation.Move | DataPackageOperation.Copy;
 			}
 
 			deferral.Complete();
@@ -480,6 +482,12 @@ namespace Files.App.ViewModels.UserControls
 		public void PathboxItemFlyout_Opened(object sender, object e)
 		{
 			ToolbarFlyoutOpened?.Invoke(this, new ToolbarFlyoutOpenedEventArgs() { OpenedFlyout = (MenuFlyout)sender });
+		}
+
+		public void CurrentPathSetTextBox_TextChanged(object sender, TextChangedEventArgs args)
+		{
+			if (sender is TextBox textBox)
+				PathBoxQuerySubmitted?.Invoke(this, new ToolbarQuerySubmittedEventArgs() { QueryText = textBox.Text });
 		}
 
 		public void VisiblePath_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -572,11 +580,12 @@ namespace Files.App.ViewModels.UserControls
 			}
 			else
 			{
-				SearchBox.Query = string.Empty;
 				IsSearchBoxVisible = false;
 
 				if (doFocus)
 				{
+					SearchBox.Query = string.Empty;
+
 					var page = Ioc.Default.GetRequiredService<IContentPageContext>().ShellPage?.SlimContentPage;
 
 					if (page is BaseGroupableLayoutPage svb && svb.IsLoaded)
@@ -793,7 +802,7 @@ namespace Files.App.ViewModels.UserControls
 
 		private void SavePathToHistory(string path)
 		{
-			var pathHistoryList = UserSettingsService.GeneralSettingsService.PathHistoryList?.ToList() ?? new List<string>();
+			var pathHistoryList = UserSettingsService.GeneralSettingsService.PathHistoryList?.ToList() ?? [];
 			pathHistoryList.Remove(path);
 			pathHistoryList.Insert(0, path);
 
@@ -830,14 +839,15 @@ namespace Files.App.ViewModels.UserControls
 					{
 						IsCommandPaletteOpen = true;
 						var searchText = sender.Text.Substring(1).Trim();
-						suggestions = Commands.Where(command => command.IsExecutable &&
-							(command.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase)
-							|| command.Code.ToString().Contains(searchText, StringComparison.OrdinalIgnoreCase)))
+						suggestions = Commands.Where(command =>
+							command.IsExecutable &&
+							(command.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+							command.Code.ToString().Contains(searchText, StringComparison.OrdinalIgnoreCase)))
 						.Select(command => new NavigationBarSuggestionItem()
 						{
 							Text = ">" + command.Code,
 							PrimaryDisplay = command.Description,
-							SupplementaryDisplay = command.HotKeyText,
+							HotKeys = command.HotKeys,
 							SearchText = searchText,
 						}).ToList();
 					}
@@ -914,9 +924,8 @@ namespace Files.App.ViewModels.UserControls
 							{
 								NavigationBarSuggestions[index].Text = suggestions[index].Text;
 								NavigationBarSuggestions[index].PrimaryDisplay = suggestions[index].PrimaryDisplay;
-								NavigationBarSuggestions[index].SecondaryDisplay = suggestions[index].SecondaryDisplay;
-								NavigationBarSuggestions[index].SupplementaryDisplay = suggestions[index].SupplementaryDisplay;
 								NavigationBarSuggestions[index].SearchText = suggestions[index].SearchText;
+								NavigationBarSuggestions[index].HotKeys = suggestions[index].HotKeys;
 							}
 							else
 							{
@@ -936,7 +945,10 @@ namespace Files.App.ViewModels.UserControls
 						for (int index = 0; index < suggestions.Count; index++)
 						{
 							if (NavigationBarSuggestions.Count > index && NavigationBarSuggestions[index].PrimaryDisplay == suggestions[index].PrimaryDisplay)
+							{
 								NavigationBarSuggestions[index].SearchText = suggestions[index].SearchText;
+								NavigationBarSuggestions[index].HotKeys = suggestions[index].HotKeys;
+							}
 							else
 								NavigationBarSuggestions.Insert(index, suggestions[index]);
 						}
@@ -945,11 +957,13 @@ namespace Files.App.ViewModels.UserControls
 					return true;
 				}))
 				{
-					NavigationBarSuggestions.Clear();
-					NavigationBarSuggestions.Add(new NavigationBarSuggestionItem()
-					{
-						Text = shellpage.FilesystemViewModel.WorkingDirectory,
-						PrimaryDisplay = "NavigationToolbarVisiblePathNoResults".GetLocalizedResource()
+					SafetyExtensions.IgnoreExceptions(() => {
+						NavigationBarSuggestions.Clear();
+						NavigationBarSuggestions.Add(new NavigationBarSuggestionItem()
+						{
+							Text = shellpage.FilesystemViewModel.WorkingDirectory,
+							PrimaryDisplay = "NavigationToolbarVisiblePathNoResults".GetLocalizedResource()
+						});
 					});
 				}
 			}

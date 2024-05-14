@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class ClearSelectionAction : IAction
+	internal sealed class ClearSelectionAction : IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -43,7 +43,7 @@ namespace Files.App.Actions
 			context = Ioc.Default.GetRequiredService<IContentPageContext>();
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			context.ShellPage?.SlimContentPage?.ItemManipulationModel?.ClearSelection();
 

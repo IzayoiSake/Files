@@ -49,7 +49,7 @@ namespace Files.App.ViewModels.Previews
 		/// <returns>The task to run</returns>
 		public virtual async Task LoadAsync()
 		{
-			List<FileProperty> detailsFull = new();
+			List<FileProperty> detailsFull = [];
 
 			if (Item.ItemFile is null)
 			{
@@ -95,7 +95,7 @@ namespace Files.App.ViewModels.Previews
 			else
 				FileImage ??= await MainWindow.Instance.DispatcherQueue.EnqueueOrInvokeAsync(() => new BitmapImage());
 
-			return new List<FileProperty>();
+			return [];
 		}
 
 		/// <summary>
@@ -129,7 +129,7 @@ namespace Files.App.ViewModels.Previews
 			return list.Where(i => i.ValueText is not null).ToList();
 		}
 
-		private class DetailsOnlyPreviewModel : BasePreviewModel
+		private sealed class DetailsOnlyPreviewModel : BasePreviewModel
 		{
 			public DetailsOnlyPreviewModel(ListedItem item) : base(item) { }
 

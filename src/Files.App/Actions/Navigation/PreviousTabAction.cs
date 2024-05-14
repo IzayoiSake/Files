@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class PreviousTabAction : ObservableObject, IAction
+	internal sealed class PreviousTabAction : ObservableObject, IAction
 	{
 		private readonly IMultitaskingContext multitaskingContext;
 
@@ -26,7 +26,7 @@ namespace Files.App.Actions
 			multitaskingContext.PropertyChanged += MultitaskingContext_PropertyChanged;
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			if (App.AppModel.TabStripSelectedIndex is 0)
 				App.AppModel.TabStripSelectedIndex = multitaskingContext.TabCount - 1;

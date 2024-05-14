@@ -1,7 +1,10 @@
 // Copyright (c) 2024 Files Community
 // Licensed under the MIT License. See the LICENSE.
 
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using System.Windows.Input;
 using Windows.System;
@@ -12,21 +15,21 @@ namespace Files.App.ViewModels
 	/// <summary>
 	/// Represents ViewModel of <see cref="MainPage"/>.
 	/// </summary>
-	public class MainPageViewModel : ObservableObject
+	public sealed class MainPageViewModel : ObservableObject
 	{
 		// Dependency injections
 
 		private IAppearanceSettingsService AppearanceSettingsService { get; } = Ioc.Default.GetRequiredService<IAppearanceSettingsService>();
-		private NetworkDrivesViewModel NetworkDrivesViewModel { get; } = Ioc.Default.GetRequiredService<NetworkDrivesViewModel>();
+		private INetworkDrivesService NetworkDrivesService { get; } = Ioc.Default.GetRequiredService<INetworkDrivesService>();
 		private IUserSettingsService UserSettingsService { get; } = Ioc.Default.GetRequiredService<IUserSettingsService>();
 		private IResourcesService ResourcesService { get; } = Ioc.Default.GetRequiredService<IResourcesService>();
 		private DrivesViewModel DrivesViewModel { get; } = Ioc.Default.GetRequiredService<DrivesViewModel>();
 
 		// Properties
 
-		public static ObservableCollection<TabBarItem> AppInstances { get; private set; } = new();
+		public static ObservableCollection<TabBarItem> AppInstances { get; private set; } = [];
 
-		public List<ITabBar> MultitaskingControls { get; } = new();
+		public List<ITabBar> MultitaskingControls { get; } = [];
 
 		public ITabBar? MultitaskingControl { get; set; }
 
@@ -58,6 +61,24 @@ namespace Files.App.ViewModels
 			set => SetProperty(ref shouldPreviewPaneBeDisplayed, value);
 		}
 
+		public Stretch AppThemeBackgroundImageFit
+			=> AppearanceSettingsService.AppThemeBackgroundImageFit;
+
+		public float AppThemeBackgroundImageOpacity
+			=> AppearanceSettingsService.AppThemeBackgroundImageOpacity;
+
+		public ImageSource? AppThemeBackgroundImageSource =>
+			string.IsNullOrEmpty(AppearanceSettingsService.AppThemeBackgroundImageSource)
+				? null
+				: new BitmapImage(new Uri(AppearanceSettingsService.AppThemeBackgroundImageSource, UriKind.RelativeOrAbsolute));
+
+		public VerticalAlignment AppThemeBackgroundImageVerticalAlignment
+			=> AppearanceSettingsService.AppThemeBackgroundImageVerticalAlignment;
+
+		public HorizontalAlignment AppThemeBackgroundImageHorizontalAlignment
+			=> AppearanceSettingsService.AppThemeBackgroundImageHorizontalAlignment;
+
+
 		// Commands
 
 		public ICommand NavigateToNumberedTabKeyboardAcceleratorCommand { get; }
@@ -67,6 +88,28 @@ namespace Files.App.ViewModels
 		public MainPageViewModel()
 		{
 			NavigateToNumberedTabKeyboardAcceleratorCommand = new RelayCommand<KeyboardAcceleratorInvokedEventArgs>(ExecuteNavigateToNumberedTabKeyboardAcceleratorCommand);
+
+			AppearanceSettingsService.PropertyChanged += (s, e) =>
+			{
+				switch (e.PropertyName)
+				{
+					case nameof(AppearanceSettingsService.AppThemeBackgroundImageSource):
+						OnPropertyChanged(nameof(AppThemeBackgroundImageSource));
+						break;
+					case nameof(AppearanceSettingsService.AppThemeBackgroundImageOpacity):
+						OnPropertyChanged(nameof(AppThemeBackgroundImageOpacity));
+						break;
+					case nameof(AppearanceSettingsService.AppThemeBackgroundImageFit):
+						OnPropertyChanged(nameof(AppThemeBackgroundImageFit));
+						break;
+					case nameof(AppearanceSettingsService.AppThemeBackgroundImageVerticalAlignment):
+						OnPropertyChanged(nameof(AppThemeBackgroundImageVerticalAlignment));
+						break;
+					case nameof(AppearanceSettingsService.AppThemeBackgroundImageHorizontalAlignment):
+						OnPropertyChanged(nameof(AppThemeBackgroundImageHorizontalAlignment));
+						break;
+				}
+			};
 		}
 
 		// Methods
@@ -75,10 +118,6 @@ namespace Files.App.ViewModels
 		{
 			if (e.NavigationMode == NavigationMode.Back)
 				return;
-
-			// Initialize the static theme helper to capture a reference to this window
-			// to handle theme changes without restarting the app
-			var isInitialized = ThemeHelper.Initialize();
 
 			var parameter = e.Parameter;
 			var ignoreStartupSettings = false;
@@ -169,17 +208,14 @@ namespace Files.App.ViewModels
 								await NavigationHelpers.AddNewTabByPathAsync(typeof(PaneHolderPage), path, true);
 						}
 						else if (UserSettingsService.GeneralSettingsService.ContinueLastSessionOnStartUp &&
-							UserSettingsService.GeneralSettingsService.LastSessionTabList is not null)
+							UserSettingsService.GeneralSettingsService.LastSessionTabList is not null &&
+							AppInstances.Count == 0)
 						{
 							foreach (string tabArgsString in UserSettingsService.GeneralSettingsService.LastSessionTabList)
 							{
 								var tabArgs = CustomTabViewItemParameter.Deserialize(tabArgsString);
 								await NavigationHelpers.AddNewTabByParamAsync(tabArgs.InitialPageType, tabArgs.NavigationParameter);
 							}
-
-							var defaultArg = new CustomTabViewItemParameter() { InitialPageType = typeof(PaneHolderPage), NavigationParameter = "Home" };
-
-							UserSettingsService.GeneralSettingsService.LastSessionTabList = new List<string> { defaultArg.Serialize() };
 						}
 					}
 					catch { }
@@ -191,26 +227,14 @@ namespace Files.App.ViewModels
 					await NavigationHelpers.AddNewTabByParamAsync(typeof(PaneHolderPage), paneArgs);
 				else if (parameter is CustomTabViewItemParameter tabArgs)
 					await NavigationHelpers.AddNewTabByParamAsync(tabArgs.InitialPageType, tabArgs.NavigationParameter);
-				else if (parameter is List<CustomTabViewItemParameter> tabArgsList)
-				{
-					foreach (CustomTabViewItemParameter tabArgItem in tabArgsList)
-					{
-						await NavigationHelpers.AddNewTabByParamAsync(tabArgItem.InitialPageType, tabArgItem.NavigationParameter);
-					}
-				}
-				else
-					await NavigationHelpers.AddNewTabAsync();
 			}
 
-			if (isInitialized)
-			{
-				// Load the app theme resources
-				ResourcesService.LoadAppResources(AppearanceSettingsService);
+			// Load the app theme resources
+			ResourcesService.LoadAppResources(AppearanceSettingsService);
 
-				await Task.WhenAll(
-					DrivesViewModel.UpdateDrivesAsync(),
-					NetworkDrivesViewModel.UpdateDrivesAsync());
-			}
+			await Task.WhenAll(
+				DrivesViewModel.UpdateDrivesAsync(),
+				NetworkDrivesService.UpdateDrivesAsync());
 		}
 
 		// Command methods

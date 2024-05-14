@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class CopyItemAction : ObservableObject, IAction
+	internal sealed class CopyItemAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -29,7 +29,7 @@ namespace Files.App.Actions
 			context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			if (context.ShellPage is not null)
 				return UIFilesystemHelpers.CopyItemAsync(context.ShellPage);

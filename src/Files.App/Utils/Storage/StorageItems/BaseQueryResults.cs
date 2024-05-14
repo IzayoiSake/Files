@@ -37,7 +37,7 @@ namespace Files.App.Utils.Storage
 				var query = string.Join(' ', Options.ApplicationSearchFilter, Options.UserSearchFilter).Trim();
 				if (!string.IsNullOrEmpty(query))
 				{
-					var spaceSplit = Regex.Split(query, "(?<=^[^\"]*(?:\"[^\"]*\"[^\"]*)*) (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+					var spaceSplit = RegexHelpers.SpaceSplit().Split(query);
 					foreach (var split in spaceSplit)
 					{
 						var colonSplit = split.Split(':');
@@ -89,7 +89,7 @@ namespace Files.App.Utils.Storage
 				var query = string.Join(' ', Options.ApplicationSearchFilter, Options.UserSearchFilter).Trim();
 				if (!string.IsNullOrEmpty(query))
 				{
-					var spaceSplit = Regex.Split(query, "(?<=^[^\"]*(?:\"[^\"]*\"[^\"]*)*) (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+					var spaceSplit = RegexHelpers.SpaceSplit().Split(query);
 					foreach (var split in spaceSplit)
 					{
 						var colonSplit = split.Split(':');
@@ -141,7 +141,7 @@ namespace Files.App.Utils.Storage
 				var query = string.Join(' ', Options.ApplicationSearchFilter, Options.UserSearchFilter).Trim();
 				if (!string.IsNullOrEmpty(query))
 				{
-					var spaceSplit = Regex.Split(query, "(?<=^[^\"]*(?:\"[^\"]*\"[^\"]*)*) (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+					var spaceSplit = RegexHelpers.SpaceSplit().Split(query);
 					foreach (var split in spaceSplit)
 					{
 						var colonSplit = split.Split(':');
@@ -165,7 +165,7 @@ namespace Files.App.Utils.Storage
 		public virtual StorageFolderQueryResult ToStorageFolderQueryResult() => null;
 	}
 
-	public class SystemStorageItemQueryResult : BaseStorageItemQueryResult
+	public sealed class SystemStorageItemQueryResult : BaseStorageItemQueryResult
 	{
 		private StorageItemQueryResult StorageItemQueryResult { get; }
 
@@ -195,7 +195,7 @@ namespace Files.App.Utils.Storage
 		public override StorageItemQueryResult ToStorageItemQueryResult() => StorageItemQueryResult;
 	}
 
-	public class SystemStorageFileQueryResult : BaseStorageFileQueryResult
+	public sealed class SystemStorageFileQueryResult : BaseStorageFileQueryResult
 	{
 		private StorageFileQueryResult StorageFileQueryResult { get; }
 
@@ -225,7 +225,7 @@ namespace Files.App.Utils.Storage
 		public override StorageFileQueryResult ToStorageFileQueryResult() => StorageFileQueryResult;
 	}
 
-	public class SystemStorageFolderQueryResult : BaseStorageFolderQueryResult
+	public sealed class SystemStorageFolderQueryResult : BaseStorageFolderQueryResult
 	{
 		private StorageFolderQueryResult StorageFolderQueryResult { get; }
 

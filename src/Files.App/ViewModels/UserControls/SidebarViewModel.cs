@@ -22,14 +22,13 @@ using Files.Core.Storage.Extensions;
 
 namespace Files.App.ViewModels.UserControls
 {
-	public class SidebarViewModel : ObservableObject, IDisposable, ISidebarViewModel
+	public sealed class SidebarViewModel : ObservableObject, IDisposable, ISidebarViewModel
 	{
+		private INetworkDrivesService NetworkDrivesService { get; } = Ioc.Default.GetRequiredService<INetworkDrivesService>();
 		private IUserSettingsService UserSettingsService { get; } = Ioc.Default.GetRequiredService<IUserSettingsService>();
 		private ICommandManager Commands { get; } = Ioc.Default.GetRequiredService<ICommandManager>();
 		private readonly DrivesViewModel drivesViewModel = Ioc.Default.GetRequiredService<DrivesViewModel>();
 		private readonly IFileTagsService fileTagsService;
-
-		private readonly NetworkDrivesViewModel networkDrivesViewModel = Ioc.Default.GetRequiredService<NetworkDrivesViewModel>();
 
 		private IPaneHolder paneHolder;
 		public IPaneHolder PaneHolder
@@ -74,8 +73,7 @@ namespace Files.App.ViewModels.UserControls
 		public static event EventHandler<INavigationControlItem?>? RightClickedItemChanged;
 
 		private readonly SectionType[] SectionOrder =
-			new SectionType[]
-			{
+			[
 				SectionType.Home,
 				SectionType.Pinned,
 				SectionType.Library,
@@ -84,7 +82,7 @@ namespace Files.App.ViewModels.UserControls
 				SectionType.Network,
 				SectionType.WSL,
 				SectionType.FileTag
-			};
+			];
 
 		public bool IsSidebarCompactSize
 			=> SidebarDisplayMode == SidebarDisplayMode.Compact || SidebarDisplayMode == SidebarDisplayMode.Minimal;
@@ -113,8 +111,7 @@ namespace Files.App.ViewModels.UserControls
 			}
 
 			item = filteredItems.FirstOrDefault(x => x.Path.Equals(value, StringComparison.OrdinalIgnoreCase));
-			item ??= filteredItems.FirstOrDefault(x => x.Path.Equals(value + "\\", StringComparison.OrdinalIgnoreCase));
-			item ??= filteredItems.Where(x => value.StartsWith(x.Path, StringComparison.OrdinalIgnoreCase)).MaxBy(x => x.Path.Length);
+			item ??= filteredItems.Where(x => value.StartsWith(x.Path + "\\", StringComparison.OrdinalIgnoreCase)).MaxBy(x => x.Path.Length);
 			item ??= filteredItems.FirstOrDefault(x => x.Path.Equals(Path.GetPathRoot(value), StringComparison.OrdinalIgnoreCase));
 
 			if (item is null && value == "Home")
@@ -236,7 +233,7 @@ namespace Files.App.ViewModels.UserControls
 			dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
 			fileTagsService = Ioc.Default.GetRequiredService<IFileTagsService>();
 
-			sidebarItems = new BulkConcurrentObservableCollection<INavigationControlItem>();
+			sidebarItems = [];
 			UserSettingsService.OnSettingChangedEvent += UserSettingsService_OnSettingChangedEvent;
 			CreateItemHomeAsync();
 
@@ -252,7 +249,7 @@ namespace Files.App.ViewModels.UserControls
 			App.LibraryManager.DataChanged += Manager_DataChanged;
 			drivesViewModel.Drives.CollectionChanged += (x, args) => Manager_DataChanged(SectionType.Drives, args);
 			CloudDrivesManager.DataChanged += Manager_DataChanged;
-			networkDrivesViewModel.Drives.CollectionChanged += (x, args) => Manager_DataChanged(SectionType.Network, args);
+			NetworkDrivesService.Drives.CollectionChanged += (x, args) => Manager_DataChanged(SectionType.Network, args);
 			WSLDistroManager.DataChanged += Manager_DataChanged;
 			App.FileTagsManager.DataChanged += Manager_DataChanged;
 			SidebarDisplayMode = UserSettingsService.AppearanceSettingsService.IsSidebarOpen ? SidebarDisplayMode.Expanded : SidebarDisplayMode.Compact;
@@ -269,7 +266,7 @@ namespace Files.App.ViewModels.UserControls
 			ReorderItemsCommand = new AsyncRelayCommand(ReorderItemsAsync);
 		}
 
-		private Task CreateItemHomeAsync()
+		private Task<LocationItem> CreateItemHomeAsync()
 		{
 			return CreateSectionAsync(SectionType.Home);
 		}
@@ -285,7 +282,7 @@ namespace Files.App.ViewModels.UserControls
 					SectionType.Pinned => App.QuickAccessManager.Model.PinnedFolderItems,
 					SectionType.CloudDrives => CloudDrivesManager.Drives,
 					SectionType.Drives => drivesViewModel.Drives.Cast<DriveItem>().ToList().AsReadOnly(),
-					SectionType.Network => networkDrivesViewModel.Drives.Cast<DriveItem>().ToList().AsReadOnly(),
+					SectionType.Network => NetworkDrivesService.Drives.Cast<DriveItem>().ToList().AsReadOnly(),
 					SectionType.WSL => WSLDistroManager.Distros,
 					SectionType.Library => App.LibraryManager.Libraries,
 					SectionType.FileTag => App.FileTagsManager.FileTags,
@@ -380,7 +377,7 @@ namespace Files.App.ViewModels.UserControls
 				else
 				{
 					string drivePath = drive.Path;
-					IList<string> paths = section.ChildItems.Select(item => item.Path).ToList();
+					var paths = section.ChildItems.Select(item => item.Path).ToList();
 
 					if (!paths.Contains(drivePath))
 					{
@@ -560,7 +557,7 @@ namespace Files.App.ViewModels.UserControls
 				Section = sectionType,
 				MenuOptions = options,
 				SelectsOnInvoked = selectsOnInvoked,
-				ChildItems = new BulkConcurrentObservableCollection<INavigationControlItem>()
+				ChildItems = []
 			};
 		}
 
@@ -580,7 +577,7 @@ namespace Files.App.ViewModels.UserControls
 				{
 					SectionType.CloudDrives when generalSettingsService.ShowCloudDrivesSection => CloudDrivesManager.UpdateDrivesAsync,
 					SectionType.Drives => drivesViewModel.UpdateDrivesAsync,
-					SectionType.Network when generalSettingsService.ShowNetworkDrivesSection => networkDrivesViewModel.UpdateDrivesAsync,
+					SectionType.Network when generalSettingsService.ShowNetworkDrivesSection => NetworkDrivesService.UpdateDrivesAsync,
 					SectionType.WSL when generalSettingsService.ShowWslSection => WSLDistroManager.UpdateDrivesAsync,
 					SectionType.FileTag when generalSettingsService.ShowFileTagsSection => App.FileTagsManager.UpdateFileTagsAsync,
 					SectionType.Library => App.LibraryManager.UpdateLibrariesAsync,
@@ -647,7 +644,7 @@ namespace Files.App.ViewModels.UserControls
 			App.LibraryManager.DataChanged -= Manager_DataChanged;
 			drivesViewModel.Drives.CollectionChanged -= (x, args) => Manager_DataChanged(SectionType.Drives, args);
 			CloudDrivesManager.DataChanged -= Manager_DataChanged;
-			networkDrivesViewModel.Drives.CollectionChanged -= (x, args) => Manager_DataChanged(SectionType.Network, args);
+			NetworkDrivesService.Drives.CollectionChanged -= (x, args) => Manager_DataChanged(SectionType.Network, args);
 			WSLDistroManager.DataChanged -= Manager_DataChanged;
 			App.FileTagsManager.DataChanged -= Manager_DataChanged;
 		}
@@ -1068,7 +1065,7 @@ namespace Files.App.ViewModels.UserControls
 				{
 					Text = "Loading".GetLocalizedResource(),
 					Glyph = "\xE712",
-					Items = new List<ContextMenuFlyoutItemViewModel>(),
+					Items = [],
 					ID = "ItemOverflow",
 					Tag = "ItemOverflow",
 					IsEnabled = false,
@@ -1130,7 +1127,8 @@ namespace Files.App.ViewModels.UserControls
 					if (locationItem.Path.StartsWith(Constants.UserEnvironmentPaths.RecycleBinPath, StringComparison.Ordinal))
 					{
 						captionText = string.Format("MoveToFolderCaptionText".GetLocalizedResource(), locationItem.Text);
-						operationType = DataPackageOperation.Move;
+						// Some applications such as Edge can't raise the drop event by the Move flag (#14008), so we set the Copy flag as well.
+						operationType = DataPackageOperation.Move | DataPackageOperation.Copy;
 					}
 					else if (rawEvent.Modifiers.HasFlag(DragDropModifiers.Alt) || rawEvent.Modifiers.HasFlag(DragDropModifiers.Control | DragDropModifiers.Shift))
 					{
@@ -1145,7 +1143,8 @@ namespace Files.App.ViewModels.UserControls
 					else if (rawEvent.Modifiers.HasFlag(DragDropModifiers.Shift))
 					{
 						captionText = string.Format("MoveToFolderCaptionText".GetLocalizedResource(), locationItem.Text);
-						operationType = DataPackageOperation.Move;
+						// Some applications such as Edge can't raise the drop event by the Move flag (#14008), so we set the Copy flag as well.
+						operationType = DataPackageOperation.Move | DataPackageOperation.Copy;
 					}
 					else if (storageItems.Any(x => x.Item is ZipStorageFile || x.Item is ZipStorageFolder)
 						|| ZipStorageFolder.IsZipPath(locationItem.Path))
@@ -1156,7 +1155,8 @@ namespace Files.App.ViewModels.UserControls
 					else if (locationItem.IsDefaultLocation || storageItems.AreItemsInSameDrive(locationItem.Path))
 					{
 						captionText = string.Format("MoveToFolderCaptionText".GetLocalizedResource(), locationItem.Text);
-						operationType = DataPackageOperation.Move;
+						// Some applications such as Edge can't raise the drop event by the Move flag (#14008), so we set the Copy flag as well.
+						operationType = DataPackageOperation.Move | DataPackageOperation.Copy;
 					}
 					else
 					{
@@ -1204,12 +1204,14 @@ namespace Files.App.ViewModels.UserControls
 				else if (args.RawEvent.Modifiers.HasFlag(DragDropModifiers.Shift))
 				{
 					captionText = string.Format("MoveToFolderCaptionText".GetLocalizedResource(), driveItem.Text);
-					operationType = DataPackageOperation.Move;
+					// Some applications such as Edge can't raise the drop event by the Move flag (#14008), so we set the Copy flag as well.
+					operationType = DataPackageOperation.Move | DataPackageOperation.Copy;
 				}
 				else if (storageItems.AreItemsInSameDrive(driveItem.Path))
 				{
 					captionText = string.Format("MoveToFolderCaptionText".GetLocalizedResource(), driveItem.Text);
-					operationType = DataPackageOperation.Move;
+					// Some applications such as Edge can't raise the drop event by the Move flag (#14008), so we set the Copy flag as well.
+					operationType = DataPackageOperation.Move | DataPackageOperation.Copy;
 				}
 				else
 				{
@@ -1272,7 +1274,7 @@ namespace Files.App.ViewModels.UserControls
 			}
 		}
 
-		private Task HandleDriveItemDroppedAsync(DriveItem driveItem, ItemDroppedEventArgs args)
+		private Task<ReturnResult> HandleDriveItemDroppedAsync(DriveItem driveItem, ItemDroppedEventArgs args)
 		{
 			return FilesystemHelpers.PerformOperationTypeAsync(args.RawEvent.AcceptedOperation, args.RawEvent.DataView, driveItem.Path, false, true);
 		}
@@ -1286,7 +1288,7 @@ namespace Files.App.ViewModels.UserControls
 				{
 					ItemPath = item.Path,
 					FileFRN = await FileTagsHelper.GetFileFRN(item.Item),
-					FileTags = new[] { fileTagItem.FileTag.Uid }
+					FileTags = [fileTagItem.FileTag.Uid]
 				};
 			}
 		}

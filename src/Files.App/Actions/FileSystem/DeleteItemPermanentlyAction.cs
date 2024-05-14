@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class DeleteItemPermanentlyAction : BaseDeleteAction, IAction
+	internal sealed class DeleteItemPermanentlyAction : BaseDeleteAction, IAction
 	{
 		public string Label
 			=> "DeletePermanently".GetLocalizedResource();
@@ -14,7 +14,7 @@ namespace Files.App.Actions
 		public HotKey HotKey
 			=> new(Keys.Delete, KeyModifiers.Shift);
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			return DeleteItemsAsync(true);
 		}

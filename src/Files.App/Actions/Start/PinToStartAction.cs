@@ -6,7 +6,7 @@ using Files.Core.Storage;
 
 namespace Files.App.Actions
 {
-	internal class PinToStartAction : IAction
+	internal sealed class PinToStartAction : IAction
 	{
 		private IStorageService StorageService { get; } = Ioc.Default.GetRequiredService<IStorageService>();
 
@@ -31,7 +31,7 @@ namespace Files.App.Actions
 			context = Ioc.Default.GetRequiredService<IContentPageContext>();
 		}
 
-		public async Task ExecuteAsync()
+		public async Task ExecuteAsync(object? parameter = null)
 		{
 			if (context.SelectedItems.Count > 0 && context.ShellPage?.SlimContentPage?.SelectedItems is not null)
 			{

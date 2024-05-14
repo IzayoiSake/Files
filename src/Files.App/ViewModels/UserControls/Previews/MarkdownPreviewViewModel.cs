@@ -5,7 +5,7 @@ using Files.App.ViewModels.Properties;
 
 namespace Files.App.ViewModels.Previews
 {
-	public class MarkdownPreviewViewModel : BasePreviewModel
+	public sealed class MarkdownPreviewViewModel : BasePreviewModel
 	{
 		private string textValue;
 		public string TextValue
@@ -27,7 +27,7 @@ namespace Files.App.ViewModels.Previews
 			var text = await ReadFileAsTextAsync(Item.ItemFile);
 			TextValue = text.Left(Constants.PreviewPane.TextCharacterLimit);
 
-			return new List<FileProperty>();
+			return [];
 		}
 	}
 }

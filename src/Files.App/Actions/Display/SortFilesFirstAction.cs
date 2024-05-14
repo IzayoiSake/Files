@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class SortFilesFirstAction : ObservableObject, IToggleAction
+	internal sealed class SortFilesFirstAction : ObservableObject, IToggleAction
 	{
 		private readonly IDisplayPageContext context;
 
@@ -23,7 +23,7 @@ namespace Files.App.Actions
 			context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			context.SortFilesFirst = true;
 			context.SortDirectoriesAlongsideFiles = false;

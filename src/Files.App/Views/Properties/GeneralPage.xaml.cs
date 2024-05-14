@@ -6,15 +6,14 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using System.IO;
-using System.Text.RegularExpressions;
 using Windows.Storage;
+using Windows.Win32;
+using Files.App.Helpers;
 
 namespace Files.App.Views.Properties
 {
 	public sealed partial class GeneralPage : BasePropertiesPage
 	{
-		private readonly Regex letterRegex = new(@"\s*\(\w:\)$");
-
 		private readonly DispatcherQueueTimer _updateDateDisplayTimer;
 		public GeneralPage()
 		{
@@ -28,7 +27,7 @@ namespace Files.App.Views.Properties
 
 		private void ItemFileName_GettingFocus(UIElement _, GettingFocusEventArgs e)
 		{
-			ItemFileName.Text = letterRegex.Replace(ItemFileName.Text, string.Empty);
+			ItemFileName.Text = RegexHelpers.DriveLetter().Replace(ItemFileName.Text, string.Empty);
 		}
 
 		private void ItemFileName_LosingFocus(UIElement _, LosingFocusEventArgs e)
@@ -39,7 +38,7 @@ namespace Files.App.Views.Properties
 				return;
 			}
 
-			var match = letterRegex.Match(ViewModel.OriginalItemName);
+			var match = RegexHelpers.DriveLetter().Match(ViewModel.OriginalItemName);
 			if (match.Success)
 				ItemFileName.Text += match.Value;
 		}
@@ -85,7 +84,7 @@ namespace Files.App.Views.Properties
 				if (!GetNewName(out var newName) || fsVM is null)
 					return false;
 
-				newName = letterRegex.Replace(newName, string.Empty); // Remove "(C:)" from the new label
+				newName = RegexHelpers.DriveLetter().Replace(newName, string.Empty); // Remove "(C:)" from the new label
 
 				if (drive.Type == Data.Items.DriveType.Network)
 					Win32Helper.SetNetworkDriveLabel(drive.DeviceID, newName);
@@ -131,9 +130,16 @@ namespace Files.App.Views.Properties
 				{
 					foreach (var fileOrFolder in fileOrFolders)
 					{
-						await MainWindow.Instance.DispatcherQueue.EnqueueOrInvokeAsync(() =>
-							UIFilesystemHelpers.SetHiddenAttributeItem(fileOrFolder, ViewModel.IsHidden, itemMM)
-						);
+						if (ViewModel.IsHiddenEditedValue is not null)
+						{
+							var isHiddenEditedValue = (bool)ViewModel.IsHiddenEditedValue;
+							await MainWindow.Instance.DispatcherQueue.EnqueueOrInvokeAsync(() =>
+								UIFilesystemHelpers.SetHiddenAttributeItem(fileOrFolder, isHiddenEditedValue, itemMM)
+							);
+							ViewModel.IsHidden = isHiddenEditedValue;
+						}
+
+						ViewModel.IsReadOnly = ViewModel.IsReadOnlyEditedValue;
 
 						if (ViewModel.IsAblumCoverModified)
 						{
@@ -153,15 +159,15 @@ namespace Files.App.Views.Properties
 			{
 				// Handle the visibility attribute for a single file
 				var itemMM = AppInstance?.SlimContentPage?.ItemManipulationModel;
-				if (itemMM is not null) // null on homepage
+				if (itemMM is not null && ViewModel.IsHiddenEditedValue is not null) // null on homepage
 				{
 					await MainWindow.Instance.DispatcherQueue.EnqueueOrInvokeAsync(() =>
-						UIFilesystemHelpers.SetHiddenAttributeItem(item, ViewModel.IsHidden, itemMM)
+						UIFilesystemHelpers.SetHiddenAttributeItem(item, (bool)ViewModel.IsHiddenEditedValue, itemMM)
 					);
 				}
 
 				if (ViewModel.IsUnblockFileSelected)
-					NativeFileOperationsHelper.DeleteFileFromApp($"{item.ItemPath}:Zone.Identifier");
+					PInvoke.DeleteFileFromApp($"{item.ItemPath}:Zone.Identifier");
 
 				if (ViewModel.IsAblumCoverModified)
 				{

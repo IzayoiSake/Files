@@ -11,7 +11,7 @@ using Windows.Storage.Streams;
 
 namespace Files.App.ViewModels.Previews
 {
-	public class PDFPreviewViewModel : BasePreviewModel
+	public sealed class PDFPreviewViewModel : BasePreviewModel
 	{
 		private Visibility loadingBarVisibility;
 		public Visibility LoadingBarVisibility
@@ -28,7 +28,7 @@ namespace Files.App.ViewModels.Previews
 			set => SetProperty(ref pageCount, value);
 		}
 
-		public ObservableCollection<PageViewModel> Pages { get; } = new();
+		public ObservableCollection<PageViewModel> Pages { get; } = [];
 
 		public PDFPreviewViewModel(ListedItem item)
 			: base(item)

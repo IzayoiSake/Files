@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class NewTabAction : IAction
+	internal sealed class NewTabAction : IAction
 	{
 		public string Label
 			=> "NewTab".GetLocalizedResource();
@@ -18,7 +18,7 @@ namespace Files.App.Actions
 		{
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			return NavigationHelpers.AddNewTabAsync();
 		}

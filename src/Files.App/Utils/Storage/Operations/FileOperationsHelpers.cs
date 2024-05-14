@@ -16,7 +16,7 @@ using Windows.ApplicationModel.DataTransfer;
 
 namespace Files.App.Utils.Storage
 {
-	public class FileOperationsHelpers
+	public sealed class FileOperationsHelpers
 	{
 		private static readonly Ole32.PROPERTYKEY PKEY_FilePlaceholderStatus = new Ole32.PROPERTYKEY(new Guid("B2F9B9D6-FEC4-4DD5-94D7-8957488C807B"), 2);
 		private const uint PS_CLOUDFILE_PLACEHOLDER = 8;
@@ -31,7 +31,7 @@ namespace Files.App.Utils.Storage
 				var fileList = new System.Collections.Specialized.StringCollection();
 				fileList.AddRange(filesToCopy);
 				MemoryStream dropEffect = new MemoryStream(operation == DataPackageOperation.Copy ?
-					new byte[] { 5, 0, 0, 0 } : new byte[] { 2, 0, 0, 0 });
+					[5, 0, 0, 0] : [2, 0, 0, 0]);
 				var data = new System.Windows.Forms.DataObject();
 				data.SetFileDropList(fileList);
 				data.SetData("Preferred DropEffect", dropEffect);
@@ -580,9 +580,10 @@ namespace Files.App.Utils.Storage
 					{
 						using ShellItem shi = new(fileToCopyPath[i]);
 						using ShellFolder shd = new(Path.GetDirectoryName(copyDestination[i]));
-
-						// Performa copy operation
-						op.QueueCopyOperation(shi, shd, Path.GetFileName(copyDestination[i]));
+						
+						var fileName = GetIncrementalName(overwriteOnCopy, copyDestination[i], fileToCopyPath[i]);
+						// Perform a copy operation
+						op.QueueCopyOperation(shi, shd, fileName);						
 					}))
 					{
 						shellOperationResult.Items.Add(new ShellOperationItemResult()
@@ -661,7 +662,7 @@ namespace Files.App.Utils.Storage
 
 		public static IEnumerable<Win32Process>? CheckFileInUse(string[] fileToCheckPath)
 		{
-			var processes = SafetyExtensions.IgnoreExceptions(() => FileUtils.WhoIsLocking(fileToCheckPath), App.Logger);
+			var processes = SafetyExtensions.IgnoreExceptions(() => Win32Helper.WhoIsLocking(fileToCheckPath), App.Logger);
 
 			if (processes is not null)
 			{
@@ -854,7 +855,7 @@ namespace Files.App.Utils.Storage
 				};
 				if (destination is null)
 				{
-					dbInstance.SetTags(sourcePath, null, null); // remove tag from deleted files
+					dbInstance.SetTags(sourcePath, null, []); // remove tag from deleted files
 				}
 				else
 				{
@@ -862,7 +863,7 @@ namespace Files.App.Utils.Storage
 					{
 						if (operationType == "copy")
 						{
-							var tag = dbInstance.GetTags(sourcePath);
+							var tag = dbInstance.GetTags(sourcePath, null);
 
 							dbInstance.SetTags(destination, FileTagsHelper.GetFileFRN(destination), tag); // copy tag to new files
 							using var si = new ShellItem(destination);
@@ -882,7 +883,7 @@ namespace Files.App.Utils.Storage
 					var tags = dbInstance.GetAllUnderPath(sourcePath).ToList();
 					if (destination is null) // remove tag for items contained in the folder
 					{
-						tags.ForEach(t => dbInstance.SetTags(t.FilePath, null, null));
+						tags.ForEach(t => dbInstance.SetTags(t.FilePath, null, []));
 					}
 					else
 					{
@@ -893,7 +894,7 @@ namespace Files.App.Utils.Storage
 								SafetyExtensions.IgnoreExceptions(() =>
 								{
 									var subPath = t.FilePath.Replace(sourcePath, destination, StringComparison.Ordinal);
-									dbInstance.SetTags(subPath, FileTagsHelper.GetFileFRN(subPath), t.Tags);
+									dbInstance.SetTags(subPath, FileTagsHelper.GetFileFRN(subPath), t.Tags ?? []);
 								}, App.Logger);
 							});
 						}
@@ -916,11 +917,11 @@ namespace Files.App.Utils.Storage
 		public static void WaitForCompletion()
 			=> progressHandler?.WaitForCompletion();
 
-		private class ProgressHandler : Disposable
+		private sealed class ProgressHandler : Disposable
 		{
 			private readonly ManualResetEvent operationsCompletedEvent;
 
-			public class OperationWithProgress
+			public sealed class OperationWithProgress
 			{
 				public double Progress { get; set; }
 				public bool Canceled { get; set; }
@@ -1018,5 +1019,26 @@ namespace Files.App.Utils.Storage
 				}
 			}
 		}
+
+		private static string GetIncrementalName(bool overWriteOnCopy, string? filePathToCheck, string? filePathToCopy)
+		{
+			if (filePathToCheck == null)
+				return null;			
+
+			if ((!Path.Exists(filePathToCheck)) || overWriteOnCopy || filePathToCheck == filePathToCopy)
+				return Path.GetFileName(filePathToCheck);
+
+			var index = 2;
+			var filePath = filePathToCheck;
+			if (Path.HasExtension(filePathToCheck))
+				filePath = filePathToCheck.Substring(0, filePathToCheck.LastIndexOf("."));
+
+			Func<int, string> genFilePath = x => string.Concat([filePath, " (", x.ToString(), ")", Path.GetExtension(filePathToCheck)]);
+
+			while (Path.Exists(genFilePath(index)))
+				index++;
+
+			return Path.GetFileName(genFilePath(index));
+		}		
 	}
 }

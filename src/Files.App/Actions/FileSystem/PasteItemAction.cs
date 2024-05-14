@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Files.App.Actions
 {
-	internal class PasteItemAction : ObservableObject, IAction
+	internal sealed class PasteItemAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -38,7 +38,7 @@ namespace Files.App.Actions
 			App.AppModel.PropertyChanged += AppModel_PropertyChanged;
 		}
 
-		public async Task ExecuteAsync()
+		public async Task ExecuteAsync(object? parameter = null)
 		{
 			if (context.ShellPage is null)
 				return;

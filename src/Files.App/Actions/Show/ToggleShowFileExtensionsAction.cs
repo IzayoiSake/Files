@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class ToggleShowFileExtensionsAction : ObservableObject, IToggleAction
+	internal sealed class ToggleShowFileExtensionsAction : ObservableObject, IToggleAction
 	{
 		private readonly IFoldersSettingsService settings;
 
@@ -23,7 +23,7 @@ namespace Files.App.Actions
 			settings.PropertyChanged += Settings_PropertyChanged;
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			settings.ShowFileExtensions = !settings.ShowFileExtensions;
 

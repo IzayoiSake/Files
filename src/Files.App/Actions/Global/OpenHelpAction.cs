@@ -5,7 +5,7 @@ using Windows.System;
 
 namespace Files.App.Actions
 {
-	internal class OpenHelpAction : IAction
+	internal sealed class OpenHelpAction : IAction
 	{
 		public string Label
 			=> "Help".GetLocalizedResource();
@@ -16,7 +16,7 @@ namespace Files.App.Actions
 		public HotKey HotKey
 			=> new(Keys.F1);
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			var url = new Uri(Constants.ExternalUrl.DocumentationUrl);
 			return Launcher.LaunchUriAsync(url).AsTask();

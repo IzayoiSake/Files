@@ -127,7 +127,7 @@
     <value>Copiați calea cu ghilimele</value>
   </data>
   <data name="Browse" xml:space="preserve">
-    <value>Răsfoiește</value>
+    <value>Răsfoire</value>
   </data>
   <data name="Size" xml:space="preserve">
     <value>Mărime</value>
@@ -216,8 +216,8 @@
   <data name="Appearance" xml:space="preserve">
     <value>Aspect</value>
   </data>
-  <data name="Background" xml:space="preserve">
-    <value>Fundal</value>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>Culoare fundal</value>
   </data>
   <data name="Advanced" xml:space="preserve">
     <value>Avansat</value>
@@ -273,8 +273,8 @@
   <data name="Delete" xml:space="preserve">
     <value>Ștergere</value>
   </data>
-  <data name="PinToFavorites" xml:space="preserve">
-    <value>Fixați la Favorite</value>
+  <data name="PinFolderToSidebar" xml:space="preserve">
+    <value>Fixați la Bara Laterală</value>
   </data>
   <data name="WelcomeDialog.Title" xml:space="preserve">
     <value>Bun venit la Files!</value>
@@ -338,6 +338,9 @@
   </data>
   <data name="SetAsLockscreen" xml:space="preserve">
     <value>Stabilire ca ecran de blocare</value>
+  </data>
+  <data name="SetAsAppBackground" xml:space="preserve">
+    <value>Setează ca fundal al aplicației</value>
   </data>
   <data name="AccessDeniedDeleteDialog.Text" xml:space="preserve">
     <value>Nu am putut șterge acest element</value>
@@ -817,16 +820,16 @@
     <value>Editor</value>
   </data>
   <data name="PropertyThumbnailLargePath" xml:space="preserve">
-    <value>Calea Thumbnail-urilor mari</value>
+    <value>Calea Miniaturilor Mari</value>
   </data>
   <data name="PropertyThumbnailLargeUri" xml:space="preserve">
-    <value>Calea Thumbnail-urilor Uri</value>
+    <value>Calea Miniaturilor Uri</value>
   </data>
   <data name="PropertyThumbnailSmallPath" xml:space="preserve">
-    <value>Calea Thumbnail-urilor mici</value>
+    <value>Calea Miniaturilor Mici</value>
   </data>
   <data name="PropertyThumbnailSmallUri" xml:space="preserve">
-    <value>Calea Thumbnail-urilor Uri</value>
+    <value>Calea Miniaturilor Uri</value>
   </data>
   <data name="PropertyUserWebUrl" xml:space="preserve">
     <value>URL web al utilizator</value>
@@ -881,6 +884,12 @@
   </data>
   <data name="PropertyEncodingBitrate" xml:space="preserve">
     <value>Codare Bitrate</value>
+  </data>
+  <data name="PropertyPreviewAudioEncodingBitrate" xml:space="preserve">
+    <value>Rată de Biți de Codificare Audio</value>
+  </data>
+  <data name="PropertyPreviewVideoEncodingBitrate" xml:space="preserve">
+    <value>Rată de Biți de Codificare Video</value>
   </data>
   <data name="Compression" xml:space="preserve">
     <value>Compresie</value>
@@ -1029,8 +1038,8 @@
   <data name="OpenInNewPane" xml:space="preserve">
     <value>Deschideți într-un panou nou</value>
   </data>
-  <data name="Folders" xml:space="preserve">
-    <value>Foldere</value>
+  <data name="FilesAndFolders" xml:space="preserve">
+    <value>Fișiere &amp; foldere</value>
   </data>
   <data name="NavToolbarDetails.ToolTipService.ToolTip" xml:space="preserve">
     <value>Detalii (Ctrl+Shift+1)</value>
@@ -1071,8 +1080,8 @@
   <data name="PropertyItemName" xml:space="preserve">
     <value>Nume Obiect</value>
   </data>
-  <data name="UnpinFromFavorites" xml:space="preserve">
-    <value>Anulați fixarea de la Favorite</value>
+  <data name="UnpinFolderFromSidebar" xml:space="preserve">
+    <value>Anulați fixarea la Bara Laterală</value>
   </data>
   <data name="SidebarNetworkDrives" xml:space="preserve">
     <value>Unități de rețea</value>
@@ -1158,8 +1167,8 @@
   <data name="DrivesWidgetOptionsFlyoutMapNetDriveMenuItem.Text" xml:space="preserve">
     <value>Conectare unitate de rețea</value>
   </data>
-  <data name="SidebarFavorites" xml:space="preserve">
-    <value>Favorite</value>
+  <data name="Pinned" xml:space="preserve">
+    <value>Fixat</value>
   </data>
   <data name="SidebarLibraries" xml:space="preserve">
     <value>Biblioteci</value>
@@ -1698,12 +1707,6 @@
   <data name="CredentialDialogUserName.PlaceholderText" xml:space="preserve">
     <value>Nume de utilizator</value>
   </data>
-  <data name="DrivesWidgetAutomationProperties.Name" xml:space="preserve">
-    <value>Widget unități</value>
-  </data>
-  <data name="RecentFilesWidgetAutomationProperties.Name" xml:space="preserve">
-    <value>Widget fișiere recente</value>
-  </data>
   <data name="NoSearchResultsFound" xml:space="preserve">
     <value>Niciun element găsit</value>
   </data>
@@ -1797,65 +1800,59 @@
   <data name="None" xml:space="preserve">
     <value>Niciuna</value>
   </data>
-  <data name="HighDpiOption_UseDPIOnLogin" xml:space="preserve">
+  <data name="CompatibilityOnWindowsLogin" xml:space="preserve">
     <value>Când mă conectez la Windows</value>
   </data>
-  <data name="HighDpiOption_UseDPIOnProgramStart" xml:space="preserve">
+  <data name="CompatibilityOnProgramStart" xml:space="preserve">
     <value>La pornirea programului</value>
   </data>
-  <data name="HighDpiOverride_System" xml:space="preserve">
+  <data name="System" xml:space="preserve">
     <value>Sistem</value>
   </data>
-  <data name="HighDpiOverride_SystemAdvanced" xml:space="preserve">
-    <value>Sistem (avansat)</value>
+  <data name="CompatibilitySystemEnhanced" xml:space="preserve">
+    <value>Sistem (Îmbunătățit)</value>
   </data>
-  <data name="OSCompatibility_Windows7" xml:space="preserve">
-    <value>Windows 7</value>
+  <data name="CompatibilityReducedColorModeColor16bit" xml:space="preserve">
+    <value>Culoare 16-bit (65536)</value>
   </data>
-  <data name="OSCompatibility_Windows8" xml:space="preserve">
-    <value>Windows 8</value>
+  <data name="CompatibilityReducedColorModeColor8bit" xml:space="preserve">
+    <value>Culoare 8-bit (256)</value>
   </data>
-  <data name="OSCompatibility_WindowsVista" xml:space="preserve">
-    <value>Windows Vista</value>
+  <data name="CompatibilityDisableFullscreenOptimizations" xml:space="preserve">
+    <value>Dezactivați optimizările pe ecran complet</value>
   </data>
-  <data name="OSCompatibility_WindowsVistaSP1" xml:space="preserve">
-    <value>Windows Vista SP1</value>
+  <data name="CompatibilityRunIn640x480Resolution" xml:space="preserve">
+    <value>Rulați la rezoluția ecranului de 640 x 480</value>
   </data>
-  <data name="OSCompatibility_WindowsVistaSP2" xml:space="preserve">
-    <value>Windows Vista SP2</value>
+  <data name="CompatibilityOverrideHighDPIBehavior" xml:space="preserve">
+    <value>Suprascrieți comportamentul de scalare DPI mare</value>
   </data>
-  <data name="ReducedColorMode_Color16Bit" xml:space="preserve">
-    <value>Culori 16 biți (65536)</value>
-  </data>
-  <data name="ReducedColorMode_Color8Bit" xml:space="preserve">
-    <value>Culori 8 biți (256)</value>
-  </data>
-  <data name="CompatibilityMode" xml:space="preserve">
-    <value>Mod compatibilitate</value>
-  </data>
-  <data name="DisableFullscreenOptimizations" xml:space="preserve">
-    <value>Dezactivează optimizările pe ecran complet</value>
-  </data>
-  <data name="ExecuteAt640X480" xml:space="preserve">
-    <value>Rulează la rezoluție de 640 x 480</value>
-  </data>
-  <data name="OverrideDPIScalingBehaviour" xml:space="preserve">
-    <value>Suprascrie comportamentul de scalare DPI mare</value>
-  </data>
-  <data name="ReducedColorMode" xml:space="preserve">
+  <data name="CompatibilityReducedColorMode" xml:space="preserve">
     <value>Mod de culoare redus</value>
   </data>
-  <data name="RegisterForRestart" xml:space="preserve">
-    <value>Înregistrați pentru repornire</value>
+  <data name="CompatibilityRegisterThisProgramForRestart" xml:space="preserve">
+    <value>Înregistrați acest program pentru repornire</value>
   </data>
   <data name="RunAsAdministrator" xml:space="preserve">
     <value>Rulare ca administrator</value>
   </data>
-  <data name="RunCompatibilityTroubleShooter" xml:space="preserve">
+  <data name="CompatibilityRunTroubleshooter" xml:space="preserve">
     <value>Rulați depanatorul pentru compatibilitate</value>
   </data>
-  <data name="UseMainMonitorDPISettings" xml:space="preserve">
+  <data name="CompatibilityUseDPISettings" xml:space="preserve">
     <value>Utilizați setările DPI ale monitorului principal</value>
+  </data>
+  <data name="CompatibilityDoNotAdjustDPI" xml:space="preserve">
+    <value>Nu ajustați setările DPI</value>
+  </data>
+  <data name="CompatibilityDoNotOverrideDPI" xml:space="preserve">
+    <value>Nu suprascrieți setările DPI</value>
+  </data>
+  <data name="CompatibilityMode" xml:space="preserve">
+    <value>Mod compatibilitate</value>
+  </data>
+  <data name="CompatibilityNoReducedColor" xml:space="preserve">
+    <value>Fără culoare redusă</value>
   </data>
   <data name="ThirdPartyLicenses" xml:space="preserve">
     <value>Licențe terță parte</value>
@@ -1895,9 +1892,6 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Tip</value>
-  </data>
-  <data name="IconGrid" xml:space="preserve">
-    <value>Grilă pictograme</value>
   </data>
   <data name="Bytes" xml:space="preserve">
     <value>Octeți</value>
@@ -1984,10 +1978,10 @@
     <value>Poziționează toate coloanele să încapă</value>
   </data>
   <data name="Adaptive" xml:space="preserve">
-    <value>Automatically choose the best layout</value>
+    <value>Aspect adaptabil</value>
   </data>
   <data name="AdaptiveShortcutTooltip" xml:space="preserve">
-    <value>Adaptive (Ctrl+Shift+7)</value>
+    <value>Aspect adaptiv (Ctrl+Shift+7)</value>
   </data>
   <data name="BaseLayoutContextFlyoutAdaptive.KeyboardAcceleratorTextOverride" xml:space="preserve">
     <value>Ctrl+Shift+7</value>
@@ -2027,9 +2021,6 @@
   </data>
   <data name="TypeColumn" xml:space="preserve">
     <value>Coloană tip</value>
-  </data>
-  <data name="DetailsLayoutColumns" xml:space="preserve">
-    <value>Coloană aspect detalii</value>
   </data>
   <data name="Lockscreen" xml:space="preserve">
     <value>Ecran de blocare</value>
@@ -2460,11 +2451,11 @@
   <data name="UnpinFromStartDescription" xml:space="preserve">
     <value>Anulați fixarea la Meniul Start a elementului/lor</value>
   </data>
-  <data name="PinItemToFavoritesDescription" xml:space="preserve">
-    <value>Fixați folderul/folderele la Favorite</value>
+  <data name="PinFolderToSidebarDescription" xml:space="preserve">
+    <value>Fixați un folder/foldere la Bara Laterală</value>
   </data>
-  <data name="UnpinItemFromFavoritesDescription" xml:space="preserve">
-    <value>Anulați fixarea folderului/folderelor la Favorite</value>
+  <data name="UnpinFolderFromSidebarDescription" xml:space="preserve">
+    <value>Anulați fixarea folderului/folderelor la Bara Laterală</value>
   </data>
   <data name="SetAsWallpaperBackgroundDescription" xml:space="preserve">
     <value>Setați imaginea selectată ca imagine de fundal</value>
@@ -2474,6 +2465,9 @@
   </data>
   <data name="SetAsLockscreenBackgroundDescription" xml:space="preserve">
     <value>Setați imaginea selectată ca imagine de fundal pentru ecranul de blocare</value>
+  </data>
+  <data name="SetAsAppBackgroundDescription" xml:space="preserve">
+    <value>Setează imaginea selectată ca fundal al aplicației</value>
   </data>
   <data name="InstallFontDescription" xml:space="preserve">
     <value>Instalați fonturile selectate</value>
@@ -3077,7 +3071,7 @@
     <value>Locale</value>
   </data>
   <data name="Remotes" xml:space="preserve">
-    <value>Remotes</value>
+    <value>La distanţă</value>
   </data>
   <data name="ImproveTranslation" xml:space="preserve">
     <value>Traduceți pe Crowdin</value>
@@ -3277,7 +3271,7 @@
     <value>Files rulează ca administrator</value>
   </data>
   <data name="FilesRunningAsAdminContent" xml:space="preserve">
-    <value>Din cauza limitărilor platformei, tragerea și lăsarea fișierelor nu este disponibilă atunci când rulați Files ca administrator.</value>
+    <value>Din cauza unei limitări cu Windows și WinAppSdk, tragerea și fixarea nu sunt disponibile atunci când se execută fișierele ca administrator. Daca doresti sa folosesti drag and drop poți lucra în jurul acestei limitări deschizând UAC (Control Cont Utilizator) din Meniul Start și selectând al treilea nivel, și repornind Windows. Altfel, puteţi continua să utilizaţi fişiere fără a trage &amp; plasa.</value>
   </data>
   <data name="SettingsLeaveAppRunning" xml:space="preserve">
     <value>Lăsați aplicația să ruleze în fundal atunci când fereastra este închisă</value>
@@ -3665,10 +3659,10 @@
     <value>Unde s-a dus Files?</value>
   </data>
   <data name="QuestionsAndDiscussions" xml:space="preserve">
-    <value>Questions &amp; discussions</value>
+    <value>Întrebări și discuții</value>
   </data>
   <data name="TilesViewSizeInfo" xml:space="preserve">
-    <value>Additional sizes are not yet available for the Tiles View.</value>
+    <value>Alte mărimi nu sunt încă disponibile pentru Vizualizarea Dale.</value>
   </data>
   <data name="Compact" xml:space="preserve">
     <value>Compact</value>
@@ -3683,23 +3677,23 @@
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+" xml:space="preserve">
-    <value>Medium +</value>
+    <value>Mediu +</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium++" xml:space="preserve">
-    <value>Medium ++</value>
+    <value>Mediu ++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+++" xml:space="preserve">
-    <value>Medium +++</value>
+    <value>Mediu +++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium++++" xml:space="preserve">
-    <value>Medium ++++</value>
+    <value>Mediu ++++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+++++" xml:space="preserve">
-    <value>Medium +++++</value>
+    <value>Mediu +++++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large" xml:space="preserve">
@@ -3707,19 +3701,99 @@
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large+" xml:space="preserve">
-    <value>Large +</value>
+    <value>Mare +</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large++" xml:space="preserve">
-    <value>Large ++</value>
+    <value>Mare ++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large+++" xml:space="preserve">
-    <value>Large +++</value>
+    <value>Mare +++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="ExtraLarge" xml:space="preserve">
-    <value>Extra large</value>
+    <value>Foarte mare</value>
     <comment>Used to describe layout sizes</comment>
+  </data>
+  <data name="DetailsView" xml:space="preserve">
+    <value>Vizualizare detalii</value>
+  </data>
+  <data name="LayoutType" xml:space="preserve">
+    <value>Tip aspect</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Acțiuni</value>
+  </data>
+  <data name="Commands" xml:space="preserve">
+    <value>Comenzi</value>
+  </data>
+  <data name="AddCommand" xml:space="preserve">
+    <value>Adăugare comandă</value>
+  </data>
+  <data name="RestoreDefaults" xml:space="preserve">
+    <value>Restabiliți la valorile implicite</value>
+  </data>
+  <data name="ChooseAnAction" xml:space="preserve">
+    <value>Alegeți o acțiune</value>
+  </data>
+  <data name="RestoreDefaultKeybindingsConfirmation" xml:space="preserve">
+    <value>Sunteți sigur că doriți să restaurați comenzile rapide la valorile implicite? Această acțiune nu poate fi anulată.</value>
+  </data>
+  <data name="KeybindingAlreadyUsedNotification" xml:space="preserve">
+    <value>Această comandă rapidă este deja utilizată, vă rugăm să alegeți o comandă rapidă diferită pentru a continua.</value>
+  </data>
+  <data name="Customized" xml:space="preserve">
+    <value>Personalizat</value>
+  </data>
+  <data name="AdaptiveLayoutDisabledNotification" xml:space="preserve">
+    <value>Aspectul Adaptiv nu este disponibil atunci când preferințele sunt sincronizate, aspectul implicit a fost schimbat la Detalii.</value>
+  </data>
+  <data name="BackgroundImage" xml:space="preserve">
+    <value>Imagine de fundal</value>
+  </data>
+  <data name="Bottom" xml:space="preserve">
+    <value>Partea de jos</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Center" xml:space="preserve">
+    <value>Centrare</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Fill" xml:space="preserve">
+    <value>Umplere</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="HorizontalAlignment" xml:space="preserve">
+    <value>Aliniere orizontală</value>
+  </data>
+  <data name="ImageFit" xml:space="preserve">
+    <value>Potrivire imagine</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>Stânga</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Opacity" xml:space="preserve">
+    <value>Opacitate</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>Dreapta</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Top" xml:space="preserve">
+    <value>Deasupra</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Uniform" xml:space="preserve">
+    <value>Uniformă</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="UniformToFill" xml:space="preserve">
+    <value>Umplere uniformă</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="VerticalAlignment" xml:space="preserve">
+    <value>Aliniere verticală</value>
   </data>
 </root>

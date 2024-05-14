@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class GitSyncAction : ObservableObject, IAction
+	internal sealed class GitSyncAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext _context;
 
@@ -23,7 +23,7 @@ namespace Files.App.Actions
 			_context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			var instance = _context.ShellPage?.InstanceViewModel;
 

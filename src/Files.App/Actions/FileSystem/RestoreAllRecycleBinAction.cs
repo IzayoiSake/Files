@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class RestoreAllRecycleBinAction : BaseUIAction, IAction
+	internal sealed class RestoreAllRecycleBinAction : BaseUIAction, IAction
 	{
 		public string Label
 			=> "RestoreAllItems".GetLocalizedResource();
@@ -18,7 +18,7 @@ namespace Files.App.Actions
 			UIHelpers.CanShowDialog &&
 			RecycleBinHelpers.RecycleBinHasItems();
 
-		public async Task ExecuteAsync()
+		public async Task ExecuteAsync(object? parameter = null)
 		{
 			await RecycleBinHelpers.RestoreRecycleBinAsync();
 		}

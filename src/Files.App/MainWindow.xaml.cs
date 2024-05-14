@@ -1,15 +1,11 @@
 // Copyright (c) 2024 Files Community
 // Licensed under the MIT License. See the LICENSE.
 
-using Files.App.UserControls.TabBar;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
-using System.IO;
-using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
 using WinUIEx;
@@ -55,7 +51,7 @@ namespace Files.App
 			// or "Automatically hide the taskbar in desktop mode" in Windows 10 is enabled.
 			// Setting this property when the setting is disabled will result in the taskbar overlapping the application
 			if (AppLifecycleHelper.IsAutoHideTaskbarEnabled()) 
-				InteropHelpers.SetPropW(WindowHandle, "NonRudeHWND", new IntPtr(1));
+				Win32PInvoke.SetPropW(WindowHandle, "NonRudeHWND", new IntPtr(1));
 		}
 
 		public void ShowSplashScreen()
@@ -217,6 +213,9 @@ namespace Files.App
 				AppWindow.Show();
 				Activate();
 			}
+
+			if (Windows.Win32.PInvoke.IsIconic(new(WindowHandle)))
+				Instance.Restore(); // Restore window if minimized
 		}
 
 		public Frame EnsureWindowIsInitialized()
@@ -300,7 +299,7 @@ namespace Files.App
 								.OnSuccess(item => FileTagsHelper.GetFileFRN(item));
 							if (fileFRN is not null)
 							{
-								var tagUid = tag is not null ? new[] { tag.Uid } : null;
+								var tagUid = tag is not null ? new[] { tag.Uid } : [];
 								var dbInstance = FileTagsHelper.GetDbInstance();
 								dbInstance.SetTags(file, fileFRN, tagUid);
 								FileTagsHelper.WriteFileTag(file, tagUid);

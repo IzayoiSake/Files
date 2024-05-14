@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class ClosePaneAction : ObservableObject, IAction
+	internal sealed class ClosePaneAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -29,7 +29,7 @@ namespace Files.App.Actions
 			context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			context.ShellPage!.PaneHolder.CloseActivePane();
 

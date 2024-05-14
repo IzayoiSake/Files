@@ -5,7 +5,7 @@ using Windows.ApplicationModel.DataTransfer;
 
 namespace Files.App.Actions
 {
-	internal class CopyPathWithQuotesAction : IAction
+	internal sealed class CopyPathWithQuotesAction : IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -19,7 +19,7 @@ namespace Files.App.Actions
 			=> new RichGlyph(opacityStyle: "ColorIconCopyPath");
 
 		public HotKey HotKey
-			=> new(Keys.C, KeyModifiers.MenuCtrl);
+			=> new(Keys.C, KeyModifiers.CtrlAlt);
 
 		public bool IsExecutable
 			=> context.HasSelection;
@@ -29,7 +29,7 @@ namespace Files.App.Actions
 			context = Ioc.Default.GetRequiredService<IContentPageContext>();
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			if (context.ShellPage?.SlimContentPage is not null)
 			{

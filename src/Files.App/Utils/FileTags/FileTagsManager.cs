@@ -6,14 +6,14 @@ using System.Collections.Specialized;
 
 namespace Files.App.Utils.FileTags
 {
-	public class FileTagsManager
+	public sealed class FileTagsManager
 	{
 		private readonly ILogger logger = Ioc.Default.GetRequiredService<ILogger<App>>();
 		private readonly IFileTagsSettingsService fileTagsSettingsService = Ioc.Default.GetService<IFileTagsSettingsService>();
 
 		public EventHandler<NotifyCollectionChangedEventArgs> DataChanged;
 
-		private readonly List<FileTagItem> fileTags = new();
+		private readonly List<FileTagItem> fileTags = [];
 		public IReadOnlyList<FileTagItem> FileTags
 		{
 			get

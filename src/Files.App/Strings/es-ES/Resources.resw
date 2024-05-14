@@ -216,8 +216,8 @@
   <data name="Appearance" xml:space="preserve">
     <value>Apariencia</value>
   </data>
-  <data name="Background" xml:space="preserve">
-    <value>Fondo</value>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>Color de fondo</value>
   </data>
   <data name="Advanced" xml:space="preserve">
     <value>Avanzado</value>
@@ -273,8 +273,8 @@
   <data name="Delete" xml:space="preserve">
     <value>Eliminar</value>
   </data>
-  <data name="PinToFavorites" xml:space="preserve">
-    <value>Anclar a Favoritos</value>
+  <data name="PinFolderToSidebar" xml:space="preserve">
+    <value>Anclar en la barra lateral</value>
   </data>
   <data name="WelcomeDialog.Title" xml:space="preserve">
     <value>¡Bienvenido a Files!</value>
@@ -338,6 +338,9 @@
   </data>
   <data name="SetAsLockscreen" xml:space="preserve">
     <value>Establecer como fondo de pantalla de bloqueo</value>
+  </data>
+  <data name="SetAsAppBackground" xml:space="preserve">
+    <value>Establecer como fondo de la aplicación</value>
   </data>
   <data name="AccessDeniedDeleteDialog.Text" xml:space="preserve">
     <value>No se pudo eliminar este elemento</value>
@@ -882,6 +885,12 @@
   <data name="PropertyEncodingBitrate" xml:space="preserve">
     <value>Velocidad de bits</value>
   </data>
+  <data name="PropertyPreviewAudioEncodingBitrate" xml:space="preserve">
+    <value>Tasa de bits de codificación de audio</value>
+  </data>
+  <data name="PropertyPreviewVideoEncodingBitrate" xml:space="preserve">
+    <value>Tasa de bits de codificación de vídeo</value>
+  </data>
   <data name="Compression" xml:space="preserve">
     <value>Compresión</value>
   </data>
@@ -1029,8 +1038,8 @@
   <data name="OpenInNewPane" xml:space="preserve">
     <value>Abrir en nuevo panel</value>
   </data>
-  <data name="Folders" xml:space="preserve">
-    <value>Carpetas</value>
+  <data name="FilesAndFolders" xml:space="preserve">
+    <value>Archivos y carpetas</value>
   </data>
   <data name="NavToolbarDetails.ToolTipService.ToolTip" xml:space="preserve">
     <value>Detalles (Ctrl+Mayús+1)</value>
@@ -1071,8 +1080,8 @@
   <data name="PropertyItemName" xml:space="preserve">
     <value>Nombre del elemento</value>
   </data>
-  <data name="UnpinFromFavorites" xml:space="preserve">
-    <value>Desanclar de Favoritos</value>
+  <data name="UnpinFolderFromSidebar" xml:space="preserve">
+    <value>Desanclar de la barra lateral</value>
   </data>
   <data name="SidebarNetworkDrives" xml:space="preserve">
     <value>Unidades de red</value>
@@ -1158,8 +1167,8 @@
   <data name="DrivesWidgetOptionsFlyoutMapNetDriveMenuItem.Text" xml:space="preserve">
     <value>Conectar a unidad de red</value>
   </data>
-  <data name="SidebarFavorites" xml:space="preserve">
-    <value>Favoritos</value>
+  <data name="Pinned" xml:space="preserve">
+    <value>Anclados</value>
   </data>
   <data name="SidebarLibraries" xml:space="preserve">
     <value>Bibliotecas</value>
@@ -1462,13 +1471,13 @@
     <value>Crear nueva biblioteca</value>
   </data>
   <data name="SideBarRestoreLibraries.Text" xml:space="preserve">
-    <value>Restablecer bibliotecas predeterminadas</value>
+    <value>Restaurar bibliotecas predeterminadas</value>
   </data>
   <data name="DialogRestoreLibrariesSubtitleText" xml:space="preserve">
-    <value>¿Está seguro que desea restablecer las bibliotecas por defecto? Todos los archivos permanecerán en su almacenamiento.</value>
+    <value>¿Está seguro de que desea restaurar las bibliotecas por defecto? Todos los archivos permanecerán en su almacenamiento.</value>
   </data>
   <data name="DialogRestoreLibrariesTitleText" xml:space="preserve">
-    <value>Restablecer bibliotecas</value>
+    <value>Restaurar bibliotecas</value>
   </data>
   <data name="PropertyFileOwner" xml:space="preserve">
     <value>Propietario</value>
@@ -1698,12 +1707,6 @@
   <data name="CredentialDialogUserName.PlaceholderText" xml:space="preserve">
     <value>Nombre de usuario</value>
   </data>
-  <data name="DrivesWidgetAutomationProperties.Name" xml:space="preserve">
-    <value>Widget de Unidades</value>
-  </data>
-  <data name="RecentFilesWidgetAutomationProperties.Name" xml:space="preserve">
-    <value>Widget de Archivos Recientes</value>
-  </data>
   <data name="NoSearchResultsFound" xml:space="preserve">
     <value>Ningún elemento encontrado</value>
   </data>
@@ -1797,65 +1800,59 @@
   <data name="None" xml:space="preserve">
     <value>Ninguno</value>
   </data>
-  <data name="HighDpiOption_UseDPIOnLogin" xml:space="preserve">
+  <data name="CompatibilityOnWindowsLogin" xml:space="preserve">
     <value>Al iniciar sesión en Windows</value>
   </data>
-  <data name="HighDpiOption_UseDPIOnProgramStart" xml:space="preserve">
+  <data name="CompatibilityOnProgramStart" xml:space="preserve">
     <value>Al iniciar el programa</value>
   </data>
-  <data name="HighDpiOverride_System" xml:space="preserve">
+  <data name="System" xml:space="preserve">
     <value>Sistema</value>
   </data>
-  <data name="HighDpiOverride_SystemAdvanced" xml:space="preserve">
-    <value>Sistema (avanzado)</value>
+  <data name="CompatibilitySystemEnhanced" xml:space="preserve">
+    <value>Sistema (Mejorado)</value>
   </data>
-  <data name="OSCompatibility_Windows7" xml:space="preserve">
-    <value>Windows 7</value>
+  <data name="CompatibilityReducedColorModeColor16bit" xml:space="preserve">
+    <value>Color de 16 bits (65536)</value>
   </data>
-  <data name="OSCompatibility_Windows8" xml:space="preserve">
-    <value>Windows 8</value>
+  <data name="CompatibilityReducedColorModeColor8bit" xml:space="preserve">
+    <value>Color de 8 bits (256)</value>
   </data>
-  <data name="OSCompatibility_WindowsVista" xml:space="preserve">
-    <value>Windows Vista</value>
+  <data name="CompatibilityDisableFullscreenOptimizations" xml:space="preserve">
+    <value>Desactivar optimizaciones en pantalla completa</value>
   </data>
-  <data name="OSCompatibility_WindowsVistaSP1" xml:space="preserve">
-    <value>Windows Vista SP1</value>
+  <data name="CompatibilityRunIn640x480Resolution" xml:space="preserve">
+    <value>Ejecutar con resolución de pantalla de 640 x 480</value>
   </data>
-  <data name="OSCompatibility_WindowsVistaSP2" xml:space="preserve">
-    <value>Windows Vista SP2</value>
+  <data name="CompatibilityOverrideHighDPIBehavior" xml:space="preserve">
+    <value>Invalidar el comportamiento de escalado de DPI alto</value>
   </data>
-  <data name="ReducedColorMode_Color16Bit" xml:space="preserve">
-    <value>Color de 16 Bits (65536)</value>
-  </data>
-  <data name="ReducedColorMode_Color8Bit" xml:space="preserve">
-    <value>Color de 8 Bits (256)</value>
-  </data>
-  <data name="CompatibilityMode" xml:space="preserve">
-    <value>Modo de compatibilidad</value>
-  </data>
-  <data name="DisableFullscreenOptimizations" xml:space="preserve">
-    <value>Deshabilitar optimizaciones de pantalla completa</value>
-  </data>
-  <data name="ExecuteAt640X480" xml:space="preserve">
-    <value>Ejecutar con una resolución de pantalla de 640 x 480</value>
-  </data>
-  <data name="OverrideDPIScalingBehaviour" xml:space="preserve">
-    <value>Invalidar el comportamiento de ajuste de PPP alto</value>
-  </data>
-  <data name="ReducedColorMode" xml:space="preserve">
+  <data name="CompatibilityReducedColorMode" xml:space="preserve">
     <value>Modo de color reducido</value>
   </data>
-  <data name="RegisterForRestart" xml:space="preserve">
-    <value>Registrar para el reinicio</value>
+  <data name="CompatibilityRegisterThisProgramForRestart" xml:space="preserve">
+    <value>Registrar este programa para reiniciar</value>
   </data>
   <data name="RunAsAdministrator" xml:space="preserve">
     <value>Ejecutar como administrador</value>
   </data>
-  <data name="RunCompatibilityTroubleShooter" xml:space="preserve">
+  <data name="CompatibilityRunTroubleshooter" xml:space="preserve">
     <value>Ejecutar el solucionador de problemas de compatibilidad</value>
   </data>
-  <data name="UseMainMonitorDPISettings" xml:space="preserve">
-    <value>Utilizar los ajustes de PPP de la pantalla principal</value>
+  <data name="CompatibilityUseDPISettings" xml:space="preserve">
+    <value>Usar la configuración DPI del monitor principal</value>
+  </data>
+  <data name="CompatibilityDoNotAdjustDPI" xml:space="preserve">
+    <value>No ajustar DPI</value>
+  </data>
+  <data name="CompatibilityDoNotOverrideDPI" xml:space="preserve">
+    <value>No anular DPI</value>
+  </data>
+  <data name="CompatibilityMode" xml:space="preserve">
+    <value>Modo de compatibilidad</value>
+  </data>
+  <data name="CompatibilityNoReducedColor" xml:space="preserve">
+    <value>Color sin reducción</value>
   </data>
   <data name="ThirdPartyLicenses" xml:space="preserve">
     <value>Licencias de terceros</value>
@@ -1895,9 +1892,6 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Tipo</value>
-  </data>
-  <data name="IconGrid" xml:space="preserve">
-    <value>Cuadrícula de iconos</value>
   </data>
   <data name="Bytes" xml:space="preserve">
     <value>Bytes</value>
@@ -2028,9 +2022,6 @@
   <data name="TypeColumn" xml:space="preserve">
     <value>Columna de tipo</value>
   </data>
-  <data name="DetailsLayoutColumns" xml:space="preserve">
-    <value>Columnas en diseño de detalles</value>
-  </data>
   <data name="Lockscreen" xml:space="preserve">
     <value>Pantalla de bloqueo</value>
   </data>
@@ -2047,7 +2038,7 @@
     <value>Seleccionar archivos y carpetas al pasar el cursor sobre ellos</value>
   </data>
   <data name="ConfirmRestoreBinDialogContent" xml:space="preserve">
-    <value>¿Está seguro que desea restaurar todos los elementos de la papelera de reciclaje?</value>
+    <value>¿Está seguro de que desea restaurar todos los elementos de la papelera de reciclaje?</value>
   </data>
   <data name="ConfirmRestoreBinDialogTitle" xml:space="preserve">
     <value>Restaurar todos los elementos</value>
@@ -2062,7 +2053,7 @@
     <value>Restaurar todos los elementos</value>
   </data>
   <data name="Restore" xml:space="preserve">
-    <value>Restablecer</value>
+    <value>Restaurar</value>
   </data>
   <data name="ShortcutCannotBeOpened" xml:space="preserve">
     <value>No se puede abrir el acceso directo</value>
@@ -2460,11 +2451,11 @@
   <data name="UnpinFromStartDescription" xml:space="preserve">
     <value>Desanclar elemento(s) del menú Inicio</value>
   </data>
-  <data name="PinItemToFavoritesDescription" xml:space="preserve">
-    <value>Anclar carpeta(s) a Favoritos</value>
+  <data name="PinFolderToSidebarDescription" xml:space="preserve">
+    <value>Anclar carpeta(s) en la barra lateral</value>
   </data>
-  <data name="UnpinItemFromFavoritesDescription" xml:space="preserve">
-    <value>Desanclar carpeta(s) de Favoritos</value>
+  <data name="UnpinFolderFromSidebarDescription" xml:space="preserve">
+    <value>Desanclar carpeta(s) de la barra lateral</value>
   </data>
   <data name="SetAsWallpaperBackgroundDescription" xml:space="preserve">
     <value>Establecer imagen seleccionada como fondo de escritorio</value>
@@ -2474,6 +2465,9 @@
   </data>
   <data name="SetAsLockscreenBackgroundDescription" xml:space="preserve">
     <value>Establecer imagen seleccionada como fondo de pantalla de bloqueo</value>
+  </data>
+  <data name="SetAsAppBackgroundDescription" xml:space="preserve">
+    <value>Establecer imagen seleccionada como fondo de la aplicación</value>
   </data>
   <data name="InstallFontDescription" xml:space="preserve">
     <value>Instalar fuente(s) seleccionada(s)</value>
@@ -2533,7 +2527,7 @@
     <value>Reducir el tamaño del elemento en la vista actual</value>
   </data>
   <data name="LayoutIncreaseSizeDescription" xml:space="preserve">
-    <value>Aumenta el tamaño del elemento en la vista actual</value>
+    <value>Aumentar el tamaño del elemento en la vista actual</value>
   </data>
   <data name="LayoutDetailsDescription" xml:space="preserve">
     <value>Cambiar a vista de detalles</value>
@@ -2548,10 +2542,10 @@
     <value>Lista</value>
   </data>
   <data name="Grid" xml:space="preserve">
-    <value>Cuadrícula</value>
+    <value>Rejilla</value>
   </data>
   <data name="LayoutGridDescription" xml:space="preserve">
-    <value>Cambiar a vista de cuadrícula</value>
+    <value>Cambiar a vista de rejilla</value>
   </data>
   <data name="LayoutColumnsDescription" xml:space="preserve">
     <value>Cambiar a vista de columnas</value>
@@ -2692,7 +2686,7 @@
     <value>Cerrar panel derecho</value>
   </data>
   <data name="ToggleSidebar" xml:space="preserve">
-    <value>Ocultar/mostrar barra lateral</value>
+    <value>Mostrar/Ocultar barra lateral</value>
   </data>
   <data name="Key.Menu" xml:space="preserve">
     <value>Alt</value>
@@ -3277,7 +3271,7 @@
     <value>Files se está ejecutando como administrador</value>
   </data>
   <data name="FilesRunningAsAdminContent" xml:space="preserve">
-    <value>Debido a limitaciones de la plataforma, arrastrar y soltar no está disponible cuando se ejecuta Files como administrador.</value>
+    <value>Debido a una limitación con Windows y WinAppSdk, arrastrar y soltar no está disponible cuando se ejecuta Archivos como administrador. Si desea usar arrastrar y soltar, puede solucionar esta limitación abriendo UAC (Control de cuentas de usuario) desde el Menú Inicio y seleccionando el tercer nivel, y reiniciando Windows. De lo contrario, puede seguir usando Archivos sin arrastrar y soltar.</value>
   </data>
   <data name="SettingsLeaveAppRunning" xml:space="preserve">
     <value>Permitir que la aplicación se ejecute en segundo plano al cerrar la ventana</value>
@@ -3327,7 +3321,7 @@
     <comment>One of the custom color themes</comment>
   </data>
   <data name="OrangeBright" xml:space="preserve">
-    <value>Naranje brillante</value>
+    <value>Naranja brillante</value>
     <comment>One of the custom color themes</comment>
   </data>
   <data name="Overcast" xml:space="preserve">
@@ -3617,7 +3611,7 @@
     <value>Ordenar primero los archivos</value>
   </data>
   <data name="SortFilesFirstDescription" xml:space="preserve">
-    <value>Ordena primero los archivos y luego las carpetas</value>
+    <value>Ordenar primero los archivos y luego las carpetas</value>
   </data>
   <data name="SortFoldersFirst" xml:space="preserve">
     <value>Ordenar primero las carpetas</value>
@@ -3668,10 +3662,10 @@
     <value>Preguntas y discusiones</value>
   </data>
   <data name="TilesViewSizeInfo" xml:space="preserve">
-    <value>Additional sizes are not yet available for the Tiles View.</value>
+    <value>Aún no se dispone de tamaños adicionales para la vista Mosaicos.</value>
   </data>
   <data name="Compact" xml:space="preserve">
-    <value>Compact</value>
+    <value>Compacto</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Small" xml:space="preserve">
@@ -3683,23 +3677,23 @@
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+" xml:space="preserve">
-    <value>Medium +</value>
+    <value>Mediano +</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium++" xml:space="preserve">
-    <value>Medium ++</value>
+    <value>Mediano ++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+++" xml:space="preserve">
-    <value>Medium +++</value>
+    <value>Mediano +++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium++++" xml:space="preserve">
-    <value>Medium ++++</value>
+    <value>Mediano ++++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Medium+++++" xml:space="preserve">
-    <value>Medium +++++</value>
+    <value>Mediano +++++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large" xml:space="preserve">
@@ -3707,19 +3701,99 @@
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large+" xml:space="preserve">
-    <value>Large +</value>
+    <value>Grande +</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large++" xml:space="preserve">
-    <value>Large ++</value>
+    <value>Grande ++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="Large+++" xml:space="preserve">
-    <value>Large +++</value>
+    <value>Grande +++</value>
     <comment>Used to describe layout sizes</comment>
   </data>
   <data name="ExtraLarge" xml:space="preserve">
-    <value>Extra large</value>
+    <value>Muy grande</value>
     <comment>Used to describe layout sizes</comment>
+  </data>
+  <data name="DetailsView" xml:space="preserve">
+    <value>Vista detallada</value>
+  </data>
+  <data name="LayoutType" xml:space="preserve">
+    <value>Tipo de disposición</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Acciones</value>
+  </data>
+  <data name="Commands" xml:space="preserve">
+    <value>Comandos</value>
+  </data>
+  <data name="AddCommand" xml:space="preserve">
+    <value>Añadir comando</value>
+  </data>
+  <data name="RestoreDefaults" xml:space="preserve">
+    <value>Restaurar valores predeterminados</value>
+  </data>
+  <data name="ChooseAnAction" xml:space="preserve">
+    <value>Seleccionar una acción</value>
+  </data>
+  <data name="RestoreDefaultKeybindingsConfirmation" xml:space="preserve">
+    <value>¿Está seguro de que desea restaurar las combinaciones de teclas predeterminadas? Esta acción no se puede deshacer.</value>
+  </data>
+  <data name="KeybindingAlreadyUsedNotification" xml:space="preserve">
+    <value>Esta combinación de teclas ya está siendo utilizada, por favor elija una combinación de teclas diferente para continuar.</value>
+  </data>
+  <data name="Customized" xml:space="preserve">
+    <value>Personalizado</value>
+  </data>
+  <data name="AdaptiveLayoutDisabledNotification" xml:space="preserve">
+    <value>El diseño adaptable no está disponible cuando las preferencias están sincronizadas, el diseño predeterminado se ha cambiado a Detalles.</value>
+  </data>
+  <data name="BackgroundImage" xml:space="preserve">
+    <value>Imagen de fondo</value>
+  </data>
+  <data name="Bottom" xml:space="preserve">
+    <value>Abajo</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Center" xml:space="preserve">
+    <value>Centro</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Fill" xml:space="preserve">
+    <value>Relleno</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="HorizontalAlignment" xml:space="preserve">
+    <value>Alineación horizontal</value>
+  </data>
+  <data name="ImageFit" xml:space="preserve">
+    <value>Ajuste de imagen</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>Izquierda</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Opacity" xml:space="preserve">
+    <value>Opacidad</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>Derecha</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Top" xml:space="preserve">
+    <value>Arriba</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Uniform" xml:space="preserve">
+    <value>Uniforme</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="UniformToFill" xml:space="preserve">
+    <value>Uniforme hasta rellenar</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="VerticalAlignment" xml:space="preserve">
+    <value>Alineación vertical</value>
   </data>
 </root>

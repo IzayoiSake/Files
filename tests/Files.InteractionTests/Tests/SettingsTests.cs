@@ -8,7 +8,7 @@ using System.Threading;
 namespace Files.InteractionTests.Tests
 {
 	[TestClass]
-	public class SettingsTests
+	public sealed class SettingsTests
 	{
 
 		[TestCleanup]
@@ -30,6 +30,7 @@ namespace Files.InteractionTests.Tests
 				"SettingsItemAppearance",
 				//"SettingsItemLayout", TODO find workaround for the "Group by" setting block issue
 				"SettingsItemFolders",
+				"SettingsItemActions",
 				"SettingsItemTags",
 				"SettingsItemGit",
 				"SettingsItemAdvanced",

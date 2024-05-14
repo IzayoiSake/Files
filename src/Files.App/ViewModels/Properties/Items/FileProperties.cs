@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Files.App.ViewModels.Properties
 {
-	public class FileProperties : BaseProperties, IFileProperties
+	public sealed class FileProperties : BaseProperties, IFileProperties
 	{
 		public ListedItem Item { get; }
 
@@ -44,7 +44,7 @@ namespace Files.App.ViewModels.Properties
 			ViewModel.LoadCustomIcon = Item.LoadCustomIcon;
 			ViewModel.CustomIconSource = Item.CustomIconSource;
 			ViewModel.LoadFileIcon = Item.LoadFileIcon;
-			ViewModel.IsDownloadedFile = NativeFileOperationsHelper.ReadStringFromFile($"{Item.ItemPath}:Zone.Identifier") is not null;
+			ViewModel.IsDownloadedFile = Win32Helper.ReadStringFromFile($"{Item.ItemPath}:Zone.Identifier") is not null;
 			ViewModel.IsEditAlbumCoverVisible = 
 				FileExtensionHelpers.IsVideoFile(Item.FileExtension) ||
 				FileExtensionHelpers.IsAudioFile(Item.FileExtension);
@@ -93,9 +93,9 @@ namespace Files.App.ViewModels.Properties
 
 		public override async Task GetSpecialPropertiesAsync()
 		{
-			ViewModel.IsReadOnly = NativeFileOperationsHelper.HasFileAttribute(
+			ViewModel.IsReadOnly = Win32Helper.HasFileAttribute(
 				Item.ItemPath, System.IO.FileAttributes.ReadOnly);
-			ViewModel.IsHidden = NativeFileOperationsHelper.HasFileAttribute(
+			ViewModel.IsHidden = Win32Helper.HasFileAttribute(
 				Item.ItemPath, System.IO.FileAttributes.Hidden);
 
 			ViewModel.ItemSizeVisibility = true;
@@ -103,7 +103,7 @@ namespace Files.App.ViewModels.Properties
 
 			// Only load the size for items on the device
 			if (Item.SyncStatusUI.SyncStatus is not CloudDriveSyncStatus.FileOnline and not CloudDriveSyncStatus.FolderOnline)
-				ViewModel.ItemSizeOnDisk = NativeFileOperationsHelper.GetFileSizeOnDisk(Item.ItemPath)?.ToLongSizeString() ??
+				ViewModel.ItemSizeOnDisk = Win32Helper.GetFileSizeOnDisk(Item.ItemPath)?.ToLongSizeString() ??
 				   string.Empty;
 
 			var result = await FileThumbnailHelper.GetIconAsync(
@@ -170,20 +170,6 @@ namespace Files.App.ViewModels.Properties
 					x => x.Property == "System.GPS.LatitudeDecimal").Value,
 					(double?)list.Find(x => x.Property == "System.GPS.LongitudeDecimal").Value);
 
-			// Find Encoding Bitrate property and convert it to kbps
-			var encodingBitrate = list.Find(x => x.Property == "System.Audio.EncodingBitrate");
-
-			if (encodingBitrate?.Value is null)
-				encodingBitrate = list.Find(x => x.Property == "System.Video.EncodingBitrate");
-
-			if (encodingBitrate?.Value is not null)
-			{
-				var sizes = new string[] { "Bps", "KBps", "MBps", "GBps" };
-				var order = Math.Min((int)Math.Floor(Math.Log((uint)encodingBitrate.Value, 1024)), 3);
-				var readableSpeed = (uint)encodingBitrate.Value / Math.Pow(1024, order);
-				encodingBitrate.Value = $"{readableSpeed:0.##} {sizes[order]}";
-			}
-
 			var query = list
 				.Where(fileProp => !(fileProp.Value is null && fileProp.IsReadOnly))
 				.GroupBy(fileProp => fileProp.SectionResource)
@@ -211,8 +197,10 @@ namespace Files.App.ViewModels.Properties
 				{
 					if (!prop.IsReadOnly && prop.Modified)
 					{
-						var newDict = new Dictionary<string, object>();
-						newDict.Add(prop.Property, prop.Value);
+						var newDict = new Dictionary<string, object>
+						{
+							{ prop.Property, prop.Value }
+						};
 
 						try
 						{
@@ -249,8 +237,10 @@ namespace Files.App.ViewModels.Properties
 				{
 					if (!prop.IsReadOnly)
 					{
-						var newDict = new Dictionary<string, object>();
-						newDict.Add(prop.Property, null);
+						var newDict = new Dictionary<string, object>
+						{
+							{ prop.Property, null }
+						};
 
 						try
 						{
@@ -275,37 +265,23 @@ namespace Files.App.ViewModels.Properties
 			switch (e.PropertyName)
 			{
 				case nameof(ViewModel.IsReadOnly):
-					if (ViewModel.IsReadOnly)
+					if (ViewModel.IsReadOnly is not null)
 					{
-						NativeFileOperationsHelper.SetFileAttribute(
-							Item.ItemPath,
-							System.IO.FileAttributes.ReadOnly
-						);
-					}
-					else
-					{
-						NativeFileOperationsHelper.UnsetFileAttribute(
-							Item.ItemPath,
-							System.IO.FileAttributes.ReadOnly
-						);
+						if ((bool)ViewModel.IsReadOnly)
+							Win32Helper.SetFileAttribute(Item.ItemPath, System.IO.FileAttributes.ReadOnly);
+						else
+							Win32Helper.UnsetFileAttribute(Item.ItemPath, System.IO.FileAttributes.ReadOnly);
 					}
 
 					break;
 
 				case nameof(ViewModel.IsHidden):
-					if (ViewModel.IsHidden)
+					if (ViewModel.IsHidden is not null)
 					{
-						NativeFileOperationsHelper.SetFileAttribute(
-							Item.ItemPath,
-							System.IO.FileAttributes.Hidden
-						);
-					}
-					else
-					{
-						NativeFileOperationsHelper.UnsetFileAttribute(
-							Item.ItemPath,
-							System.IO.FileAttributes.Hidden
-						);
+						if ((bool)ViewModel.IsHidden)
+							Win32Helper.SetFileAttribute(Item.ItemPath,	System.IO.FileAttributes.Hidden);
+						else
+							Win32Helper.UnsetFileAttribute(Item.ItemPath, System.IO.FileAttributes.Hidden);
 					}
 
 					break;

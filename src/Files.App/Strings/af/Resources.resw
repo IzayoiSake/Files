@@ -216,8 +216,8 @@
   <data name="Appearance" xml:space="preserve">
     <value>Voorkoms</value>
   </data>
-  <data name="Background" xml:space="preserve">
-    <value>Agtergrond</value>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>Background color</value>
   </data>
   <data name="Advanced" xml:space="preserve">
     <value>Gevorderde</value>
@@ -273,8 +273,8 @@
   <data name="Delete" xml:space="preserve">
     <value>Skrap</value>
   </data>
-  <data name="PinToFavorites" xml:space="preserve">
-    <value>Speld vas aan gunstelinge</value>
+  <data name="PinFolderToSidebar" xml:space="preserve">
+    <value>Pin to Sidebar</value>
   </data>
   <data name="WelcomeDialog.Title" xml:space="preserve">
     <value>Welkom by Files!</value>
@@ -338,6 +338,9 @@
   </data>
   <data name="SetAsLockscreen" xml:space="preserve">
     <value>Stel as sluitskerm agtergrond</value>
+  </data>
+  <data name="SetAsAppBackground" xml:space="preserve">
+    <value>Set as app background</value>
   </data>
   <data name="AccessDeniedDeleteDialog.Text" xml:space="preserve">
     <value>Ons kon nie hierdie item skrap nie</value>
@@ -883,6 +886,12 @@
   <data name="PropertyEncodingBitrate" xml:space="preserve">
     <value>Enkodering Bitrate</value>
   </data>
+  <data name="PropertyPreviewAudioEncodingBitrate" xml:space="preserve">
+    <value>Audio Encoding Bitrate</value>
+  </data>
+  <data name="PropertyPreviewVideoEncodingBitrate" xml:space="preserve">
+    <value>Video Encoding Bitrate</value>
+  </data>
   <data name="Compression" xml:space="preserve">
     <value>Kompressie</value>
   </data>
@@ -1030,8 +1039,8 @@
   <data name="OpenInNewPane" xml:space="preserve">
     <value>Maak in nuwe paneel oop</value>
   </data>
-  <data name="Folders" xml:space="preserve">
-    <value>Omslae</value>
+  <data name="FilesAndFolders" xml:space="preserve">
+    <value>Files &amp; folders</value>
   </data>
   <data name="NavToolbarDetails.ToolTipService.ToolTip" xml:space="preserve">
     <value>Besonderhede (Ctrl+Shift+1)</value>
@@ -1072,8 +1081,8 @@
   <data name="PropertyItemName" xml:space="preserve">
     <value>Item Naam</value>
   </data>
-  <data name="UnpinFromFavorites" xml:space="preserve">
-    <value>Onpen van Gunstelinge</value>
+  <data name="UnpinFolderFromSidebar" xml:space="preserve">
+    <value>Unpin from Sidebar</value>
   </data>
   <data name="SidebarNetworkDrives" xml:space="preserve">
     <value>Netwerkaandrywers</value>
@@ -1159,8 +1168,8 @@
   <data name="DrivesWidgetOptionsFlyoutMapNetDriveMenuItem.Text" xml:space="preserve">
     <value>Karteer netwerkaandrywer</value>
   </data>
-  <data name="SidebarFavorites" xml:space="preserve">
-    <value>Gunstelinge</value>
+  <data name="Pinned" xml:space="preserve">
+    <value>Pinned</value>
   </data>
   <data name="SidebarLibraries" xml:space="preserve">
     <value>Biblioteke</value>
@@ -1699,12 +1708,6 @@
   <data name="CredentialDialogUserName.PlaceholderText" xml:space="preserve">
     <value>Gebruikersnaam</value>
   </data>
-  <data name="DrivesWidgetAutomationProperties.Name" xml:space="preserve">
-    <value>Aandrywers-hulptuig</value>
-  </data>
-  <data name="RecentFilesWidgetAutomationProperties.Name" xml:space="preserve">
-    <value>Onlangse lêers hulptuig</value>
-  </data>
   <data name="NoSearchResultsFound" xml:space="preserve">
     <value>Geen items gevind nie</value>
   </data>
@@ -1798,65 +1801,59 @@
   <data name="None" xml:space="preserve">
     <value>Geen</value>
   </data>
-  <data name="HighDpiOption_UseDPIOnLogin" xml:space="preserve">
-    <value>Op Windows-aanmelding</value>
+  <data name="CompatibilityOnWindowsLogin" xml:space="preserve">
+    <value>On Windows login</value>
   </data>
-  <data name="HighDpiOption_UseDPIOnProgramStart" xml:space="preserve">
-    <value>Op program begin</value>
+  <data name="CompatibilityOnProgramStart" xml:space="preserve">
+    <value>On this program start</value>
   </data>
-  <data name="HighDpiOverride_System" xml:space="preserve">
+  <data name="System" xml:space="preserve">
     <value>Stelsel</value>
   </data>
-  <data name="HighDpiOverride_SystemAdvanced" xml:space="preserve">
-    <value>Stelsel (gevorderd)</value>
+  <data name="CompatibilitySystemEnhanced" xml:space="preserve">
+    <value>System (Enhanced)</value>
   </data>
-  <data name="OSCompatibility_Windows7" xml:space="preserve">
-    <value>Windows 7</value>
+  <data name="CompatibilityReducedColorModeColor16bit" xml:space="preserve">
+    <value>16-bit (65536) color</value>
   </data>
-  <data name="OSCompatibility_Windows8" xml:space="preserve">
-    <value>Windows 8</value>
+  <data name="CompatibilityReducedColorModeColor8bit" xml:space="preserve">
+    <value>8-bit (256) color</value>
   </data>
-  <data name="OSCompatibility_WindowsVista" xml:space="preserve">
-    <value>Windows Vista</value>
+  <data name="CompatibilityDisableFullscreenOptimizations" xml:space="preserve">
+    <value>Disable full-screen optimizations</value>
   </data>
-  <data name="OSCompatibility_WindowsVistaSP1" xml:space="preserve">
-    <value>Windows Vista SP1</value>
+  <data name="CompatibilityRunIn640x480Resolution" xml:space="preserve">
+    <value>Run in 640 x 480 screen resolution</value>
   </data>
-  <data name="OSCompatibility_WindowsVistaSP2" xml:space="preserve">
-    <value>Windows Vista SP2</value>
+  <data name="CompatibilityOverrideHighDPIBehavior" xml:space="preserve">
+    <value>Override high DPI scaling behavior</value>
   </data>
-  <data name="ReducedColorMode_Color16Bit" xml:space="preserve">
-    <value>16 Bis Kleure (65536)</value>
+  <data name="CompatibilityReducedColorMode" xml:space="preserve">
+    <value>Reduced color mode</value>
   </data>
-  <data name="ReducedColorMode_Color8Bit" xml:space="preserve">
-    <value>8 Bis Kleure (256)</value>
-  </data>
-  <data name="CompatibilityMode" xml:space="preserve">
-    <value>Verenigbaarheidsmodus</value>
-  </data>
-  <data name="DisableFullscreenOptimizations" xml:space="preserve">
-    <value>Deaktiveer volskermoptimaliserings</value>
-  </data>
-  <data name="ExecuteAt640X480" xml:space="preserve">
-    <value>Hardloop by 640 x 480 skerm resolusie</value>
-  </data>
-  <data name="OverrideDPIScalingBehaviour" xml:space="preserve">
-    <value>Oorheers hoë DPI-skaalgedrag</value>
-  </data>
-  <data name="ReducedColorMode" xml:space="preserve">
-    <value>Verminderde kleurmodus</value>
-  </data>
-  <data name="RegisterForRestart" xml:space="preserve">
-    <value>Registreer vir herbegin</value>
+  <data name="CompatibilityRegisterThisProgramForRestart" xml:space="preserve">
+    <value>Register this program for restart</value>
   </data>
   <data name="RunAsAdministrator" xml:space="preserve">
     <value>Laat loop as administrateur</value>
   </data>
-  <data name="RunCompatibilityTroubleShooter" xml:space="preserve">
-    <value>Laat loop verenigbaarheids foutspeurder</value>
+  <data name="CompatibilityRunTroubleshooter" xml:space="preserve">
+    <value>Run compatibility troubleshooter</value>
   </data>
-  <data name="UseMainMonitorDPISettings" xml:space="preserve">
-    <value>Gebruik DPI-instellings van die hoofmonitor</value>
+  <data name="CompatibilityUseDPISettings" xml:space="preserve">
+    <value>Use DPI settings of the main monitor</value>
+  </data>
+  <data name="CompatibilityDoNotAdjustDPI" xml:space="preserve">
+    <value>Do not adjust DPI</value>
+  </data>
+  <data name="CompatibilityDoNotOverrideDPI" xml:space="preserve">
+    <value>Do not override DPI</value>
+  </data>
+  <data name="CompatibilityMode" xml:space="preserve">
+    <value>Verenigbaarheidsmodus</value>
+  </data>
+  <data name="CompatibilityNoReducedColor" xml:space="preserve">
+    <value>No reduced color</value>
   </data>
   <data name="ThirdPartyLicenses" xml:space="preserve">
     <value>Derde party lisensies</value>
@@ -1896,9 +1893,6 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Soort:</value>
-  </data>
-  <data name="IconGrid" xml:space="preserve">
-    <value>Icon grid</value>
   </data>
   <data name="Bytes" xml:space="preserve">
     <value>Grepe</value>
@@ -2028,9 +2022,6 @@
   </data>
   <data name="TypeColumn" xml:space="preserve">
     <value>Type column</value>
-  </data>
-  <data name="DetailsLayoutColumns" xml:space="preserve">
-    <value>Details layout columns</value>
   </data>
   <data name="Lockscreen" xml:space="preserve">
     <value>Lockscreen</value>
@@ -2461,11 +2452,11 @@
   <data name="UnpinFromStartDescription" xml:space="preserve">
     <value>Unpin item(s) from the Start Menu</value>
   </data>
-  <data name="PinItemToFavoritesDescription" xml:space="preserve">
-    <value>Pin folder(s) to Favorites</value>
+  <data name="PinFolderToSidebarDescription" xml:space="preserve">
+    <value>Pin folder(s) to Sidebar</value>
   </data>
-  <data name="UnpinItemFromFavoritesDescription" xml:space="preserve">
-    <value>Unpin folder(s) from Favorites</value>
+  <data name="UnpinFolderFromSidebarDescription" xml:space="preserve">
+    <value>Unpin folder(s) from Sidebar</value>
   </data>
   <data name="SetAsWallpaperBackgroundDescription" xml:space="preserve">
     <value>Set selected picture as desktop background</value>
@@ -2475,6 +2466,9 @@
   </data>
   <data name="SetAsLockscreenBackgroundDescription" xml:space="preserve">
     <value>Set selected picture as lockscreen background</value>
+  </data>
+  <data name="SetAsAppBackgroundDescription" xml:space="preserve">
+    <value>Set selected picture as the app background</value>
   </data>
   <data name="InstallFontDescription" xml:space="preserve">
     <value>Install selected font(s)</value>
@@ -2898,13 +2892,13 @@
     <value>Untagged</value>
   </data>
   <data name="PreviousTab" xml:space="preserve">
-    <value>Moves to the previous tab</value>
+    <value>Move to the previous tab</value>
   </data>
   <data name="NextTab" xml:space="preserve">
-    <value>Moves to the next tab</value>
+    <value>Move to the next tab</value>
   </data>
   <data name="CloseTab" xml:space="preserve">
-    <value>Closes current tab</value>
+    <value>Close current tab</value>
   </data>
   <data name="EditPath" xml:space="preserve">
     <value>Edit path</value>
@@ -3278,7 +3272,7 @@
     <value>Files is running as administrator</value>
   </data>
   <data name="FilesRunningAsAdminContent" xml:space="preserve">
-    <value>Due to platform limitations, drag and drop isn't available when running Files as administrator.</value>
+    <value>Due to a limitation with Windows and WinAppSdk, drag and drop isn't available when running Files as admin. If you wish to use drag and drop, you can work around this limitation by opening UAC (User Account Control) from the Start Menu and selecting the third level, and restarting Windows. Otherwise, you can keep using Files without drag &amp; drop.</value>
   </data>
   <data name="SettingsLeaveAppRunning" xml:space="preserve">
     <value>Leave app running in the background when the window is closed</value>
@@ -3722,5 +3716,85 @@
   <data name="ExtraLarge" xml:space="preserve">
     <value>Extra large</value>
     <comment>Used to describe layout sizes</comment>
+  </data>
+  <data name="DetailsView" xml:space="preserve">
+    <value>Details view</value>
+  </data>
+  <data name="LayoutType" xml:space="preserve">
+    <value>Layout type</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="Commands" xml:space="preserve">
+    <value>Commands</value>
+  </data>
+  <data name="AddCommand" xml:space="preserve">
+    <value>Add command</value>
+  </data>
+  <data name="RestoreDefaults" xml:space="preserve">
+    <value>Restore defaults</value>
+  </data>
+  <data name="ChooseAnAction" xml:space="preserve">
+    <value>Choose an action</value>
+  </data>
+  <data name="RestoreDefaultKeybindingsConfirmation" xml:space="preserve">
+    <value>Are you sure you want to restore the default key bindings? This action cannot be undone.</value>
+  </data>
+  <data name="KeybindingAlreadyUsedNotification" xml:space="preserve">
+    <value>This key binding is already being used, please choose a different key binding to continue.</value>
+  </data>
+  <data name="Customized" xml:space="preserve">
+    <value>Customized</value>
+  </data>
+  <data name="AdaptiveLayoutDisabledNotification" xml:space="preserve">
+    <value>Adaptive layout is not available when preferences are synced, the default layout has been changed to Details.</value>
+  </data>
+  <data name="BackgroundImage" xml:space="preserve">
+    <value>Background image</value>
+  </data>
+  <data name="Bottom" xml:space="preserve">
+    <value>Bottom</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Center" xml:space="preserve">
+    <value>Center</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Fill" xml:space="preserve">
+    <value>Fill</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="HorizontalAlignment" xml:space="preserve">
+    <value>Horizontal alignment</value>
+  </data>
+  <data name="ImageFit" xml:space="preserve">
+    <value>Image fit</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>Left</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Opacity" xml:space="preserve">
+    <value>Opacity</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>Right</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Top" xml:space="preserve">
+    <value>Top</value>
+    <comment>Image alignment type</comment>
+  </data>
+  <data name="Uniform" xml:space="preserve">
+    <value>Uniform</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="UniformToFill" xml:space="preserve">
+    <value>Uniform to fill</value>
+    <comment>Image stretch type</comment>
+  </data>
+  <data name="VerticalAlignment" xml:space="preserve">
+    <value>Vertical alignment</value>
   </data>
 </root>

@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class DeleteItemAction : BaseDeleteAction, IAction
+	internal sealed class DeleteItemAction : BaseDeleteAction, IAction
 	{
 		public string Label
 			=> "Delete".GetLocalizedResource();
@@ -20,7 +20,7 @@ namespace Files.App.Actions
 		public HotKey SecondHotKey
 			=> new(Keys.D, KeyModifiers.Ctrl);
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			return DeleteItemsAsync(false);
 		}

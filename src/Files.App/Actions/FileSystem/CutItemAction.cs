@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal class CutItemAction : ObservableObject, IAction
+	internal sealed class CutItemAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -29,7 +29,7 @@ namespace Files.App.Actions
 			context.PropertyChanged += Context_PropertyChanged;
 		}
 
-		public Task ExecuteAsync()
+		public Task ExecuteAsync(object? parameter = null)
 		{
 			return context.ShellPage is not null
 				? UIFilesystemHelpers.CutItemAsync(context.ShellPage)
