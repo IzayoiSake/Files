@@ -170,7 +170,7 @@ namespace Files.App.ViewModels
 					{
 						var isRestored = TabsManageHelper.RestoreLastAppsTabs(this);
 						var lastSessionTabList = UserSettingsService.GeneralSettingsService.LastSessionTabList.ToList();
-						var defaultArg = new CustomTabViewItemParameter() { InitialPageType = typeof(PaneHolderPage), NavigationParameter = "Home" };
+						var defaultArg = new TabBarItemParameter() { InitialPageType = typeof(PaneHolderPage), NavigationParameter = "Home" };
 						var defaultArgStrList = new List<string>() { defaultArg.Serialize() };
 						if (isRestored && !lastSessionTabList.SequenceEqual(defaultArgStrList))
 						{
