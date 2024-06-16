@@ -219,7 +219,7 @@ namespace Files.App.Helpers
 		{
 			var otherTabsWithIdArgList = tabsWithIdArgList.FindAll(x => x.instanceId != instanceId).ToList();
 			var thisInstanceTabsStr = MainPageViewModel.AppInstances.DefaultIfEmpty().Select(x => x.NavigationParameter.Serialize()).ToList();
-			var thisInstanceTabsWithIdArgList = thisInstanceTabsStr.Select(x => TabItemWithIDArguments.CreateFromTabItemArg(CustomTabViewItemParameter.Deserialize(x))).ToList();
+			var thisInstanceTabsWithIdArgList = thisInstanceTabsStr.Select(x => TabItemWithIDArguments.CreateFromTabItemArg(TabBarItemParameter.Deserialize(x))).ToList();
 			var newTabsWithIDArgList = otherTabsWithIdArgList.ToList();
 			newTabsWithIDArgList.AddRange(thisInstanceTabsWithIdArgList);
 			return newTabsWithIDArgList;

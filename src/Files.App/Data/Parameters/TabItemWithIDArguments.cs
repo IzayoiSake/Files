@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Files.App.Data.Parameters
 {
-	//	CustomTabViewItemParameter is sealed and cannot be inherited
+	//	 TabBarItemParameter is sealed and cannot be inherited
 	public class TabItemWithIDArguments
 	{
 		public string instanceId { get; set; }
@@ -17,7 +17,7 @@ namespace Files.App.Data.Parameters
 		public TabItemWithIDArguments()
 		{
 			instanceId = Process.GetCurrentProcess().Id.ToString();
-			var defaultArg = new CustomTabViewItemParameter() { InitialPageType = typeof(PaneHolderPage), NavigationParameter = "Home" };
+			var defaultArg = new TabBarItemParameter() { InitialPageType = typeof(PaneHolderPage), NavigationParameter = "Home" };
 			customTabItemParameterStr = defaultArg.Serialize();
 		}
 
@@ -37,21 +37,21 @@ namespace Files.App.Data.Parameters
 			return tabArgs;
 		}
 
-		public static TabItemWithIDArguments CreateFromTabItemArg(CustomTabViewItemParameter tabItemArg)
+		public static TabItemWithIDArguments CreateFromTabItemArg(TabBarItemParameter tabItemArg)
 		{
 			var tabItemWithIDArg = new TabItemWithIDArguments();
 			tabItemWithIDArg.instanceId = Process.GetCurrentProcess().Id.ToString();
-			// Serialize CustomTabViewItemParameter and store the JSON string
+			// Serialize  TabBarItemParameter and store the JSON string
 			tabItemWithIDArg.customTabItemParameterStr = tabItemArg.Serialize();
 			return tabItemWithIDArg;
 		}
 
-		public CustomTabViewItemParameter ExportToTabItemArg()
+		public TabBarItemParameter ExportToTabItemArg()
 		{
 			if (!string.IsNullOrWhiteSpace(customTabItemParameterStr))
 			{
-				// Deserialize and return CustomTabViewItemParameter
-				return CustomTabViewItemParameter.Deserialize(customTabItemParameterStr);
+				// Deserialize and return TabBarItemParameter
+				return TabBarItemParameter.Deserialize(customTabItemParameterStr);
 			}
 			return null;
 		}
