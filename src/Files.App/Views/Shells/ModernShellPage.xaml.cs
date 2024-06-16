@@ -40,19 +40,6 @@ namespace Files.App.Views.Shells
 			}
 		}
 
-		public Thickness CurrentInstanceBorderThickness
-		{
-			get => (Thickness)GetValue(CurrentInstanceBorderThicknessProperty);
-			set => SetValue(CurrentInstanceBorderThicknessProperty, value);
-		}
-
-		public static readonly DependencyProperty CurrentInstanceBorderThicknessProperty =
-			DependencyProperty.Register(
-				nameof(CurrentInstanceBorderThickness),
-				typeof(Thickness),
-				typeof(ModernShellPage),
-				new PropertyMetadata(null));
-
 		public ModernShellPage() : base(new CurrentInstanceViewModel())
 		{
 			InitializeComponent();
@@ -167,7 +154,7 @@ namespace Files.App.Views.Shells
 
 			var parameters = e.Parameter as NavigationArguments;
 			var isTagSearch = parameters.NavPathParam is not null && parameters.NavPathParam.StartsWith("tag:");
-			TabItemParameter = new()
+			TabBarItemParameter = new()
 			{
 				InitialPageType = typeof(ModernShellPage),
 				NavigationParameter = parameters.IsSearchResultPage && !isTagSearch ? parameters.SearchPathParam : parameters.NavPathParam
@@ -319,7 +306,7 @@ namespace Files.App.Views.Shells
 					navigationPath.TrimEnd(Path.DirectorySeparatorChar).Equals(
 						FilesystemViewModel.WorkingDirectory.TrimEnd(Path.DirectorySeparatorChar),
 						StringComparison.OrdinalIgnoreCase)) &&
-					(TabItemParameter?.NavigationParameter is not string navArg ||
+					(TabBarItemParameter?.NavigationParameter is not string navArg ||
 					string.IsNullOrEmpty(navArg) ||
 					!navArg.StartsWith("tag:"))) // Return if already selected
 				{

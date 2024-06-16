@@ -107,6 +107,7 @@ namespace Files.App.Data.Commands
 		OpenTerminal,
 		OpenTerminalAsAdmin,
 		OpenCommandPalette,
+		EditInNotepad,
 
 		// Layout
 		LayoutDecreaseSize,
@@ -189,6 +190,8 @@ namespace Files.App.Data.Commands
 		CloseSelectedTab,
 		OpenNewPane,
 		ClosePane,
+		FocusLeftPane,
+		FocusRightPane,
 
 		// Play
 		PlayAll,

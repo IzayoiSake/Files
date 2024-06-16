@@ -1,17 +1,15 @@
 ﻿// Copyright (c) 2024 Files Community
 // Licensed under the MIT License. See the LICENSE.
 
-using CommunityToolkit.WinUI.Notifications;
-using Files.App.Services.DateTimeFormatter;
-using Files.App.Services.Settings;
-using Files.App.Storage.FtpStorage;
-using Files.App.Storage.NativeStorage;
-using Files.App.ViewModels.Settings;
+using CommunityToolkit.WinUI.Helpers;
+using Files.App.Helpers.Application;
 using Files.App.Services.SizeProvider;
-using Files.Core.Storage;
+using Files.App.Storage.Storables;
+using Files.App.ViewModels.Settings;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Sentry;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Text;
@@ -19,7 +17,6 @@ using Windows.ApplicationModel;
 using System.Text.Json;
 using Windows.Storage;
 using Windows.System;
-using Windows.UI.Notifications;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Files.App.Helpers
@@ -112,24 +109,22 @@ namespace Files.App.Helpers
 		}
 
 		/// <summary>
-		/// Configures AppCenter service, such as Analytics and Crash Report.
+		/// Configures Sentry service, such as Analytics and Crash Report.
 		/// </summary>
-		public static void ConfigureAppCenter()
+		public static void ConfigureSentry()
 		{
-			try
+			SentrySdk.Init(options =>
 			{
-				if (!Microsoft.AppCenter.AppCenter.Configured)
+				options.Dsn = Constants.AutomatedWorkflowInjectionKeys.SentrySecret;
+				options.AutoSessionTracking = true;
+				options.Release = $"{SystemInformation.Instance.ApplicationVersion.Major}.{SystemInformation.Instance.ApplicationVersion.Minor}.{SystemInformation.Instance.ApplicationVersion.Build}";
+				options.TracesSampleRate = 1.0;
+				options.ProfilesSampleRate = 1.0;
+				options.ExperimentalMetrics = new ExperimentalMetricsOptions
 				{
-					Microsoft.AppCenter.AppCenter.Start(
-						Constants.AutomatedWorkflowInjectionKeys.AppCenterSecret,
-						typeof(Microsoft.AppCenter.Analytics.Analytics),
-						typeof(Microsoft.AppCenter.Crashes.Crashes));
-				}
-			}
-			catch (Exception ex)
-			{
-				App.Logger.LogWarning(ex, "Failed to start AppCenter service.");
-			}
+					EnableCodeLocations = true
+				};
+			});
 		}
 
 		/// <summary>
@@ -148,6 +143,7 @@ namespace Files.App.Helpers
 					.AddSingleton<IAppearanceSettingsService, AppearanceSettingsService>(sp => new AppearanceSettingsService(((UserSettingsService)sp.GetRequiredService<IUserSettingsService>()).GetSharingContext()))
 					.AddSingleton<IGeneralSettingsService, GeneralSettingsService>(sp => new GeneralSettingsService(((UserSettingsService)sp.GetRequiredService<IUserSettingsService>()).GetSharingContext()))
 					.AddSingleton<IFoldersSettingsService, FoldersSettingsService>(sp => new FoldersSettingsService(((UserSettingsService)sp.GetRequiredService<IUserSettingsService>()).GetSharingContext()))
+					.AddSingleton<IDevToolsSettingsService, DevToolsSettingsService>(sp => new DevToolsSettingsService(((UserSettingsService)sp.GetRequiredService<IUserSettingsService>()).GetSharingContext()))
 					.AddSingleton<IApplicationSettingsService, ApplicationSettingsService>(sp => new ApplicationSettingsService(((UserSettingsService)sp.GetRequiredService<IUserSettingsService>()).GetSharingContext()))
 					.AddSingleton<IInfoPaneSettingsService, InfoPaneSettingsService>(sp => new InfoPaneSettingsService(((UserSettingsService)sp.GetRequiredService<IUserSettingsService>()).GetSharingContext()))
 					.AddSingleton<ILayoutSettingsService, LayoutSettingsService>(sp => new LayoutSettingsService(((UserSettingsService)sp.GetRequiredService<IUserSettingsService>()).GetSharingContext()))
@@ -155,7 +151,7 @@ namespace Files.App.Helpers
 					.AddSingleton<IActionsSettingsService, ActionsSettingsService>(sp => new ActionsSettingsService(((UserSettingsService)sp.GetRequiredService<IUserSettingsService>()).GetSharingContext()))
 					.AddSingleton<IFileTagsSettingsService, FileTagsSettingsService>()
 					// Contexts
-					.AddSingleton<IPageContext, PageContext>()
+					.AddSingleton<IMultiPanesContext, MultiPanesContext>()
 					.AddSingleton<IContentPageContext, ContentPageContext>()
 					.AddSingleton<IDisplayPageContext, DisplayPageContext>()
 					.AddSingleton<IHomePageContext, HomePageContext>()
@@ -165,6 +161,7 @@ namespace Files.App.Helpers
 					// Services
 					.AddSingleton<IAppThemeModeService, AppThemeModeService>()
 					.AddSingleton<IDialogService, DialogService>()
+					.AddSingleton<ICommonDialogService, CommonDialogService>()
 					.AddSingleton<IImageService, ImagingService>()
 					.AddSingleton<IThreadingService, ThreadingService>()
 					.AddSingleton<ILocalizationService, LocalizationService>()
@@ -177,21 +174,23 @@ namespace Files.App.Helpers
 					.AddSingleton<IAddItemService, AddItemService>()
 #if STABLE || PREVIEW
 					.AddSingleton<IUpdateService, SideloadUpdateService>()
+#elif STORE
+					.AddSingleton<IUpdateService, StoreUpdateService>()
 #else
-					.AddSingleton<IUpdateService, UpdateService>()
+					.AddSingleton<IUpdateService, DummyUpdateService>()
 #endif
 					.AddSingleton<IPreviewPopupService, PreviewPopupService>()
 					.AddSingleton<IDateTimeFormatterFactory, DateTimeFormatterFactory>()
 					.AddSingleton<IDateTimeFormatter, UserDateTimeFormatter>()
-					.AddSingleton<IVolumeInfoFactory, VolumeInfoFactory>()
 					.AddSingleton<ISizeProvider, UserSizeProvider>()
 					.AddSingleton<IQuickAccessService, QuickAccessService>()
 					.AddSingleton<IResourcesService, ResourcesService>()
 					.AddSingleton<IWindowsJumpListService, WindowsJumpListService>()
 					.AddSingleton<IRemovableDrivesService, RemovableDrivesService>()
-					.AddSingleton<INetworkDrivesService, NetworkDrivesService>()
+					.AddSingleton<INetworkService, NetworkService>()
 					.AddSingleton<IStartMenuService, StartMenuService>()
 					.AddSingleton<IStorageCacheService, StorageCacheService>()
+					.AddSingleton<IStorageArchiveService, StorageArchiveService>()
 					.AddSingleton<IWindowsCompatibilityService, WindowsCompatibilityService>()
 					// ViewModels
 					.AddSingleton<MainPageViewModel>()
@@ -204,6 +203,7 @@ namespace Files.App.Helpers
 					.AddTransient<HomeViewModel>()
 					.AddSingleton<QuickAccessWidgetViewModel>()
 					.AddSingleton<DrivesWidgetViewModel>()
+					.AddSingleton<NetworkLocationsWidgetViewModel>()
 					.AddSingleton<FileTagsWidgetViewModel>()
 					.AddSingleton<RecentFilesWidgetViewModel>()
 					// Utilities
@@ -231,7 +231,7 @@ namespace Files.App.Helpers
 				}
 				else
 				{
-					var defaultArg = new CustomTabViewItemParameter()
+					var defaultArg = new TabBarItemParameter()
 					{
 						InitialPageType = typeof(PaneHolderPage),
 						NavigationParameter = "Home"
@@ -258,6 +258,8 @@ namespace Files.App.Helpers
 
 			if (ex is not null)
 			{
+				SentrySdk.CaptureException(ex);
+
 				formattedException.AppendLine($">>>> HRESULT: {ex.HResult}");
 
 				if (ex.Message is not null)
@@ -302,47 +304,7 @@ namespace Files.App.Helpers
 
 			SafetyExtensions.IgnoreExceptions(() =>
 			{
-				var toastContent = new ToastContent()
-				{
-					Visual = new()
-					{
-						BindingGeneric = new ToastBindingGeneric()
-						{
-							Children =
-						{
-							new AdaptiveText()
-							{
-								Text = "ExceptionNotificationHeader".GetLocalizedResource()
-							},
-							new AdaptiveText()
-							{
-								Text = "ExceptionNotificationBody".GetLocalizedResource()
-							}
-						},
-							AppLogoOverride = new()
-							{
-								Source = "ms-appx:///Assets/error.png"
-							}
-						}
-					},
-					Actions = new ToastActionsCustom()
-					{
-						Buttons =
-					{
-						new ToastButton("ExceptionNotificationReportButton".GetLocalizedResource(), Constants.ExternalUrl.BugReportUrl)
-						{
-							ActivationType = ToastActivationType.Protocol
-						}
-					}
-					},
-					ActivationType = ToastActivationType.Protocol
-				};
-
-				// Create the toast notification
-				var toastNotification = new ToastNotification(toastContent.GetXml());
-
-				// And send the notification
-				ToastNotificationManager.CreateToastNotifier().Show(toastNotification);
+				AppToastNotificationHelper.ShowUnhandledExceptionToast();
 			});
 
 			// Restart the app

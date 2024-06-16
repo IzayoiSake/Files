@@ -16,7 +16,7 @@ namespace Files.App.Helpers
 	{
 		private static MainPageViewModel MainPageViewModel { get; } = Ioc.Default.GetRequiredService<MainPageViewModel>();
 		private static DrivesViewModel DrivesViewModel { get; } = Ioc.Default.GetRequiredService<DrivesViewModel>();
-		private static INetworkDrivesService NetworkDrivesService { get; } = Ioc.Default.GetRequiredService<INetworkDrivesService>();
+		private static INetworkService NetworkService { get; } = Ioc.Default.GetRequiredService<INetworkService>();
 
 		public static Task OpenPathInNewTab(string? path, bool focusNewTab)
 		{
@@ -46,7 +46,7 @@ namespace Files.App.Helpers
 				IconSource = null,
 				Description = null,
 				ToolTipText = null,
-				NavigationParameter = new CustomTabViewItemParameter()
+				NavigationParameter = new TabBarItemParameter()
 				{
 					InitialPageType = type,
 					NavigationParameter = path
@@ -75,7 +75,7 @@ namespace Files.App.Helpers
 				ToolTipText = null
 			};
 
-			tabItem.NavigationParameter = new CustomTabViewItemParameter()
+			tabItem.NavigationParameter = new TabBarItemParameter()
 			{
 				InitialPageType = type,
 				NavigationParameter = tabViewItemArgs
@@ -147,7 +147,7 @@ namespace Files.App.Helpers
 			else if (currentPath.Equals(Constants.UserEnvironmentPaths.MyComputerPath, StringComparison.OrdinalIgnoreCase))
 				tabLocationHeader = "ThisPC".GetLocalizedResource();
 			else if (currentPath.Equals(Constants.UserEnvironmentPaths.NetworkFolderPath, StringComparison.OrdinalIgnoreCase))
-				tabLocationHeader = "SidebarNetworkDrives".GetLocalizedResource();
+				tabLocationHeader = "Network".GetLocalizedResource();
 			else if (App.LibraryManager.TryGetLibrary(currentPath, out LibraryLocationItem library))
 			{
 				var libName = System.IO.Path.GetFileNameWithoutExtension(library.Path).GetLocalizedResource();
@@ -170,7 +170,7 @@ namespace Files.App.Helpers
 				}
 				else if (PathNormalization.NormalizePath(PathNormalization.GetPathRoot(currentPath)) == normalizedCurrentPath) // If path is a drive's root
 				{
-					var matchingDrive = NetworkDrivesService.Drives.Cast<DriveItem>().FirstOrDefault(netDrive => normalizedCurrentPath.Contains(PathNormalization.NormalizePath(netDrive.Path), StringComparison.OrdinalIgnoreCase));
+					var matchingDrive = NetworkService.Computers.Cast<DriveItem>().FirstOrDefault(netDrive => normalizedCurrentPath.Contains(PathNormalization.NormalizePath(netDrive.Path), StringComparison.OrdinalIgnoreCase));
 					matchingDrive ??= DrivesViewModel.Drives.Cast<DriveItem>().FirstOrDefault(drive => normalizedCurrentPath.Contains(PathNormalization.NormalizePath(drive.Path), StringComparison.OrdinalIgnoreCase));
 					tabLocationHeader = matchingDrive is not null ? matchingDrive.Text : normalizedCurrentPath;
 				}
@@ -234,7 +234,7 @@ namespace Files.App.Helpers
 			});
 		}
 
-		public static async void Control_ContentChanged(object? sender, CustomTabViewItemParameter e)
+		public static async void Control_ContentChanged(object? sender, TabBarItemParameter e)
 		{
 			if (sender is null)
 				return;

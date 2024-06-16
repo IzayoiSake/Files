@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using System.Windows.Input;
 using Windows.System;
+using Microsoft.UI.Xaml.Controls;
 using Files.App.Helpers;
 
 namespace Files.App.ViewModels
@@ -20,7 +21,7 @@ namespace Files.App.ViewModels
 		// Dependency injections
 
 		private IAppearanceSettingsService AppearanceSettingsService { get; } = Ioc.Default.GetRequiredService<IAppearanceSettingsService>();
-		private INetworkDrivesService NetworkDrivesService { get; } = Ioc.Default.GetRequiredService<INetworkDrivesService>();
+		private INetworkService NetworkService { get; } = Ioc.Default.GetRequiredService<INetworkService>();
 		private IUserSettingsService UserSettingsService { get; } = Ioc.Default.GetRequiredService<IUserSettingsService>();
 		private IResourcesService ResourcesService { get; } = Ioc.Default.GetRequiredService<IResourcesService>();
 		private DrivesViewModel DrivesViewModel { get; } = Ioc.Default.GetRequiredService<DrivesViewModel>();
@@ -134,9 +135,9 @@ namespace Files.App.ViewModels
 					// add last session tabs to closed tabs stack if those tabs are not about to be opened
 					if (!UserSettingsService.AppSettingsService.RestoreTabsOnStartup && !UserSettingsService.GeneralSettingsService.ContinueLastSessionOnStartUp && UserSettingsService.GeneralSettingsService.LastSessionTabList != null)
 					{
-						var items = new CustomTabViewItemParameter[UserSettingsService.GeneralSettingsService.LastSessionTabList.Count];
+						var items = new TabBarItemParameter[UserSettingsService.GeneralSettingsService.LastSessionTabList.Count];
 						for (int i = 0; i < items.Length; i++)
-							items[i] = CustomTabViewItemParameter.Deserialize(UserSettingsService.GeneralSettingsService.LastSessionTabList[i]);
+							items[i] = TabBarItemParameter.Deserialize(UserSettingsService.GeneralSettingsService.LastSessionTabList[i]);
 
 						BaseTabBar.PushRecentTab(items);
 					}
@@ -148,7 +149,7 @@ namespace Files.App.ViewModels
 						{
 							foreach (string tabArgsString in UserSettingsService.GeneralSettingsService.LastSessionTabList)
 							{
-								var tabArgs = CustomTabViewItemParameter.Deserialize(tabArgsString);
+								var tabArgs = TabBarItemParameter.Deserialize(tabArgsString);
 								await NavigationHelpers.AddNewTabByParamAsync(tabArgs.InitialPageType, tabArgs.NavigationParameter);
 							}
 
@@ -179,7 +180,7 @@ namespace Files.App.ViewModels
 						{
 							foreach (string tabArgsString in UserSettingsService.GeneralSettingsService.LastSessionTabList)
 							{
-								var tabArgs = CustomTabViewItemParameter.Deserialize(tabArgsString);
+								var tabArgs = TabBarItemParameter.Deserialize(tabArgsString);
 								await NavigationHelpers.AddNewTabByParamAsync(tabArgs.InitialPageType, tabArgs.NavigationParameter);
 							}
 						}
@@ -213,7 +214,7 @@ namespace Files.App.ViewModels
 						{
 							foreach (string tabArgsString in UserSettingsService.GeneralSettingsService.LastSessionTabList)
 							{
-								var tabArgs = CustomTabViewItemParameter.Deserialize(tabArgsString);
+								var tabArgs = TabBarItemParameter.Deserialize(tabArgsString);
 								await NavigationHelpers.AddNewTabByParamAsync(tabArgs.InitialPageType, tabArgs.NavigationParameter);
 							}
 						}
@@ -225,7 +226,7 @@ namespace Files.App.ViewModels
 					await NavigationHelpers.AddNewTabByPathAsync(typeof(PaneHolderPage), navArgs, true);
 				else if (parameter is PaneNavigationArguments paneArgs)
 					await NavigationHelpers.AddNewTabByParamAsync(typeof(PaneHolderPage), paneArgs);
-				else if (parameter is CustomTabViewItemParameter tabArgs)
+				else if (parameter is TabBarItemParameter tabArgs)
 					await NavigationHelpers.AddNewTabByParamAsync(tabArgs.InitialPageType, tabArgs.NavigationParameter);
 			}
 
@@ -234,14 +235,15 @@ namespace Files.App.ViewModels
 
 			await Task.WhenAll(
 				DrivesViewModel.UpdateDrivesAsync(),
-				NetworkDrivesService.UpdateDrivesAsync());
+				NetworkService.UpdateComputersAsync(),
+				NetworkService.UpdateShortcutsAsync());
 		}
 
 		// Command methods
 
-		private void ExecuteNavigateToNumberedTabKeyboardAcceleratorCommand(KeyboardAcceleratorInvokedEventArgs? e)
+		private async void ExecuteNavigateToNumberedTabKeyboardAcceleratorCommand(KeyboardAcceleratorInvokedEventArgs? e)
 		{
-			int indexToSelect = e!.KeyboardAccelerator.Key switch
+			var indexToSelect = e!.KeyboardAccelerator.Key switch
 			{
 				VirtualKey.Number1 => 0,
 				VirtualKey.Number2 => 1,
@@ -257,7 +259,15 @@ namespace Files.App.ViewModels
 
 			// Only select the tab if it is in the list
 			if (indexToSelect < AppInstances.Count)
+			{
 				App.AppModel.TabStripSelectedIndex = indexToSelect;
+
+				// Small delay for the UI to load
+				await Task.Delay(500);
+
+				// Refocus on the file list
+				(SelectedTabItem?.TabItemContent as Control)?.Focus(FocusState.Programmatic);
+			}
 
 			e.Handled = true;
 		}

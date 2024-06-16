@@ -1,7 +1,6 @@
 // Copyright (c) 2024 Files Community
 // Licensed under the MIT License. See the LICENSE.
 
-using Microsoft.AppCenter.Analytics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 
@@ -49,6 +48,13 @@ namespace Files.App.Services.Settings
 		}
 
 		/// <inheritdoc/>
+		public String AppThemeToolbarBackgroundColor
+		{
+			get => Get("");
+			set => Set(value);
+		}
+
+		/// <inheritdoc/>
 		public String AppThemeSidebarBackgroundColor
 		{
 			get => Get("");
@@ -57,6 +63,20 @@ namespace Files.App.Services.Settings
 
 		/// <inheritdoc/>
 		public String AppThemeFileAreaBackgroundColor
+		{
+			get => Get("");
+			set => Set(value);
+		}
+
+		/// <inheritdoc/>
+		public String AppThemeFileAreaSecondaryBackgroundColor
+		{
+			get => Get("");
+			set => Set(value);
+		}
+
+		/// <inheritdoc/>
+		public String AppThemeInfoPaneBackgroundColor
 		{
 			get => Get("");
 			set => Set(value);
@@ -113,21 +133,6 @@ namespace Files.App.Services.Settings
 
 		protected override void RaiseOnSettingChangedEvent(object sender, SettingChangedEventArgs e)
 		{
-			switch (e.SettingName)
-			{
-				case nameof(AppThemeBackgroundColor):
-				case nameof(AppThemeAddressBarBackgroundColor):
-				case nameof(AppThemeSidebarBackgroundColor):
-				case nameof(AppThemeFileAreaBackgroundColor):
-				case nameof(AppThemeBackdropMaterial):
-				case nameof(AppThemeBackgroundImageFit):
-				case nameof(AppThemeBackgroundImageOpacity):
-				case nameof(AppThemeBackgroundImageVerticalAlignment):
-				case nameof(AppThemeBackgroundImageHorizontalAlignment):
-					Analytics.TrackEvent($"Set {e.SettingName} to {e.NewValue}");
-					break;
-			}
-
 			base.RaiseOnSettingChangedEvent(sender, e);
 		}
 	}

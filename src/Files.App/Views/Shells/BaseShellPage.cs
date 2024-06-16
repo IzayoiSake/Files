@@ -80,20 +80,20 @@ namespace Files.App.Views.Shells
 				if (value != _ContentPage)
 				{
 					if (_ContentPage is not null)
-						_ContentPage.DirectoryPropertiesViewModel.CheckoutRequested -= GitCheckout_Required;
+						_ContentPage.StatusBarViewModel.CheckoutRequested -= GitCheckout_Required;
 
 					_ContentPage = value;
 
 					NotifyPropertyChanged(nameof(ContentPage));
 					NotifyPropertyChanged(nameof(SlimContentPage));
 					if (value is not null)
-						_ContentPage.DirectoryPropertiesViewModel.CheckoutRequested += GitCheckout_Required;
+						_ContentPage.StatusBarViewModel.CheckoutRequested += GitCheckout_Required;
 				}
 			}
 		}
 
-		protected IPaneHolder _PaneHolder;
-		public IPaneHolder PaneHolder
+		protected IPanesPage _PaneHolder;
+		public IPanesPage PaneHolder
 		{
 			get => _PaneHolder;
 			set
@@ -107,8 +107,8 @@ namespace Files.App.Views.Shells
 			}
 		}
 
-		protected CustomTabViewItemParameter _TabItemArguments;
-		public CustomTabViewItemParameter TabItemParameter
+		protected TabBarItemParameter _TabItemArguments;
+		public TabBarItemParameter TabBarItemParameter
 		{
 			get => _TabItemArguments;
 			set
@@ -142,6 +142,10 @@ namespace Files.App.Views.Shells
 						_IsCurrentInstanceTCS = new();
 
 					NotifyPropertyChanged(nameof(IsCurrentInstance));
+
+					// Update background to show off the focused shell page
+					if (!IsColumnView)
+						VisualStateManager.GoToState(this, value ? "ShellBackgroundFocusOnState" : "ShellBackgroundFocusOffState", true);
 				}
 			}
 		}
@@ -150,22 +154,9 @@ namespace Files.App.Views.Shells
 
 		public virtual Task WhenIsCurrent() => _IsCurrentInstanceTCS.Task;
 
-		public SolidColorBrush CurrentInstanceBorderBrush
-		{
-			get => (SolidColorBrush)GetValue(CurrentInstanceBorderBrushProperty);
-			set => SetValue(CurrentInstanceBorderBrushProperty, value);
-		}
-
-		public static readonly DependencyProperty CurrentInstanceBorderBrushProperty =
-		   DependencyProperty.Register(
-			nameof(CurrentInstanceBorderBrush),
-			typeof(SolidColorBrush),
-			typeof(ModernShellPage),
-			new PropertyMetadata(null));
-
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public event EventHandler<CustomTabViewItemParameter> ContentChanged;
+		public event EventHandler<TabBarItemParameter> ContentChanged;
 
 		public BaseShellPage(CurrentInstanceViewModel instanceViewModel)
 		{
@@ -239,9 +230,7 @@ namespace Files.App.Views.Shells
 			if (ContentPage is null)
 				return;
 
-			var directoryItemCountLocalization = (FilesystemViewModel.FilesAndFolders.Count == 1)
-				? "ItemCount/Text".GetLocalizedResource()
-				: "ItemsCount/Text".GetLocalizedResource();
+			var directoryItemCountLocalization = "Items".GetLocalizedFormatResource(FilesystemViewModel.FilesAndFolders.Count);
 
 			BranchItem? headBranch = headBranch = InstanceViewModel.IsGitRepository
 					? await GitHelpers.GetRepositoryHead(InstanceViewModel.GitRepositoryPath)
@@ -276,13 +265,13 @@ namespace Files.App.Views.Shells
 
 			if (!GitHelpers.IsExecutingGitAction)
 			{
-				contentPage.DirectoryPropertiesViewModel.UpdateGitInfo(
+				contentPage.StatusBarViewModel.UpdateGitInfo(
 					InstanceViewModel.IsGitRepository,
 					InstanceViewModel.GitRepositoryPath,
 					headBranch);
 			}
 
-			contentPage.DirectoryPropertiesViewModel.DirectoryItemCount = $"{FilesystemViewModel.FilesAndFolders.Count} {directoryItemCountLocalization}";
+			contentPage.StatusBarViewModel.DirectoryItemCount = $"{FilesystemViewModel.FilesAndFolders.Count} {directoryItemCountLocalization}";
 			contentPage.UpdateSelectionSize();
 		}
 
@@ -299,7 +288,7 @@ namespace Files.App.Views.Shells
 				? head.Name
 				: string.Empty;
 
-			ContentPage?.DirectoryPropertiesViewModel.UpdateGitInfo(
+			ContentPage?.StatusBarViewModel.UpdateGitInfo(
 				InstanceViewModel.IsGitRepository,
 				InstanceViewModel.GitRepositoryPath,
 				head);
@@ -309,12 +298,12 @@ namespace Files.App.Views.Shells
 		{
 			if (!await GitHelpers.Checkout(FilesystemViewModel.GitDirectory, branchName))
 			{
-				_ContentPage.DirectoryPropertiesViewModel.ShowLocals = true;
-				_ContentPage.DirectoryPropertiesViewModel.SelectedBranchIndex = DirectoryPropertiesViewModel.ACTIVE_BRANCH_INDEX;
+				_ContentPage.StatusBarViewModel.ShowLocals = true;
+				_ContentPage.StatusBarViewModel.SelectedBranchIndex = StatusBarViewModel.ACTIVE_BRANCH_INDEX;
 			}
 			else
 			{
-				ContentPage.DirectoryPropertiesViewModel.UpdateGitInfo(
+				ContentPage.StatusBarViewModel.UpdateGitInfo(
 					InstanceViewModel.IsGitRepository,
 					InstanceViewModel.GitRepositoryPath,
 					await GitHelpers.GetRepositoryHead(InstanceViewModel.GitRepositoryPath));
@@ -363,11 +352,11 @@ namespace Files.App.Views.Shells
 
 		protected async void ShellPage_TextChanged(ISearchBoxViewModel sender, SearchBoxTextChangedEventArgs e)
 		{
-			FilesystemViewModel.FilesAndFoldersFilter = sender.Query;
-			await FilesystemViewModel.ApplyFilesAndFoldersChangesAsync();
-
 			if (e.Reason != SearchBoxTextChangeReason.UserInput)
 				return;
+
+			FilesystemViewModel.FilesAndFoldersFilter = sender.Query;
+			await FilesystemViewModel.ApplyFilesAndFoldersChangesAsync();
 
 			if (!string.IsNullOrWhiteSpace(sender.Query))
 			{
@@ -558,7 +547,7 @@ namespace Files.App.Views.Shells
 				ToolbarViewModel.CanRefresh = false;
 				var searchInstance = new FolderSearch
 				{
-					Query = InstanceViewModel.CurrentSearchQuery ?? (string)TabItemParameter.NavigationParameter,
+					Query = InstanceViewModel.CurrentSearchQuery ?? (string)TabBarItemParameter.NavigationParameter,
 					Folder = FilesystemViewModel.WorkingDirectory,
 					ThumbnailSize = InstanceViewModel.FolderSettings.GetRoundedIconSize(),
 				};
@@ -631,7 +620,7 @@ namespace Files.App.Views.Shells
 			ItemDisplay.BackStack.Remove(ItemDisplay.BackStack.LastOrDefault());
 		}
 
-		public void RaiseContentChanged(IShellPage instance, CustomTabViewItemParameter args)
+		public void RaiseContentChanged(IShellPage instance, TabBarItemParameter args)
 		{
 			ContentChanged?.Invoke(instance, args);
 		}
