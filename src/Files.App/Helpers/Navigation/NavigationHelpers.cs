@@ -7,8 +7,6 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Storage;
 using Windows.Storage.Search;
 using Windows.System;
-using Newtonsoft.Json.Linq;
-using System.Text.Json;
 
 namespace Files.App.Helpers
 {
