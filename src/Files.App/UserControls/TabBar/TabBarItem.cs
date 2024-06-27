@@ -101,6 +101,12 @@ namespace Files.App.UserControls.TabBar
 		{
 			_NavigationArguments = e;
 			ContentChanged?.Invoke(this, e);
+			try
+			{
+				TabsManageHelper.UpDate();
+			}
+			catch
+			{ }
 		}
 
 		public void Dispose()

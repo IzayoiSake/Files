@@ -171,7 +171,7 @@ namespace Files.App.Views
 			await NavigationHelpers.UpdateInstancePropertiesAsync(paneArgs);
 
 			// Save the updated tab list
-			AppLifecycleHelper.SaveSessionTabs();
+			// AppLifecycleHelper.SaveSessionTabs();
 		}
 
 		public async void MultitaskingControl_CurrentInstanceChanged(object? sender, CurrentInstanceChangedEventArgs e)
