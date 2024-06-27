@@ -90,13 +90,13 @@ namespace Files.App
 				var host = AppLifecycleHelper.ConfigureHost();
 				Ioc.Default.ConfigureServices(host.Services);
 
-				var userSettingsService = Ioc.Default.GetRequiredService<IUserSettingsService>();
-				var isLeaveAppRunning = userSettingsService.GeneralSettingsService.LeaveAppRunning;
-
 #if STORE || STABLE || PREVIEW
 				// Configure Sentry
 				AppLifecycleHelper.ConfigureSentry();
 #endif
+
+				var userSettingsService = Ioc.Default.GetRequiredService<IUserSettingsService>();
+				var isLeaveAppRunning = userSettingsService.GeneralSettingsService.LeaveAppRunning;
 
 				if (isStartupTask && !isLeaveAppRunning)
 				{
@@ -216,7 +216,7 @@ namespace Files.App
 				if (instance is null)
 					return;
 
-				var items = (instance.TabItemContent as PaneHolderPage)?.ActivePane?.SlimContentPage?.SelectedItems;
+				var items = (instance.TabItemContent as ShellPanesPage)?.ActivePane?.SlimContentPage?.SelectedItems;
 				if (items is null)
 					return;
 

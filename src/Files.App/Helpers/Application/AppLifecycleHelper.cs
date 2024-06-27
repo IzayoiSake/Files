@@ -5,11 +5,13 @@ using CommunityToolkit.WinUI.Helpers;
 using Files.App.Helpers.Application;
 using Files.App.Services.SizeProvider;
 using Files.App.Storage.Storables;
+using Files.App.Utils.Logger;
 using Files.App.ViewModels.Settings;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sentry;
+using Sentry.Protocol;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Text;
@@ -118,12 +120,15 @@ namespace Files.App.Helpers
 				options.Dsn = Constants.AutomatedWorkflowInjectionKeys.SentrySecret;
 				options.AutoSessionTracking = true;
 				options.Release = $"{SystemInformation.Instance.ApplicationVersion.Major}.{SystemInformation.Instance.ApplicationVersion.Minor}.{SystemInformation.Instance.ApplicationVersion.Build}";
-				options.TracesSampleRate = 1.0;
-				options.ProfilesSampleRate = 1.0;
+				options.TracesSampleRate = 0.80;
+				options.ProfilesSampleRate = 0.40;
+				options.Environment = AppEnvironment == AppEnvironment.Preview ? "preview" : "production";
 				options.ExperimentalMetrics = new ExperimentalMetricsOptions
 				{
 					EnableCodeLocations = true
 				};
+
+				options.DisableWinUiUnhandledExceptionIntegration();
 			});
 		}
 
@@ -136,6 +141,7 @@ namespace Files.App.Helpers
 				.UseEnvironment(AppLifecycleHelper.AppEnvironment.ToString())
 				.ConfigureLogging(builder => builder
 					.AddProvider(new FileLoggerProvider(Path.Combine(ApplicationData.Current.LocalFolder.Path, "debug.log")))
+					.AddProvider(new SentryLoggerProvider())
 					.SetMinimumLevel(LogLevel.Information))
 				.ConfigureServices(services => services
 					// Settings services
@@ -158,6 +164,7 @@ namespace Files.App.Helpers
 					.AddSingleton<IWindowContext, WindowContext>()
 					.AddSingleton<IMultitaskingContext, MultitaskingContext>()
 					.AddSingleton<ITagsContext, TagsContext>()
+					.AddSingleton<ISidebarContext, SidebarContext>()
 					// Services
 					.AddSingleton<IAppThemeModeService, AppThemeModeService>()
 					.AddSingleton<IDialogService, DialogService>()
@@ -233,7 +240,7 @@ namespace Files.App.Helpers
 				{
 					var defaultArg = new TabBarItemParameter()
 					{
-						InitialPageType = typeof(PaneHolderPage),
+						InitialPageType = typeof(ShellPanesPage),
 						NavigationParameter = "Home"
 					};
 
@@ -249,6 +256,8 @@ namespace Files.App.Helpers
 		/// </summary>
 		public static void HandleAppUnhandledException(Exception? ex, bool showToastNotification)
 		{
+			var generalSettingsService = Ioc.Default.GetRequiredService<IGeneralSettingsService>();
+
 			StringBuilder formattedException = new()
 			{
 				Capacity = 200
@@ -258,7 +267,14 @@ namespace Files.App.Helpers
 
 			if (ex is not null)
 			{
-				SentrySdk.CaptureException(ex);
+				ex.Data[Mechanism.HandledKey] = false;
+				ex.Data[Mechanism.MechanismKey] = "Application.UnhandledException";
+
+				SentrySdk.CaptureException(ex, scope =>
+				{
+					scope.User.Id = generalSettingsService?.UserId;
+					scope.Level = SentryLevel.Fatal;
+				});
 
 				formattedException.AppendLine($">>>> HRESULT: {ex.HResult}");
 

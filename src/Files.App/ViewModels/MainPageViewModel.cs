@@ -79,6 +79,9 @@ namespace Files.App.ViewModels
 		public HorizontalAlignment AppThemeBackgroundImageHorizontalAlignment
 			=> AppearanceSettingsService.AppThemeBackgroundImageHorizontalAlignment;
 
+		public bool ShowToolbar
+			=> AppearanceSettingsService.ShowToolbar;
+
 
 		// Commands
 
@@ -108,6 +111,9 @@ namespace Files.App.ViewModels
 						break;
 					case nameof(AppearanceSettingsService.AppThemeBackgroundImageHorizontalAlignment):
 						OnPropertyChanged(nameof(AppThemeBackgroundImageHorizontalAlignment));
+						break;
+					case nameof(AppearanceSettingsService.ShowToolbar):
+						OnPropertyChanged(nameof(ShowToolbar));
 						break;
 				}
 			};
@@ -161,7 +167,7 @@ namespace Files.App.ViewModels
 						UserSettingsService.GeneralSettingsService.TabsOnStartupList is not null)
 					{
 						foreach (string path in UserSettingsService.GeneralSettingsService.TabsOnStartupList)
-							await NavigationHelpers.AddNewTabByPathAsync(typeof(PaneHolderPage), path, true);
+							await NavigationHelpers.AddNewTabByPathAsync(typeof(ShellPanesPage), path, true);
 					}
 					else if (UserSettingsService.GeneralSettingsService.ContinueLastSessionOnStartUp &&
 						(UserSettingsService.GeneralSettingsService.LastSessionTabList is not null ||
@@ -206,7 +212,7 @@ namespace Files.App.ViewModels
 								UserSettingsService.GeneralSettingsService.TabsOnStartupList is not null)
 						{
 							foreach (string path in UserSettingsService.GeneralSettingsService.TabsOnStartupList)
-								await NavigationHelpers.AddNewTabByPathAsync(typeof(PaneHolderPage), path, true);
+								await NavigationHelpers.AddNewTabByPathAsync(typeof(ShellPanesPage), path, true);
 						}
 						else if (UserSettingsService.GeneralSettingsService.ContinueLastSessionOnStartUp &&
 							UserSettingsService.GeneralSettingsService.LastSessionTabList is not null &&
@@ -223,9 +229,9 @@ namespace Files.App.ViewModels
 				}
 
 				if (parameter is string navArgs)
-					await NavigationHelpers.AddNewTabByPathAsync(typeof(PaneHolderPage), navArgs, true);
+					await NavigationHelpers.AddNewTabByPathAsync(typeof(ShellPanesPage), navArgs, true);
 				else if (parameter is PaneNavigationArguments paneArgs)
-					await NavigationHelpers.AddNewTabByParamAsync(typeof(PaneHolderPage), paneArgs);
+					await NavigationHelpers.AddNewTabByParamAsync(typeof(ShellPanesPage), paneArgs);
 				else if (parameter is TabBarItemParameter tabArgs)
 					await NavigationHelpers.AddNewTabByParamAsync(tabArgs.InitialPageType, tabArgs.NavigationParameter);
 			}

@@ -12,7 +12,7 @@ namespace Files.App.Data.Contexts
 
 		private readonly IMultiPanesContext context = Ioc.Default.GetRequiredService<IMultiPanesContext>();
 
-		private ItemViewModel? filesystemViewModel;
+		private ShellViewModel? filesystemViewModel;
 
 		public IShellPage? ShellPage => context?.ActivePaneOrColumn;
 
@@ -21,7 +21,7 @@ namespace Files.App.Data.Contexts
 		private ContentPageTypes pageType = ContentPageTypes.None;
 		public ContentPageTypes PageType => pageType;
 
-		public ListedItem? Folder => ShellPage?.FilesystemViewModel?.CurrentFolder;
+		public ListedItem? Folder => ShellPage?.ShellViewModel?.CurrentFolder;
 
 		public bool HasItem => ShellPage?.ToolbarViewModel?.HasItem ?? false;
 
@@ -51,7 +51,7 @@ namespace Files.App.Data.Contexts
 
 		public bool CanExecuteGitAction => IsGitRepository && !GitHelpers.IsExecutingGitAction;
 
-		public string? SolutionFilePath => ShellPage?.FilesystemViewModel?.SolutionFilePath;
+		public string? SolutionFilePath => ShellPage?.ShellViewModel?.SolutionFilePath;
 
 		public ContentPageContext()
 		{
@@ -99,7 +99,7 @@ namespace Files.App.Data.Contexts
 					page.PaneHolder.PropertyChanged += PaneHolder_PropertyChanged;
 			}
 
-			filesystemViewModel = ShellPage?.FilesystemViewModel;
+			filesystemViewModel = ShellPage?.ShellViewModel;
 			if (filesystemViewModel is not null)
 				filesystemViewModel.PropertyChanged += FilesystemViewModel_PropertyChanged;
 
@@ -128,8 +128,8 @@ namespace Files.App.Data.Contexts
 		{
 			switch (e.PropertyName)
 			{
-				case nameof(IPanesPage.IsMultiPaneEnabled):
-				case nameof(IPanesPage.IsMultiPaneActive):
+				case nameof(IShellPanesPage.IsMultiPaneEnabled):
+				case nameof(IShellPanesPage.IsMultiPaneActive):
 					OnPropertyChanged(e.PropertyName);
 					break;
 			}
@@ -178,10 +178,10 @@ namespace Files.App.Data.Contexts
 		{
 			switch (e.PropertyName)
 			{
-				case nameof(ItemViewModel.CurrentFolder):
+				case nameof(ShellViewModel.CurrentFolder):
 					OnPropertyChanged(nameof(Folder));
 					break;
-				case nameof(ItemViewModel.SolutionFilePath):
+				case nameof(ShellViewModel.SolutionFilePath):
 					OnPropertyChanged(nameof(SolutionFilePath));
 					break;
 			}

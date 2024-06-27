@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2024 Files Community
+// Copyright (c) 2024 Files Community
 // Licensed under the MIT License. See the LICENSE.
 
 using Sentry;
@@ -108,6 +108,10 @@ namespace Files.App.Data.Commands
 		public bool IsExecutable
 			=> Action.IsExecutable;
 
+		/// <inheritdoc/>
+		public bool IsAccessibleGlobally
+			=> Action.IsAccessibleGlobally;
+
 		public ActionCommand(CommandManager manager, CommandCodes code, IAction action)
 		{
 			Code = code;
@@ -141,7 +145,7 @@ namespace Files.App.Data.Commands
 		{
 			if (IsExecutable)
 			{
-				SentrySdk.Metrics.Increment($"Triggered {Code} action");
+				SentrySdk.Metrics.Increment("actions", tags: new Dictionary<string, string> { { "command", Code.ToString() } });
 				return Action.ExecuteAsync(parameter);
 			}
 
