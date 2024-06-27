@@ -17,7 +17,7 @@ namespace Files.App.Data.Parameters
 		public TabItemWithIDArguments()
 		{
 			instanceId = Process.GetCurrentProcess().Id.ToString();
-			var defaultArg = new TabBarItemParameter() { InitialPageType = typeof(PaneHolderPage), NavigationParameter = "Home" };
+			var defaultArg = new TabBarItemParameter() { InitialPageType = typeof(ShellPanesPage), NavigationParameter = "Home" };
 			customTabItemParameterStr = defaultArg.Serialize();
 		}
 
