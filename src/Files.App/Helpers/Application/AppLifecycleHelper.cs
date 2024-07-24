@@ -166,6 +166,9 @@ namespace Files.App.Helpers
 					.AddSingleton<ITagsContext, TagsContext>()
 					.AddSingleton<ISidebarContext, SidebarContext>()
 					// Services
+					.AddSingleton<IWindowsIniService, WindowsIniService>()
+					.AddSingleton<IWindowsWallpaperService, WindowsWallpaperService>()
+					.AddSingleton<IWindowsSecurityService, WindowsSecurityService>()
 					.AddSingleton<IAppThemeModeService, AppThemeModeService>()
 					.AddSingleton<IDialogService, DialogService>()
 					.AddSingleton<ICommonDialogService, CommonDialogService>()
@@ -198,6 +201,7 @@ namespace Files.App.Helpers
 					.AddSingleton<IStartMenuService, StartMenuService>()
 					.AddSingleton<IStorageCacheService, StorageCacheService>()
 					.AddSingleton<IStorageArchiveService, StorageArchiveService>()
+					.AddSingleton<IStorageSecurityService, StorageSecurityService>()
 					.AddSingleton<IWindowsCompatibilityService, WindowsCompatibilityService>()
 					// ViewModels
 					.AddSingleton<MainPageViewModel>()
@@ -313,7 +317,7 @@ namespace Files.App.Helpers
 
 			// Save the current tab list in case it was overwriten by another instance
 			// SaveSessionTabs();
-			App.Logger.LogError(ex, ex?.Message ?? "An unhandled error occurred.");
+			App.Logger?.LogError(ex, ex?.Message ?? "An unhandled error occurred.");
 
 			if (!showToastNotification)
 				return;

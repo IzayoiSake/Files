@@ -5,6 +5,7 @@ using Files.App.Services.SizeProvider;
 using Files.Shared.Helpers;
 using LibGit2Sharp;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
@@ -46,6 +47,7 @@ namespace Files.App.ViewModels
 
 		// Files and folders list for manipulating
 		private ConcurrentCollection<ListedItem> filesAndFolders;
+		private readonly IWindowsIniService WindowsIniService = Ioc.Default.GetRequiredService<IWindowsIniService>();
 		private readonly IWindowsJumpListService jumpListService = Ioc.Default.GetRequiredService<IWindowsJumpListService>();
 		private readonly IDialogService dialogService = Ioc.Default.GetRequiredService<IDialogService>();
 		private IUserSettingsService UserSettingsService { get; } = Ioc.Default.GetRequiredService<IUserSettingsService>();
@@ -53,6 +55,7 @@ namespace Files.App.ViewModels
 		private readonly IFileTagsSettingsService fileTagsSettingsService = Ioc.Default.GetRequiredService<IFileTagsSettingsService>();
 		private readonly ISizeProvider folderSizeProvider = Ioc.Default.GetRequiredService<ISizeProvider>();
 		private readonly IStorageCacheService fileListCache = Ioc.Default.GetRequiredService<IStorageCacheService>();
+		private readonly IWindowsSecurityService WindowsSecurityService = Ioc.Default.GetRequiredService<IWindowsSecurityService>();
 
 		// Only used for Binding and ApplyFilesAndFoldersChangesAsync, don't manipulate on this!
 		public BulkConcurrentObservableCollection<ListedItem> FilesAndFolders { get; }
@@ -71,6 +74,41 @@ namespace Files.App.ViewModels
 		{
 			get => _SolutionFilePath;
 			private set => SetProperty(ref _SolutionFilePath, value);
+		}
+
+		private ImageSource? _FolderBackgroundImageSource;
+		public ImageSource? FolderBackgroundImageSource
+		{
+			get => _FolderBackgroundImageSource;
+			private set => SetProperty(ref _FolderBackgroundImageSource, value);
+		}
+
+		private float _FolderBackgroundImageOpacity = 1f;
+		public float FolderBackgroundImageOpacity
+		{
+			get => _FolderBackgroundImageOpacity;
+			private set => SetProperty(ref _FolderBackgroundImageOpacity, value);
+		}
+
+		private Stretch _FolderBackgroundImageFit = Stretch.UniformToFill;
+		public Stretch FolderBackgroundImageFit
+		{
+			get => _FolderBackgroundImageFit;
+			private set => SetProperty(ref _FolderBackgroundImageFit, value);
+		}
+
+		private VerticalAlignment _FolderBackgroundImageVerticalAlignment = VerticalAlignment.Center;
+		public VerticalAlignment FolderBackgroundImageVerticalAlignment
+		{
+			get => _FolderBackgroundImageVerticalAlignment;
+			private set => SetProperty(ref _FolderBackgroundImageVerticalAlignment, value);
+		}
+
+		private HorizontalAlignment _FolderBackgroundImageHorizontalAlignment = HorizontalAlignment.Center;
+		public HorizontalAlignment FolderBackgroundImageHorizontalAlignment
+		{
+			get => _FolderBackgroundImageHorizontalAlignment;
+			private set => SetProperty(ref _FolderBackgroundImageHorizontalAlignment, value);
 		}
 
 		private GitProperties _EnabledGitProperties;
@@ -117,6 +155,8 @@ namespace Files.App.ViewModels
 		public string? GitDirectory { get; private set; }
 
 		public bool IsValidGitDirectory { get; private set; }
+
+		public List<IniSectionDataItem> DesktopIni { get; private set; }
 
 		private StorageFolderWithPath? currentStorageFolder;
 		private StorageFolderWithPath workingRoot;
@@ -495,9 +535,15 @@ namespace Files.App.ViewModels
 			fileTagsSettingsService.OnSettingImportedEvent += FileTagsSettingsService_OnSettingUpdated;
 			fileTagsSettingsService.OnTagsUpdated += FileTagsSettingsService_OnSettingUpdated;
 			folderSizeProvider.SizeChanged += FolderSizeProvider_SizeChanged;
+			folderSettings.LayoutModeChangeRequested += LayoutModeChangeRequested;
 			RecycleBinManager.Default.RecycleBinItemCreated += RecycleBinItemCreatedAsync;
 			RecycleBinManager.Default.RecycleBinItemDeleted += RecycleBinItemDeletedAsync;
 			RecycleBinManager.Default.RecycleBinRefreshRequested += RecycleBinRefreshRequestedAsync;
+		}
+
+		private async void LayoutModeChangeRequested(object? sender, LayoutModeEventArgs e)
+		{
+			await dispatcherQueue.EnqueueOrInvokeAsync(CheckForBackgroundImage, Microsoft.UI.Dispatching.DispatcherQueuePriority.Low);
 		}
 
 		private async void RecycleBinRefreshRequestedAsync(object sender, FileSystemEventArgs e)
@@ -542,7 +588,7 @@ namespace Files.App.ViewModels
 			await ApplyFilesAndFoldersChangesAsync();
 		}
 
-		private async void FolderSizeProvider_SizeChanged(object? sender, SizeChangedEventArgs e)
+		private async void FolderSizeProvider_SizeChanged(object? sender, Services.SizeProvider.SizeChangedEventArgs e)
 		{
 			try
 			{
@@ -1003,7 +1049,8 @@ namespace Files.App.ViewModels
 			if (loadNonCachedThumbnail)
 			{
 				// Get non-cached thumbnail asynchronously
-				_ = Task.Run(async () => {
+				_ = Task.Run(async () =>
+				{
 					await loadThumbnailSemaphore.WaitAsync(cancellationToken);
 					try
 					{
@@ -1186,7 +1233,8 @@ namespace Files.App.ViewModels
 						// Try loading thumbnail for cloud files in case they weren't cached the first time
 						if (item.SyncStatusUI.SyncStatus != CloudDriveSyncStatus.NotSynced && item.SyncStatusUI.SyncStatus != CloudDriveSyncStatus.Unknown)
 						{
-							_ = Task.Run(async () => {
+							_ = Task.Run(async () =>
+							{
 								await Task.Delay(500);
 								cts.Token.ThrowIfCancellationRequested();
 								await LoadThumbnailAsync(item, cts.Token);
@@ -1221,9 +1269,7 @@ namespace Files.App.ViewModels
 			if (item.SyncStatusUI.LoadSyncStatus)
 				return false;
 
-			return item.IsShortcut
-				? ElevationHelpers.IsElevationRequired(((ShortcutItem)item).TargetPath)
-				: ElevationHelpers.IsElevationRequired(item.ItemPath);
+			return WindowsSecurityService.IsElevationRequired(item.IsShortcut ? ((ShortcutItem)item).TargetPath : item.ItemPath);
 		}
 
 		public async Task LoadGitPropertiesAsync(GitItem gitItem)
@@ -1399,7 +1445,7 @@ namespace Files.App.ViewModels
 				ItemLoadStatusChanged?.Invoke(this, new ItemLoadStatusChangedEventArgs() { Status = ItemLoadStatusChangedEventArgs.ItemLoadStatus.Complete, PreviousDirectory = previousDir, Path = path });
 				IsLoadingItems = false;
 
-				AdaptiveLayoutHelpers.ApplyAdaptativeLayout(folderSettings, WorkingDirectory, filesAndFolders.ToList());
+				AdaptiveLayoutHelpers.ApplyAdaptativeLayout(folderSettings, filesAndFolders.ToList());
 			}
 			finally
 			{
@@ -1682,15 +1728,21 @@ namespace Files.App.ViewModels
 						List<ListedItem> fileList = await Win32StorageEnumerator.ListEntries(path, hFile, findData, cancellationToken, -1, intermediateAction: async (intermediateList) =>
 						{
 							filesAndFolders.AddRange(intermediateList);
-							await OrderFilesAndFoldersAsync();
 							await ApplyFilesAndFoldersChangesAsync();
 						});
 
 						filesAndFolders.AddRange(fileList);
+						FilesAndFoldersFilter = null;
 
 						await OrderFilesAndFoldersAsync();
 						await ApplyFilesAndFoldersChangesAsync();
 						await dispatcherQueue.EnqueueOrInvokeAsync(CheckForSolutionFile, Microsoft.UI.Dispatching.DispatcherQueuePriority.Low);
+						await dispatcherQueue.EnqueueOrInvokeAsync(() =>
+						{
+							GetDesktopIniFileData();
+							CheckForBackgroundImage();
+						},
+						Microsoft.UI.Dispatching.DispatcherQueuePriority.Low);
 					});
 
 					rootFolder ??= await FilesystemTasks.Wrap(() => StorageFileExtensions.DangerousGetFolderFromPathAsync(path));
@@ -1749,6 +1801,66 @@ namespace Files.App.ViewModels
 			SolutionFilePath = filesAndFolders.ToList().AsParallel()
 				.Where(item => FileExtensionHelpers.HasExtension(item.FileExtension, ".sln"))
 				.FirstOrDefault()?.ItemPath;
+		}
+
+		private void GetDesktopIniFileData()
+		{
+			var path = Path.Combine(WorkingDirectory, "desktop.ini");
+			DesktopIni = WindowsIniService.GetData(path);
+		}
+
+		public void CheckForBackgroundImage()
+		{
+			var filesAppSection = DesktopIni?.FirstOrDefault(x => x.SectionName == "FilesApp");
+			if (filesAppSection is null || folderSettings.LayoutMode is FolderLayoutModes.ColumnView)
+			{
+				FolderBackgroundImageSource = null;
+				return;
+			}
+
+			// Image source
+			var backgroundImage = filesAppSection.Parameters.FirstOrDefault(x => x.Key == "Files_BackgroundImage").Value;
+			if (string.IsNullOrEmpty(backgroundImage))
+			{
+				FolderBackgroundImageSource = null;
+				return;
+			}
+			else
+			{
+				FolderBackgroundImageSource = new BitmapImage
+				{
+					UriSource = new Uri(backgroundImage, UriKind.RelativeOrAbsolute),
+					CreateOptions = BitmapCreateOptions.IgnoreImageCache
+				};
+			}
+
+			// Opacity
+			var backgroundOpacity = filesAppSection.Parameters.FirstOrDefault(x => x.Key == "Files_BackgroundOpacity").Value;
+			if (float.TryParse(backgroundOpacity, out var opacity))
+				FolderBackgroundImageOpacity = opacity;
+			else
+				FolderBackgroundImageOpacity = 1f;
+
+			// Stretch
+			var backgroundFit = filesAppSection.Parameters.FirstOrDefault(x => x.Key == "Files_BackgroundFit").Value;
+			if (Enum.TryParse<Stretch>(backgroundFit, out var fit))
+				FolderBackgroundImageFit = fit;
+			else
+				FolderBackgroundImageFit = Stretch.UniformToFill;
+
+			// Vertical alignment
+			var verticalAlignment = filesAppSection.Parameters.FirstOrDefault(x => x.Key == "Files_BackgroundVerticalAlignment").Value;
+			if (Enum.TryParse<VerticalAlignment>(verticalAlignment, out var vAlignment))
+				FolderBackgroundImageVerticalAlignment = vAlignment;
+			else
+				FolderBackgroundImageVerticalAlignment = VerticalAlignment.Center;
+
+			// Horizontal alignment
+			var horizontalAlignment = filesAppSection.Parameters.FirstOrDefault(x => x.Key == "Files_BackgroundHorizontalAlignment").Value;
+			if (Enum.TryParse<HorizontalAlignment>(horizontalAlignment, out var hAlignment))
+				FolderBackgroundImageHorizontalAlignment = hAlignment;
+			else
+				FolderBackgroundImageHorizontalAlignment = HorizontalAlignment.Center;
 		}
 
 		public async Task<CloudDriveSyncStatus> CheckCloudDriveSyncStatusAsync(IStorageItem item)
@@ -2471,6 +2583,7 @@ namespace Files.App.ViewModels
 			fileTagsSettingsService.OnSettingImportedEvent -= FileTagsSettingsService_OnSettingUpdated;
 			fileTagsSettingsService.OnTagsUpdated -= FileTagsSettingsService_OnSettingUpdated;
 			folderSizeProvider.SizeChanged -= FolderSizeProvider_SizeChanged;
+			folderSettings.LayoutModeChangeRequested -= LayoutModeChangeRequested;
 		}
 	}
 
