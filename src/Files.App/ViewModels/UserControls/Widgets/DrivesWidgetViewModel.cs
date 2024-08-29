@@ -72,8 +72,11 @@ namespace Files.App.ViewModels.UserControls.Widgets
 				return;
 			}
 
-			ContentPageContext.ShellPage!.NavigateWithArguments(
-				ContentPageContext.ShellPage!.InstanceViewModel.FolderSettings.GetLayoutType(path),
+			if (ContentPageContext.ShellPage is not IShellPage shellPage)
+				return;
+
+			shellPage.NavigateWithArguments(
+				shellPage.InstanceViewModel.FolderSettings.GetLayoutType(path),
 				new() { NavPathParam = path });
 		}
 
@@ -97,7 +100,7 @@ namespace Files.App.ViewModels.UserControls.Widgets
 				new()
 				{
 					Text = "PinFolderToSidebar".GetLocalizedResource(),
-					OpacityIcon = new OpacityIconModel() { OpacityIconStyle = "Icons.Pin.16x16" },
+					ThemedIconModel = new ThemedIconModel() { ThemedIconStyle = "App.ThemedIcons.FavoritePin" },
 					Command = PinToSidebarCommand,
 					CommandParameter = item,
 					ShowItem = !isPinned
@@ -105,7 +108,7 @@ namespace Files.App.ViewModels.UserControls.Widgets
 				new()
 				{
 					Text = "UnpinFolderFromSidebar".GetLocalizedResource(),
-					OpacityIcon = new OpacityIconModel() { OpacityIconStyle = "Icons.Unpin.16x16" },
+					ThemedIconModel = new ThemedIconModel() { ThemedIconStyle = "App.ThemedIcons.FavoritePinRemove" },
 					Command = UnpinFromSidebarCommand,
 					CommandParameter = item,
 					ShowItem = isPinned
@@ -127,7 +130,7 @@ namespace Files.App.ViewModels.UserControls.Widgets
 				new()
 				{
 					Text = "Properties".GetLocalizedResource(),
-					OpacityIcon = new OpacityIconModel() { OpacityIconStyle = "ColorIconProperties" },
+					ThemedIconModel = new ThemedIconModel() { ThemedIconStyle = "App.ThemedIcons.Properties" },
 					Command = OpenPropertiesCommand,
 					CommandParameter = item
 				},
@@ -143,6 +146,12 @@ namespace Files.App.ViewModels.UserControls.Widgets
 					Tag = "ManageBitLockerPlaceholder",
 					IsEnabled = false
 				},
+				new ContextMenuFlyoutItemViewModel()
+				{
+					ItemType = ContextMenuFlyoutItemType.Separator,
+					ShowItem = CommandManager.OpenTerminalFromHome.IsExecutable
+				},
+				new ContextMenuFlyoutItemViewModelBuilder(CommandManager.OpenTerminalFromHome).Build(),
 				new()
 				{
 					ItemType = ContextMenuFlyoutItemType.Separator,

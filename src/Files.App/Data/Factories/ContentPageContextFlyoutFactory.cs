@@ -98,6 +98,15 @@ namespace Files.App.Data.Factories
 
 			return new List<ContextMenuFlyoutItemViewModel>()
 			{
+				new ContextMenuFlyoutItemViewModelBuilder(Commands.CloseActivePane)
+				{
+					IsVisible = !itemsSelected && Commands.CloseActivePane.IsExecutable,
+				}.Build(),
+				new ContextMenuFlyoutItemViewModel()
+				{
+					ItemType = ContextMenuFlyoutItemType.Separator,
+					ShowItem = !itemsSelected && Commands.CloseActivePane.IsExecutable
+				},
 				new ContextMenuFlyoutItemViewModel()
 				{
 					Text = "Layout".GetLocalizedResource(),
@@ -138,9 +147,9 @@ namespace Files.App.Data.Factories
 				new ContextMenuFlyoutItemViewModel()
 				{
 					Text = "SortBy".GetLocalizedResource(),
-					OpacityIcon = new OpacityIconModel()
+					ThemedIconModel = new ThemedIconModel()
 					{
-						OpacityIconStyle = "ColorIconSort",
+						ThemedIconStyle = "App.ThemedIcons.Sorting",
 					},
 					ShowItem = !itemsSelected,
 					ShowInRecycleBin = true,
@@ -350,9 +359,9 @@ namespace Files.App.Data.Factories
 				},
 				new ContextMenuFlyoutItemViewModel()
 				{
-					OpacityIcon = new OpacityIconModel()
+					ThemedIconModel = new ThemedIconModel()
 					{
-						OpacityIconStyle = Commands.AddItem.Glyph.OpacityStyle
+						ThemedIconStyle = Commands.AddItem.Glyph.ThemedIconStyle
 					},
 					Text = Commands.AddItem.Label,
 					Items = GetNewItemItems(commandsViewModel, currentInstanceViewModel.CanCreateFileInPage),
@@ -381,9 +390,9 @@ namespace Files.App.Data.Factories
 				{
 					// TODO add back text and icon when https://github.com/microsoft/microsoft-ui-xaml/issues/9409 is resolved
 					//Text = "OpenWith".GetLocalizedResource(),
-					//OpacityIcon = new OpacityIconModel()
+					//ThemedIconModel = new ThemedIconModel()
 					//{
-					//	OpacityIconStyle = "ColorIconOpenWith"
+					//	ThemedIconStyle = "ColorIconOpenWith"
 					//},
 					Tag = "OpenWithOverflow",
 					IsHidden = true,
@@ -481,10 +490,10 @@ namespace Files.App.Data.Factories
 					IsVisible = itemsSelected,
 					IsPrimary = true,
 				}.Build(),
-				new ContextMenuFlyoutItemViewModelBuilder(Commands.OpenProperties)
+				new ContextMenuFlyoutItemViewModelBuilder(ModifiableCommands.OpenProperties)
 				{
 					IsPrimary = true,
-					IsVisible = Commands.OpenProperties.IsExecutable
+					IsVisible = ModifiableCommands.OpenProperties.IsExecutable
 				}.Build(),
 				new ContextMenuFlyoutItemViewModelBuilder(Commands.OpenParentFolder).Build(),
 				new ContextMenuFlyoutItemViewModelBuilder(Commands.PinFolderToSidebar)
@@ -509,9 +518,9 @@ namespace Files.App.Data.Factories
 				{
 					Text = "Compress".GetLocalizedResource(),
 					ShowInSearchPage = true,
-					OpacityIcon = new OpacityIconModel()
+					ThemedIconModel = new ThemedIconModel()
 					{
-						OpacityIconStyle = "ColorIconZip",
+						ThemedIconStyle = "App.ThemedIcons.Zip",
 					},
 					Items =
 					[
@@ -525,9 +534,9 @@ namespace Files.App.Data.Factories
 				{
 					Text = "Extract".GetLocalizedResource(),
 					ShowInSearchPage = true,
-					OpacityIcon = new OpacityIconModel()
+					ThemedIconModel = new ThemedIconModel()
 					{
-						OpacityIconStyle = "ColorIconZip",
+						ThemedIconStyle = "App.ThemedIcons.Zip",
 					},
 					Items =
 					[
@@ -538,6 +547,7 @@ namespace Files.App.Data.Factories
 					],
 					ShowItem = UserSettingsService.GeneralSettingsService.ShowCompressionOptions && StorageArchiveService.CanDecompress(selectedItems)
 				},
+				new ContextMenuFlyoutItemViewModelBuilder(Commands.FlattenFolder).Build(),
 				new ContextMenuFlyoutItemViewModel()
 				{
 					Text = "SendTo".GetLocalizedResource(),
@@ -578,9 +588,19 @@ namespace Files.App.Data.Factories
 					ShowItem = isDriveRoot,
 					IsEnabled = false
 				},
+				new ContextMenuFlyoutItemViewModelBuilder(Commands.EditInNotepad).Build(),
+				new ContextMenuFlyoutItemViewModel()
+				{
+					ItemType = ContextMenuFlyoutItemType.Separator,
+					ShowItem = !itemsSelected && Commands.OpenTerminal.IsExecutable || areAllItemsFolders && Commands.OpenTerminal.IsExecutable
+				},
+				new ContextMenuFlyoutItemViewModelBuilder(Commands.OpenTerminal)
+				{
+					IsVisible = !itemsSelected && Commands.OpenTerminal.IsExecutable || areAllItemsFolders && Commands.OpenTerminal.IsExecutable
+				}.Build(),
 				// Shell extensions are not available on the FTP server or in the archive,
 				// but following items are intentionally added because icons in the context menu will not appear
-				// unless there is at least one menu item with an icon that is not an OpacityIcon. (#12943)
+				// unless there is at least one menu item with an icon that is not an ThemedIconModel. (#12943)
 				new ContextMenuFlyoutItemViewModel()
 				{
 					ItemType = ContextMenuFlyoutItemType.Separator,
@@ -590,7 +610,6 @@ namespace Files.App.Data.Factories
 					ShowInRecycleBin = true,
 					ShowInSearchPage = true,
 				},
-				new ContextMenuFlyoutItemViewModelBuilder(Commands.EditInNotepad).Build(),
 				new ContextMenuFlyoutItemViewModel()
 				{
 					Text = "Loading".GetLocalizedResource(),

@@ -20,6 +20,7 @@ namespace Files.App.Data.Commands
 
 		// Show
 		ToggleShowHiddenItems,
+		ToggleDotFilesSetting,
 		ToggleShowFileExtensions,
 		TogglePreviewPane,
 		ToggleDetailsPane,
@@ -96,6 +97,9 @@ namespace Files.App.Data.Commands
 		DecompressArchiveHereSmart,
 		DecompressArchiveToChildFolder,
 
+		// Folders
+		FlattenFolder,
+
 		// Image Manipulation
 		RotateLeft,
 		RotateRight,
@@ -104,9 +108,12 @@ namespace Files.App.Data.Commands
 		OpenInVSCode,
 		OpenRepoInVSCode,
 		OpenProperties,
+		OpenClassicProperties,
 		OpenSettings,
 		OpenTerminal,
 		OpenTerminalAsAdmin,
+		OpenTerminalFromSidebar,
+		OpenTerminalFromHome,
 		OpenCommandPalette,
 		EditInNotepad,
 

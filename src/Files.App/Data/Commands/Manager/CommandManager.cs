@@ -1,10 +1,10 @@
 // Copyright (c) 2024 Files Community
 // Licensed under the MIT License. See the LICENSE.
 
-using System.Collections.Frozen;
-using System.Collections.Immutable;
 using Files.App.Actions;
 using Microsoft.Extensions.Logging;
+using System.Collections.Frozen;
+using System.Collections.Immutable;
 
 namespace Files.App.Data.Commands
 {
@@ -51,6 +51,7 @@ namespace Files.App.Data.Commands
 		public IRichCommand Redo => commands[CommandCodes.Redo];
 		public IRichCommand Undo => commands[CommandCodes.Undo];
 		public IRichCommand ToggleShowHiddenItems => commands[CommandCodes.ToggleShowHiddenItems];
+		public IRichCommand ToggleDotFilesSetting => commands[CommandCodes.ToggleDotFilesSetting];
 		public IRichCommand ToggleShowFileExtensions => commands[CommandCodes.ToggleShowFileExtensions];
 		public IRichCommand TogglePreviewPane => commands[CommandCodes.TogglePreviewPane];
 		public IRichCommand ToggleDetailsPane => commands[CommandCodes.ToggleDetailsPane];
@@ -101,6 +102,7 @@ namespace Files.App.Data.Commands
 		public IRichCommand DecompressArchiveHere => commands[CommandCodes.DecompressArchiveHere];
 		public IRichCommand DecompressArchiveHereSmart => commands[CommandCodes.DecompressArchiveHereSmart];
 		public IRichCommand DecompressArchiveToChildFolder => commands[CommandCodes.DecompressArchiveToChildFolder];
+		public IRichCommand FlattenFolder => commands[CommandCodes.FlattenFolder];
 		public IRichCommand RotateLeft => commands[CommandCodes.RotateLeft];
 		public IRichCommand RotateRight => commands[CommandCodes.RotateRight];
 		public IRichCommand OpenItem => commands[CommandCodes.OpenItem];
@@ -109,9 +111,12 @@ namespace Files.App.Data.Commands
 		public IRichCommand OpenInVSCode => commands[CommandCodes.OpenInVSCode];
 		public IRichCommand OpenRepoInVSCode => commands[CommandCodes.OpenRepoInVSCode];
 		public IRichCommand OpenProperties => commands[CommandCodes.OpenProperties];
+		public IRichCommand OpenClassicProperties => commands[CommandCodes.OpenClassicProperties];
 		public IRichCommand OpenSettings => commands[CommandCodes.OpenSettings];
 		public IRichCommand OpenTerminal => commands[CommandCodes.OpenTerminal];
 		public IRichCommand OpenTerminalAsAdmin => commands[CommandCodes.OpenTerminalAsAdmin];
+		public IRichCommand OpenTerminalFromSidebar => commands[CommandCodes.OpenTerminalFromSidebar];
+		public IRichCommand OpenTerminalFromHome => commands[CommandCodes.OpenTerminalFromHome];
 		public IRichCommand OpenCommandPalette => commands[CommandCodes.OpenCommandPalette];
 		public IRichCommand EditInNotepad => commands[CommandCodes.EditInNotepad];
 		public IRichCommand LayoutDecreaseSize => commands[CommandCodes.LayoutDecreaseSize];
@@ -237,6 +242,7 @@ namespace Files.App.Data.Commands
 			[CommandCodes.Redo] = new RedoAction(),
 			[CommandCodes.Undo] = new UndoAction(),
 			[CommandCodes.ToggleShowHiddenItems] = new ToggleShowHiddenItemsAction(),
+			[CommandCodes.ToggleDotFilesSetting] = new ToggleDotFilesSettingAction(),
 			[CommandCodes.ToggleShowFileExtensions] = new ToggleShowFileExtensionsAction(),
 			[CommandCodes.TogglePreviewPane] = new TogglePreviewPaneAction(),
 			[CommandCodes.ToggleDetailsPane] = new ToggleDetailsPaneAction(),
@@ -287,6 +293,7 @@ namespace Files.App.Data.Commands
 			[CommandCodes.DecompressArchiveHere] = new DecompressArchiveHere(),
 			[CommandCodes.DecompressArchiveHereSmart] = new DecompressArchiveHereSmart(),
 			[CommandCodes.DecompressArchiveToChildFolder] = new DecompressArchiveToChildFolderAction(),
+			[CommandCodes.FlattenFolder] = new FlattenFolderAction(),
 			[CommandCodes.RotateLeft] = new RotateLeftAction(),
 			[CommandCodes.RotateRight] = new RotateRightAction(),
 			[CommandCodes.OpenItem] = new OpenItemAction(),
@@ -295,9 +302,12 @@ namespace Files.App.Data.Commands
 			[CommandCodes.OpenInVSCode] = new OpenInVSCodeAction(),
 			[CommandCodes.OpenRepoInVSCode] = new OpenRepoInVSCodeAction(),
 			[CommandCodes.OpenProperties] = new OpenPropertiesAction(),
+			[CommandCodes.OpenClassicProperties] = new OpenClassicPropertiesAction(),
 			[CommandCodes.OpenSettings] = new OpenSettingsAction(),
 			[CommandCodes.OpenTerminal] = new OpenTerminalAction(),
 			[CommandCodes.OpenTerminalAsAdmin] = new OpenTerminalAsAdminAction(),
+			[CommandCodes.OpenTerminalFromSidebar] = new OpenTerminalFromSidebarAction(),
+			[CommandCodes.OpenTerminalFromHome] = new OpenTerminalFromHomeAction(),
 			[CommandCodes.OpenCommandPalette] = new OpenCommandPaletteAction(),
 			[CommandCodes.EditInNotepad] = new EditInNotepadAction(),
 			[CommandCodes.LayoutDecreaseSize] = new LayoutDecreaseSizeAction(),

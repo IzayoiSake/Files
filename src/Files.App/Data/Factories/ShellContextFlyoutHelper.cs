@@ -45,6 +45,7 @@ namespace Files.App.Helpers
 					Win32Helper.ExtractStringFromDLL("shell32.dll", 5385), // Unpin from Start
 					Win32Helper.ExtractStringFromDLL("shell32.dll", 5386), // Pin to taskbar
 					Win32Helper.ExtractStringFromDLL("shell32.dll", 5387), // Unpin from taskbar
+					"{9F156763-7844-4DC4-B2B1-901F640F5155}", // Open in Terminal
 				};
 
 				bool filterMenuItemsImpl(string menuItem) => !string.IsNullOrEmpty(menuItem)
@@ -336,9 +337,9 @@ namespace Files.App.Helpers
 				{
 					await openWithItem.LoadSubMenuAction();
 
-					openWithItem.OpacityIcon = new OpacityIconModel()
+					openWithItem.ThemedIconModel = new ThemedIconModel()
 					{
-						OpacityIconStyle = "ColorIconOpenWith",
+						ThemedIconStyle = "App.ThemedIcons.OpenWith",
 					};
 					var (_, openWithItems) = ContextFlyoutModelToElementHelper.GetAppBarItemsFromModel([openWithItem]);
 					var index = 0;

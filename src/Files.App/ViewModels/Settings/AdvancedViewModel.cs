@@ -78,7 +78,7 @@ namespace Files.App.ViewModels.Settings
 			var dataPath = Environment.ExpandEnvironmentVariables("%LocalAppData%\\Files");
 			if (IsSetAsDefaultFileManager)
 			{
-				if (!await Win32Helper.RunPowershellCommandAsync($"-command \"New-Item -Force -Path '{dataPath}' -ItemType Directory; Copy-Item -Filter *.* -Path '{destFolder}\\*' -Recurse -Force -Destination '{dataPath}'\"", false))
+				if (!await Win32Helper.RunPowershellCommandAsync($"-command \"New-Item -Force -Path '{dataPath}' -ItemType Directory; Copy-Item -Filter *.* -Path '{destFolder}\\*' -Recurse -Force -Destination '{dataPath}'\"", PowerShellExecutionOptions.Hidden))
 				{
 					// Error copying files
 					await DetectResult();
@@ -87,7 +87,7 @@ namespace Files.App.ViewModels.Settings
 			}
 			else
 			{
-				await Win32Helper.RunPowershellCommandAsync($"-command \"Remove-Item -Path '{dataPath}' -Recurse -Force\"", false);
+				await Win32Helper.RunPowershellCommandAsync($"-command \"Remove-Item -Path '{dataPath}' -Recurse -Force\"", PowerShellExecutionOptions.Hidden);
 			}
 
 			try
@@ -331,6 +331,34 @@ namespace Files.App.ViewModels.Settings
 
 					OnPropertyChanged();
 				}
+			}
+		}
+		
+		public bool ShowSystemTrayIcon
+		{
+			get => UserSettingsService.GeneralSettingsService.ShowSystemTrayIcon;
+			set
+			{
+				if (value != UserSettingsService.GeneralSettingsService.ShowSystemTrayIcon)
+				{
+					UserSettingsService.GeneralSettingsService.ShowSystemTrayIcon = value;
+
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		// TODO remove when feature is marked as stable
+		public bool ShowFlattenOptions
+		{
+			get => UserSettingsService.GeneralSettingsService.ShowFlattenOptions;
+			set
+			{
+				if (value == UserSettingsService.GeneralSettingsService.ShowFlattenOptions)
+					return;
+
+				UserSettingsService.GeneralSettingsService.ShowFlattenOptions = value;
+				OnPropertyChanged();
 			}
 		}
 

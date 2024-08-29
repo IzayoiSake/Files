@@ -149,7 +149,19 @@ namespace Files.App.Services.Settings
 			set => Set(value);
 		}
 
+		public bool IsPinnedSectionExpanded
+		{
+			get => Get(true);
+			set => Set(value);
+		}
+
 		public bool ShowLibrarySection
+		{
+			get => Get(false);
+			set => Set(value);
+		}
+
+		public bool IsLibrarySectionExpanded
 		{
 			get => Get(false);
 			set => Set(value);
@@ -161,9 +173,21 @@ namespace Files.App.Services.Settings
 			set => Set(value);
 		}
 
+		public bool IsDriveSectionExpanded
+		{
+			get => Get(false);
+			set => Set(value);
+		}
+
 		public bool ShowCloudDrivesSection
 		{
 			get => Get(true);
+			set => Set(value);
+		}
+
+		public bool IsCloudDriveSectionExpanded
+		{
+			get => Get(false);
 			set => Set(value);
 		}
 
@@ -173,15 +197,33 @@ namespace Files.App.Services.Settings
 			set => Set(value);
 		}
 
+		public bool IsNetworkSectionExpanded
+		{
+			get => Get(false);
+			set => Set(value);
+		}
+
 		public bool ShowWslSection
 		{
 			get => Get(true);
 			set => Set(value);
 		}
 
+		public bool IsWslSectionExpanded
+		{
+			get => Get(false);
+			set => Set(value);
+
+		}
 		public bool ShowFileTagsSection
 		{
 			get => Get(true);
+			set => Set(value);
+		}
+
+		public bool IsFileTagsSectionExpanded
+		{
+			get => Get(false);
 			set => Set(value);
 		}
 
@@ -200,6 +242,12 @@ namespace Files.App.Services.Settings
 		public bool ShowCompressionOptions
 		{
 			get => Get(true);
+			set => Set(value);
+		}
+
+		public bool ShowFlattenOptions
+		{
+			get => Get(false);
 			set => Set(value);
 		}
 
@@ -252,6 +300,12 @@ namespace Files.App.Services.Settings
 #else
 			get => Get(false);
 #endif
+			set => Set(value);
+		}
+
+		public bool ShowSystemTrayIcon
+		{
+			get => Get(true);
 			set => Set(value);
 		}
 

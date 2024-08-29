@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Sentry;
 using Sentry.Protocol;
 using System.IO;
-using System.IO.MemoryMappedFiles;
+using System.Security;
 using System.Text;
 using Windows.ApplicationModel;
 using System.Text.Json;
@@ -95,6 +95,8 @@ namespace Files.App.Helpers
 
 				return Task.CompletedTask;
 			}
+
+			generalSettingsService.PropertyChanged += GeneralSettingsService_PropertyChanged;
 		}
 
 		/// <summary>
@@ -207,7 +209,6 @@ namespace Files.App.Helpers
 					.AddSingleton<MainPageViewModel>()
 					.AddSingleton<InfoPaneViewModel>()
 					.AddSingleton<SidebarViewModel>()
-					.AddSingleton<SettingsViewModel>()
 					.AddSingleton<DrivesViewModel>()
 					.AddSingleton<StatusCenterViewModel>()
 					.AddSingleton<AppearanceViewModel>()
@@ -242,13 +243,7 @@ namespace Files.App.Helpers
 				}
 				else
 				{
-					var defaultArg = new TabBarItemParameter()
-					{
-						InitialPageType = typeof(ShellPanesPage),
-						NavigationParameter = "Home"
-					};
-
-					return defaultArg.Serialize();
+					return "";
 				}
 			})
 			.ToList();
@@ -356,15 +351,40 @@ namespace Files.App.Helpers
 		/// </summary>
 		public static bool IsAutoHideTaskbarEnabled()
 		{
-			const string registryKey = @"Software\Microsoft\Windows\CurrentVersion\Explorer\StuckRects3";
-			const string valueName = "Settings";
+			try
+			{
+				const string registryKey = @"Software\Microsoft\Windows\CurrentVersion\Explorer\StuckRects3";
+				const string valueName = "Settings";
 
-			using var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(registryKey);
+				using var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(registryKey);
 
-			var value = key?.GetValue(valueName) as byte[];
+				var value = key?.GetValue(valueName) as byte[];
 
-			// The least significant bit of the 9th byte controls the auto-hide setting																		
-			return value != null && ((value[8] & 0x01) == 1);
+				// The least significant bit of the 9th byte controls the auto-hide setting																		
+				return value != null && ((value[8] & 0x01) == 1);
+			}
+			catch (SecurityException)
+			{
+				// Handle edge case where OpenSubKey results in SecurityException
+				return false;
+			}
+		}
+
+		/// <summary>
+		/// Updates the visibility of the system tray icon
+		/// </summary>
+		private static void GeneralSettingsService_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			if (sender is not IGeneralSettingsService generalSettingsService)
+				return;
+
+			if (e.PropertyName == nameof(IGeneralSettingsService.ShowSystemTrayIcon))
+			{
+				if (generalSettingsService.ShowSystemTrayIcon)
+					App.SystemTrayIcon?.Show();
+				else
+					App.SystemTrayIcon?.Hide();
+			}
 		}
 	}
 }

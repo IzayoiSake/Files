@@ -1309,10 +1309,10 @@ namespace Files.App.ViewModels
 								{
 									gitItem.UnmergedGitStatusIcon = gitItemModel.Status switch
 									{
-										ChangeKind.Added => (Microsoft.UI.Xaml.Style)Microsoft.UI.Xaml.Application.Current.Resources["ColorIconGitAdded"],
-										ChangeKind.Deleted => (Microsoft.UI.Xaml.Style)Microsoft.UI.Xaml.Application.Current.Resources["ColorIconGitDeleted"],
-										ChangeKind.Modified => (Microsoft.UI.Xaml.Style)Microsoft.UI.Xaml.Application.Current.Resources["ColorIconGitModified"],
-										ChangeKind.Untracked => (Microsoft.UI.Xaml.Style)Microsoft.UI.Xaml.Application.Current.Resources["ColorIconGitUntracked"],
+										ChangeKind.Added => (Microsoft.UI.Xaml.Style)Microsoft.UI.Xaml.Application.Current.Resources["App.ThemedIcons.Status.Added"],
+										ChangeKind.Deleted => (Microsoft.UI.Xaml.Style)Microsoft.UI.Xaml.Application.Current.Resources["App.ThemedIcons.Status.Removed"],
+										ChangeKind.Modified => (Microsoft.UI.Xaml.Style)Microsoft.UI.Xaml.Application.Current.Resources["App.ThemedIcons.Status.Modified"],
+										ChangeKind.Untracked => (Microsoft.UI.Xaml.Style)Microsoft.UI.Xaml.Application.Current.Resources["App.ThemedIcons.Status.Removed"],
 										_ => null,
 									};
 									gitItem.UnmergedGitStatusName = gitItemModel.StatusHumanized;
@@ -1811,6 +1811,12 @@ namespace Files.App.ViewModels
 
 		public void CheckForBackgroundImage()
 		{
+			if (WorkingDirectory == "Home")
+			{
+				FolderBackgroundImageSource = null;
+				return;
+			}
+
 			var filesAppSection = DesktopIni?.FirstOrDefault(x => x.SectionName == "FilesApp");
 			if (filesAppSection is null || folderSettings.LayoutMode is FolderLayoutModes.ColumnView)
 			{
@@ -1827,11 +1833,19 @@ namespace Files.App.ViewModels
 			}
 			else
 			{
-				FolderBackgroundImageSource = new BitmapImage
+				try
 				{
-					UriSource = new Uri(backgroundImage, UriKind.RelativeOrAbsolute),
-					CreateOptions = BitmapCreateOptions.IgnoreImageCache
-				};
+					FolderBackgroundImageSource = new BitmapImage
+					{
+						UriSource = new Uri(backgroundImage, UriKind.RelativeOrAbsolute),
+						CreateOptions = BitmapCreateOptions.IgnoreImageCache
+					};
+				}
+				catch (Exception ex)
+				{
+					// Handle errors with setting the URI
+					App.Logger.LogWarning(ex, ex.Message);
+				}
 			}
 
 			// Opacity
