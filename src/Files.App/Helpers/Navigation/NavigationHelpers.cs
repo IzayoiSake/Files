@@ -277,7 +277,12 @@ namespace Files.App.Helpers
 				return;
 
 			await UpdateTabInfoAsync(matchingTabItem, e.NavigationParameter);
-			
+			try
+			{
+				await TabsManageHelper.UpDate();
+			}
+			catch
+			{ }
 		}
 
 		public static Task<bool> OpenPathInNewWindowAsync(string? path)
