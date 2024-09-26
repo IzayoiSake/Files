@@ -4,7 +4,6 @@
 using CommunityToolkit.WinUI.Helpers;
 using Files.App.Helpers.Application;
 using Files.App.Services.SizeProvider;
-using Files.App.Storage.Storables;
 using Files.App.Utils.Logger;
 using Files.App.ViewModels.Settings;
 using Microsoft.Extensions.DependencyInjection;
@@ -142,6 +141,9 @@ namespace Files.App.Helpers
 			return Host.CreateDefaultBuilder()
 				.UseEnvironment(AppLifecycleHelper.AppEnvironment.ToString())
 				.ConfigureLogging(builder => builder
+					.ClearProviders()
+					.AddConsole()
+					.AddDebug()
 					.AddProvider(new FileLoggerProvider(Path.Combine(ApplicationData.Current.LocalFolder.Path, "debug.log")))
 					.AddProvider(new SentryLoggerProvider())
 					.SetMinimumLevel(LogLevel.Information))
@@ -198,6 +200,7 @@ namespace Files.App.Helpers
 					.AddSingleton<IQuickAccessService, QuickAccessService>()
 					.AddSingleton<IResourcesService, ResourcesService>()
 					.AddSingleton<IWindowsJumpListService, WindowsJumpListService>()
+					.AddSingleton<IStorageTrashBinService, StorageTrashBinService>()
 					.AddSingleton<IRemovableDrivesService, RemovableDrivesService>()
 					.AddSingleton<INetworkService, NetworkService>()
 					.AddSingleton<IStartMenuService, StartMenuService>()
