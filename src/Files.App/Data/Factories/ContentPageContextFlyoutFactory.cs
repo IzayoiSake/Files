@@ -459,7 +459,8 @@ namespace Files.App.Data.Factories
 					IsPrimary = true,
 					IsVisible = true,
 				}.Build(),
-				new ContextMenuFlyoutItemViewModelBuilder(Commands.CopyPath)
+				new ContextMenuFlyoutItemViewModelBuilder(Commands.PasteItemAsShortcut).Build(),
+				new ContextMenuFlyoutItemViewModelBuilder(Commands.CopyItemPath)
 				{
 					IsVisible = UserSettingsService.GeneralSettingsService.ShowCopyPath
 						&& itemsSelected
@@ -475,6 +476,11 @@ namespace Files.App.Data.Factories
 						&& itemsSelected
 						&& (!selectedItems.FirstOrDefault()?.IsShortcut ?? false)
 						&& !currentInstanceViewModel.IsPageTypeRecycleBin,
+				}.Build(),
+				new ContextMenuFlyoutItemViewModelBuilder(Commands.CreateAlternateDataStream)
+				{
+					IsVisible = UserSettingsService.GeneralSettingsService.ShowCreateAlternateDataStream &&
+						Commands.CreateAlternateDataStream.IsExecutable,
 				}.Build(),
 				new ContextMenuFlyoutItemViewModelBuilder(Commands.Rename)
 				{

@@ -29,16 +29,20 @@ namespace Files.App.Data.Commands
 
 		// File System
 		CopyItem,
+		CopyItemPath,
 		CopyPath,
+		CopyItemPathWithQuotes,
 		CopyPathWithQuotes,
 		CutItem,
 		PasteItem,
+		PasteItemAsShortcut,
 		PasteItemToSelection,
 		DeleteItem,
 		DeleteItemPermanently,
 		CreateFolder,
 		CreateFolderWithSelection,
 		AddItem,
+		CreateAlternateDataStream,
 		CreateShortcut,
 		CreateShortcutFromDialog,
 		EmptyRecycleBin,
@@ -194,6 +198,7 @@ namespace Files.App.Data.Commands
 		PreviousTab,
 		NextTab,
 		CloseSelectedTab,
+		CloseAllTabs,
 
 		// Shell Panes
 		CloseActivePane,
