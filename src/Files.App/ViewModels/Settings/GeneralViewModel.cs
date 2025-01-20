@@ -116,11 +116,11 @@ namespace Files.App.ViewModels.Settings
 
 		private async void DoRestartAsync()
 		{
-			// Tells the app to restore tabs when it's next launched
-			UserSettingsService.AppSettingsService.RestoreTabsOnStartup = true;
+			//// Tells the app to restore tabs when it's next launched
+			//UserSettingsService.AppSettingsService.RestoreTabsOnStartup = true;
 
-			// Save the updated tab list before restarting
-			AppLifecycleHelper.SaveSessionTabs();
+			//// Save the updated tab list before restarting
+			//AppLifecycleHelper.SaveSessionTabs();
 
 			// Launches a new instance of Files
 			await Launcher.LaunchUriAsync(new Uri("files-dev:"));
