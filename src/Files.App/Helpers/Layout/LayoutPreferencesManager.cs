@@ -1,5 +1,5 @@
-// Copyright (c) 2024 Files Community
-// Licensed under the MIT License. See the LICENSE.
+// Copyright (c) Files Community
+// Licensed under the MIT License.
 
 using Files.App.Data.Enums;
 using System.Text.Json;
@@ -236,7 +236,7 @@ namespace Files.App.Helpers
 				_ when LayoutMode == FolderLayoutModes.GridView && UserSettingsService.LayoutSettingsService.GridViewSize <= GridViewSizeKind.Small ||
 					   LayoutMode == FolderLayoutModes.TilesView
 					=> 96,
-				_ when  LayoutMode == FolderLayoutModes.GridView && UserSettingsService.LayoutSettingsService.GridViewSize <= GridViewSizeKind.Large
+				_ when LayoutMode == FolderLayoutModes.GridView && UserSettingsService.LayoutSettingsService.GridViewSize <= GridViewSizeKind.Large
 					=> 128,
 				_ => 256,
 			};
@@ -263,6 +263,13 @@ namespace Files.App.Helpers
 				FolderLayoutModes.ColumnView => typeof(ColumnsLayoutPage),
 				_ => typeof(DetailsLayoutPage)
 			};
+		}
+
+		public bool IsPathUsingDefaultLayout(string? path)
+		{
+			return UserSettingsService.LayoutSettingsService.SyncFolderPreferencesAcrossDirectories ||
+				string.IsNullOrEmpty(path) ||
+				GetLayoutPreferencesFromDatabase(path, Win32Helper.GetFolderFRN(path)) is null;
 		}
 
 		public void ToggleLayoutModeColumnView(bool manuallySet)
@@ -594,7 +601,7 @@ namespace Files.App.Helpers
 				}
 
 				dbInstance.SetPreferences(path, frn, preferencesItem);
-			});	
+			});
 		}
 
 		private bool SetProperty<TValue>(Func<LayoutPreferencesItem, TValue> prop, Action<LayoutPreferencesItem> update, string propertyName)

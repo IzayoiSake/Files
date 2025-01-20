@@ -127,7 +127,7 @@
     <value>Kopírovat cestu s uvozovkami</value>
   </data>
   <data name="CopyItemPathWithQuotes" xml:space="preserve">
-    <value>Copy selected item path with quotes</value>
+    <value>Kopírovat vybranou cestu k položce včetně uvozovek</value>
   </data>
   <data name="Browse" xml:space="preserve">
     <value>Procházet</value>
@@ -253,7 +253,7 @@
     <value>Vložit</value>
   </data>
   <data name="PasteShortcut" xml:space="preserve">
-    <value>Paste shortcut</value>
+    <value>Vložit zástupce</value>
   </data>
   <data name="BaseLayoutContextFlyoutNew.Label" xml:space="preserve">
     <value>Nový</value>
@@ -1244,6 +1244,12 @@
   <data name="OpenStorageSense" xml:space="preserve">
     <value>Otevřít úložiště</value>
   </data>
+  <data name="OpenStorageSenseDescription" xml:space="preserve">
+    <value>Otevřít stránku Inteligentního uložiště v nastavení Windows</value>
+  </data>
+  <data name="Cleanup" xml:space="preserve">
+    <value>Vyčistit</value>
+  </data>
   <data name="Copy" xml:space="preserve">
     <value>Kopírovat</value>
   </data>
@@ -1832,6 +1838,18 @@
   <data name="CompatibilityRegisterThisProgramForRestart" xml:space="preserve">
     <value>Registrovat tento program pro restart</value>
   </data>
+  <data name="StartWindow" xml:space="preserve">
+    <value>Start window</value>
+  </data>
+  <data name="NormalWindow" xml:space="preserve">
+    <value>Normal window</value>
+  </data>
+  <data name="Minimized" xml:space="preserve">
+    <value>Minimized</value>
+  </data>
+  <data name="Maximized" xml:space="preserve">
+    <value>Maximized</value>
+  </data>
   <data name="RunAsAdministrator" xml:space="preserve">
     <value>Spustit jako správce</value>
   </data>
@@ -1941,7 +1959,7 @@
     <value>Zavřít ostatní karty</value>
   </data>
   <data name="CloseAllTabs" xml:space="preserve">
-    <value>Close all tabs</value>
+    <value>Zavřít všechny karty</value>
   </data>
   <data name="Music" xml:space="preserve">
     <value>Hudba</value>
@@ -2189,6 +2207,9 @@
   <data name="WhatsNew" xml:space="preserve">
     <value>Co je nového</value>
   </data>
+  <data name="WhatsNewDescription" xml:space="preserve">
+    <value>Otevřít poznámky o vydání</value>
+  </data>
   <data name="CannotCreateShortcutDialogTitle" xml:space="preserve">
     <value>Vytvoření zástupce v tomto umístění vyžaduje oprávnění správce</value>
   </data>
@@ -2274,7 +2295,7 @@
     <value>Zobrazit skryté položky</value>
   </data>
   <data name="FormatDriveText" xml:space="preserve">
-    <value>Formátování...</value>
+    <value>Formát</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Nápověda</value>
@@ -2385,10 +2406,10 @@
     <value>Přepnout zobrazení skrytých položek</value>
   </data>
   <data name="ToggleDotFilesSettingDescription" xml:space="preserve">
-    <value>Přepne zobrazení skrytých položek</value>
+    <value>Přepnout zobrazení skrytých položek</value>
   </data>
   <data name="ToggleShowFileExtensionsDescription" xml:space="preserve">
-    <value>Určuje, zda se zobrazí přípony souborů</value>
+    <value>Přepnout zobrazení přípon souborů</value>
   </data>
   <data name="TogglePreviewPaneDescription" xml:space="preserve">
     <value>Přepnout panel pro zobrazení náhledu souboru</value>
@@ -2400,16 +2421,16 @@
     <value>Kopírovat do schránky</value>
   </data>
   <data name="CopyPathDescription" xml:space="preserve">
-    <value>Kopírovat cestu vybraných položek do schránky</value>
+    <value>Kopírovat cestu aktuální složky do schránky</value>
   </data>
   <data name="CopyItemPathDescription" xml:space="preserve">
-    <value>Copy path of selected items to the clipboard</value>
+    <value>Kopírovat cestu vybraných položek do schránky</value>
   </data>
   <data name="CopyItemPathWithQuotesDescription" xml:space="preserve">
-    <value>Copy path of selected items with quotes to the clipboard</value>
+    <value>Kopírovat cestu vybraných položek do schránky včetně uvozovek</value>
   </data>
   <data name="CopyPathWithQuotesDescription" xml:space="preserve">
-    <value>Kopírovat cestu vybraných položek do schránky včetně uvozovek</value>
+    <value>Kopírovat cestu aktuální složky do schránky včetně uvozovek</value>
   </data>
   <data name="CutItemDescription" xml:space="preserve">
     <value>Vyjmout do schránky</value>
@@ -2418,7 +2439,7 @@
     <value>Vložte položku(y) že schránky do aktuální složky</value>
   </data>
   <data name="PasteShortcutDescription" xml:space="preserve">
-    <value>Paste item(s) from clipboard to current folder as shortcuts</value>
+    <value>Vložit položku(y) ze schránky do aktuální složky jako zástupce</value>
   </data>
   <data name="PasteItemToSelectionDescription" xml:space="preserve">
     <value>Vložte položku(y) ze schránky do vybrané složky</value>
@@ -2628,7 +2649,7 @@
     <value>Seřadit položky dle názvu</value>
   </data>
   <data name="GroupByDateModifiedDescription" xml:space="preserve">
-    <value>Seřadit položky dle data úpravy</value>
+    <value>Seřadit položky dle data úprav</value>
   </data>
   <data name="GroupByDateCreatedDescription" xml:space="preserve">
     <value>Seřadit položky dle data vytvoření</value>
@@ -2700,7 +2721,7 @@
     <value>Zavřít všechny ostatní karty</value>
   </data>
   <data name="CloseAllTabsDescription" xml:space="preserve">
-    <value>Close all tabs including the current tab</value>
+    <value>Zavřít všechny karty včetně aktuální</value>
   </data>
   <data name="ReopenClosedTabDescription" xml:space="preserve">
     <value>Vrátit naposledy uzavřenou kartu</value>
@@ -3655,13 +3676,13 @@
     <value>Nejprve řadit soubory</value>
   </data>
   <data name="SortFilesFirstDescription" xml:space="preserve">
-    <value>Nejprve řadit soubory, poté složky</value>
+    <value>Nejprve seřadit soubory, poté složky</value>
   </data>
   <data name="SortFoldersFirst" xml:space="preserve">
     <value>Nejprve řadit složky</value>
   </data>
   <data name="SortFoldersFirstDescription" xml:space="preserve">
-    <value>Nejprve řadit složky, poté soubory</value>
+    <value>Nejprve seřadit složky, poté soubory</value>
   </data>
   <data name="SortPriority" xml:space="preserve">
     <value>Seřadit dle priority</value>
@@ -3970,5 +3991,67 @@
   </data>
   <data name="BulkRename" xml:space="preserve">
     <value>Hromadně přejmenovat</value>
+  </data>
+  <data name="CompressContents" xml:space="preserve">
+    <value>Komprimovat obsah</value>
+  </data>
+  <data name="ShowCreateAlternateDataStream" xml:space="preserve">
+    <value>Zobrazit možnost vytvoření alternativního datového toku</value>
+  </data>
+  <data name="CreateAlternateDataStream" xml:space="preserve">
+    <value>Vytvořit alternativní datový tok</value>
+  </data>
+  <data name="CreateAlternateDataStreamDescription" xml:space="preserve">
+    <value>Vytvořit alternativní datový tok pro vybranou položku(y)</value>
+  </data>
+  <data name="EnterDataStreamName" xml:space="preserve">
+    <value>Zadejte název datového streamu</value>
+  </data>
+  <data name="ErrorCreatingDataStreamTitle" xml:space="preserve">
+    <value>Při vytváření alternativního datového toku, došlo k chybě</value>
+  </data>
+  <data name="ErrorCreatingDataStreamDescription" xml:space="preserve">
+    <value>Vezměte prosím na vědomí, že alternativní datové toky fungují pouze na discích formátovaných jako NTFS.</value>
+  </data>
+  <data name="DataStreamsAreHiddenTitle" xml:space="preserve">
+    <value>Alternativní datové toky jsou nyní skryty</value>
+  </data>
+  <data name="DataStreamsAreHiddenDescription" xml:space="preserve">
+    <value>Chcete zobrazit alternativní datové přenosy? Toto nastavení můžete kdykoliv změnit na stránce nastavení souborů a složek.</value>
+  </data>
+  <data name="ManageTags" xml:space="preserve">
+    <value>Správa štítků</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Dostupné</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Celkem</value>
+  </data>
+  <data name="AlwaysSwitchToNewlyOpenedTab" xml:space="preserve">
+    <value>Vždy přepnout na nově vytvořenou kartu</value>
+  </data>
+  <data name="ToggleShelfPane" xml:space="preserve">
+    <value>Toggle the shelf pane</value>
+  </data>
+  <data name="ToggleShelfPaneDescription" xml:space="preserve">
+    <value>Toggle the shelf pane visibility</value>
+  </data>
+  <data name="ShowShelfPaneButtonInAddressBar" xml:space="preserve">
+    <value>Show shelf pane toggle in address bar</value>
+  </data>
+  <data name="Shelf" xml:space="preserve">
+    <value>Shelf</value>
+    <comment>'Shelf' refers to the Shelf Pane feature, where users can conveniently drag and drop files for quick access and perform bulk actions with ease.</comment>
+  </data>
+  <data name="ClearItems" xml:space="preserve">
+    <value>Clear items</value>
+  </data>
+  <data name="RemoveFromShelf" xml:space="preserve">
+    <value>Remove from shelf</value>
+  </data>
+  <data name="AddToShelf" xml:space="preserve">
+    <value>Add to shelf</value>
+    <comment>Tooltip that displays when dragging items to the Shelf Pane</comment>
   </data>
 </root>

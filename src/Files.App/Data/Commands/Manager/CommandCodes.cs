@@ -1,5 +1,5 @@
-// Copyright (c) 2024 Files Community
-// Licensed under the MIT License. See the LICENSE.
+// Copyright (c) Files Community
+// Licensed under the MIT License.
 
 namespace Files.App.Data.Commands
 {
@@ -26,6 +26,7 @@ namespace Files.App.Data.Commands
 		ToggleDetailsPane,
 		ToggleInfoPane,
 		ToggleToolbar,
+		ToggleShelfPane,
 
 		// File System
 		CopyItem,
@@ -47,6 +48,8 @@ namespace Files.App.Data.Commands
 		CreateShortcutFromDialog,
 		EmptyRecycleBin,
 		FormatDrive,
+		FormatDriveFromHome,
+		FormatDriveFromSidebar,
 		RestoreRecycleBin,
 		RestoreAllRecycleBin,
 		OpenItem,
@@ -112,8 +115,12 @@ namespace Files.App.Data.Commands
 		OpenInVSCode,
 		OpenRepoInVSCode,
 		OpenProperties,
+		OpenReleaseNotes,
 		OpenClassicProperties,
 		OpenSettings,
+		OpenStorageSense,
+		OpenStorageSenseFromHome,
+		OpenStorageSenseFromSidebar,
 		OpenTerminal,
 		OpenTerminalAsAdmin,
 		OpenTerminalFromSidebar,

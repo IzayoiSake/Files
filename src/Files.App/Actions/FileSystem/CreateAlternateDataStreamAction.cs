@@ -1,5 +1,5 @@
-﻿// Copyright (c) 2024 Files Community
-// Licensed under the MIT License. See the LICENSE.
+﻿// Copyright (c) Files Community
+// Licensed under the MIT License.
 
 using Microsoft.UI.Xaml.Controls;
 using Windows.Foundation.Metadata;
@@ -18,6 +18,9 @@ namespace Files.App.Actions
 
 		public string Description
 			=> Strings.CreateAlternateDataStreamDescription.GetLocalizedResource();
+
+		public RichGlyph Glyph
+			=> new RichGlyph(themedIconStyle: "App.ThemedIcons.AltDataStream");
 
 		public override bool IsExecutable =>
 			context.HasSelection &&

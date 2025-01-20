@@ -1,5 +1,5 @@
-# Copyright (c) 2024 Files Community
-# Licensed under the MIT License. See the LICENSE.
+# Copyright (c) Files Community
+# Licensed under the MIT License.
 
 # Abstract:
 #   This CI is executed when a new commit is created on the main branch or
@@ -242,6 +242,11 @@ jobs:
           dotnet test `
             $env:AUTOMATED_TESTS_ASSEMBLY_DIR\**\Files.InteractionTests.dll `
             --logger "trx;LogFileName=$env:AUTOMATED_TESTS_ASSEMBLY_DIR\testResults.trx"
+
+    - if: github.event_name == 'pull_request'
+      uses: geekyeggo/delete-artifact@v5
+      with:
+          name: '*'
 
     # - name: Generate markdown from the tests result
     #   shell: pwsh

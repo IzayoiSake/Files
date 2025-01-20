@@ -1,5 +1,5 @@
-// Copyright (c) 2024 Files Community
-// Licensed under the MIT License. See the LICENSE.
+// Copyright (c) Files Community
+// Licensed under the MIT License.
 
 using System.Runtime.InteropServices;
 using Windows.Win32;
@@ -102,14 +102,14 @@ namespace Files.App.Services
 		{
 			// Get IShellItem for Recycle Bin folder
 			using ComPtr<IShellItem> pRecycleBinFolderShellItem = default;
-			var recycleBinFolderId = FOLDERID.FOLDERID_RecycleBinFolder;
+			var recycleBinFolderId = PInvoke.FOLDERID_RecycleBinFolder;
 			var shellItemGuid = typeof(IShellItem).GUID;
 			HRESULT hr = PInvoke.SHGetKnownFolderItem(&recycleBinFolderId, KNOWN_FOLDER_FLAG.KF_FLAG_DEFAULT, HANDLE.Null, &shellItemGuid, (void**)pRecycleBinFolderShellItem.GetAddressOf());
 
 			// Get IEnumShellItems for Recycle Bin folder
 			using ComPtr<IEnumShellItems> pEnumShellItems = default;
 			Guid enumShellItemGuid = typeof(IEnumShellItems).GUID;
-			var enumItemsBHID = BHID.BHID_EnumItems;
+			var enumItemsBHID = PInvoke.BHID_EnumItems;
 			hr = pRecycleBinFolderShellItem.Get()->BindToHandler(null, &enumItemsBHID, &enumShellItemGuid, (void**)pEnumShellItems.GetAddressOf());
 
 			// Initialize how to perform the operation

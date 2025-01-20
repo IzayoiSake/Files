@@ -1,5 +1,5 @@
-﻿// Copyright (c) 2024 Files Community
-// Licensed under the MIT License. See the LICENSE.
+﻿// Copyright (c) Files Community
+// Licensed under the MIT License.
 
 using Files.App.Storage.Storables;
 using Files.Core.Storage.Storables;
@@ -61,7 +61,7 @@ namespace Files.App.Services
 		public async Task<ILocatableFolder> GetPrimaryDriveAsync()
 		{
 			string cDrivePath = $@"{Constants.UserEnvironmentPaths.SystemDrivePath}\";
-			return new WindowsStorageFolder(await StorageFolder.GetFolderFromPathAsync(cDrivePath));
+			return new WindowsStorageFolderLegacy(await StorageFolder.GetFolderFromPathAsync(cDrivePath));
 		}
 
 		public async Task UpdateDrivePropertiesAsync(ILocatableFolder drive)
