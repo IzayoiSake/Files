@@ -32,7 +32,7 @@ namespace Files.Shared.Helpers
 		/// <returns><c>true</c> if the fileExtensionToCheck is an image; otherwise, <c>false</c>.</returns>
 		public static bool IsImageFile(string? fileExtensionToCheck)
 		{
-			return HasExtension(fileExtensionToCheck, ".png", ".bmp", ".jpg", ".jpeg", ".jfif", ".gif", ".tiff", ".tif", ".webp");
+			return HasExtension(fileExtensionToCheck, ".png", ".bmp", ".jpg", ".jpeg", ".jfif", ".gif", ".tiff", ".tif", ".webp", ".jxr");
 		}
 
 		/// <summary>
@@ -42,7 +42,7 @@ namespace Files.Shared.Helpers
 		/// <returns><c>true</c> if the fileExtensionToCheck is an image; otherwise, <c>false</c>.</returns>
 		public static bool IsCompatibleToSetAsWindowsWallpaper(string? fileExtensionToCheck)
 		{
-			return HasExtension(fileExtensionToCheck, ".png", ".bmp", ".jpg", ".jpeg", ".jfif", ".gif", ".tiff", ".tif");
+			return HasExtension(fileExtensionToCheck, ".png", ".bmp", ".jpg", ".jpeg", ".jfif", ".gif", ".tiff", ".tif", ".jxr");
 		}
 
 		/// <summary>
@@ -255,6 +255,16 @@ namespace Files.Shared.Helpers
 		public static bool IsScriptFile(string? filePathToCheck)
 		{
 			return HasExtension(filePathToCheck, ".py", ".ahk");
+		}
+		
+		/// <summary>
+		/// Check if the file extension is a system file.
+		/// </summary>
+		/// <param name="filePathToCheck"></param>
+		/// <returns><c>true</c> if the filePathToCheck is a system file; otherwise, <c>false</c>.</returns>
+		public static bool IsSystemFile(string? filePathToCheck)
+		{
+			return HasExtension(filePathToCheck, ".dll", ".exe", ".sys", ".inf");
 		}
 
 	}
