@@ -5,13 +5,13 @@ using Files.App.ViewModels.Properties;
 
 namespace Files.App.ViewModels.Previews
 {
-	internal sealed class ShortcutPreviewViewModel : BasePreviewModel
+	internal sealed partial class ShortcutPreviewViewModel : BasePreviewModel
 	{
 		public ShortcutPreviewViewModel(ListedItem item) : base(item) { }
 
 		public async override Task<List<FileProperty>> LoadPreviewAndDetailsAsync()
 		{
-			var item = Item as ShortcutItem;
+			var item = Item as IShortcutItem;
 			var details = new List<FileProperty>
 			{
 				GetFileProperty("PropertyParsingPath", item.ItemPath),

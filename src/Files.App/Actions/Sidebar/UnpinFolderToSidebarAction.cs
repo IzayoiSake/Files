@@ -3,16 +3,16 @@
 
 namespace Files.App.Actions
 {
-	internal sealed class UnpinFolderFromSidebarAction : ObservableObject, IAction
+	internal sealed partial class UnpinFolderFromSidebarAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext context;
 		private readonly IQuickAccessService service;
 
 		public string Label
-			=> "UnpinFolderFromSidebar".GetLocalizedResource();
+			=> Strings.UnpinFolderFromSidebar.GetLocalizedResource();
 
 		public string Description
-			=> "UnpinFolderFromSidebarDescription".GetLocalizedResource();
+			=> Strings.UnpinFolderFromSidebarDescription.GetLocalizedFormatResource(context.HasSelection ? context.SelectedItems.Count : 1);
 
 		public RichGlyph Glyph
 			=> new(themedIconStyle: "App.ThemedIcons.FavoritePinRemove");

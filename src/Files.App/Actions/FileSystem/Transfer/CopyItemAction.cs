@@ -5,13 +5,13 @@ using Windows.ApplicationModel.DataTransfer;
 
 namespace Files.App.Actions
 {
-	internal sealed class CopyItemAction : BaseTransferItemAction, IAction
+	internal sealed partial class CopyItemAction : BaseTransferItemAction, IAction
 	{
 		public string Label
-			=> "Copy".GetLocalizedResource();
+			=> Strings.Copy.GetLocalizedResource();
 
 		public string Description
-			=> "CopyItemDescription".GetLocalizedResource();
+			=> Strings.CopyItemDescription.GetLocalizedFormatResource(ContentPageContext.SelectedItems.Count);
 
 		public RichGlyph Glyph
 			=> new(themedIconStyle: "App.ThemedIcons.Copy");

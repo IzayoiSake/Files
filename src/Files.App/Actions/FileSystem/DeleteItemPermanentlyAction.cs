@@ -3,13 +3,13 @@
 
 namespace Files.App.Actions
 {
-	internal sealed class DeleteItemPermanentlyAction : BaseDeleteAction, IAction
+	internal sealed partial class DeleteItemPermanentlyAction : BaseDeleteAction, IAction
 	{
 		public string Label
-			=> "DeletePermanently".GetLocalizedResource();
+			=> Strings.DeletePermanently.GetLocalizedResource();
 
 		public string Description
-			=> "DeleteItemPermanentlyDescription".GetLocalizedResource();
+			=> Strings.DeleteItemPermanentlyDescription.GetLocalizedFormatResource(context.SelectedItems.Count);
 
 		public HotKey HotKey
 			=> new(Keys.Delete, KeyModifiers.Shift);

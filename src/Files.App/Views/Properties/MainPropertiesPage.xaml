@@ -11,7 +11,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:uc="using:Files.App.UserControls"
 	xmlns:vm="using:Files.App.ViewModels.Properties"
-	xmlns:wctconverters="using:CommunityToolkit.WinUI.UI.Converters"
+	xmlns:wctconverters="using:CommunityToolkit.WinUI.Converters"
 	Background="{ThemeResource App.Theme.BackgroundBrush}"
 	DataContext="{x:Bind MainPropertiesViewModel, Mode=OneWay}"
 	HighContrastAdjustment="None"
@@ -191,5 +191,19 @@
 
 		</NavigationView>
 
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="NavigationStates">
+				<VisualState x:Name="Narrow">
+					<VisualState.Setters>
+						<Setter Target="MainPropertiesWindowNavigationView.PaneDisplayMode" Value="LeftCompact" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState x:Name="Wide">
+					<VisualState.Setters>
+						<Setter Target="MainPropertiesWindowNavigationView.PaneDisplayMode" Value="Left" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
 	</Grid>
 </vm:BasePropertiesPage>

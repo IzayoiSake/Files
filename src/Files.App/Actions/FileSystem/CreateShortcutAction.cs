@@ -3,15 +3,15 @@
 
 namespace Files.App.Actions
 {
-	internal sealed class CreateShortcutAction : BaseUIAction, IAction
+	internal sealed partial class CreateShortcutAction : BaseUIAction, IAction
 	{
 		private readonly IContentPageContext context;
 
 		public string Label
-			=> "CreateShortcut".GetLocalizedResource();
+			=> Strings.CreateShortcut.GetLocalizedResource();
 
 		public string Description
-			=> "CreateShortcutDescription".GetLocalizedResource();
+			=> Strings.CreateShortcutDescription.GetLocalizedFormatResource(context.SelectedItems.Count);
 
 		public RichGlyph Glyph
 			=> new(themedIconStyle: "App.ThemedIcons.URL");

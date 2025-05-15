@@ -536,6 +536,9 @@
   <data name="CopyToFolderCaptionText" xml:space="preserve">
     <value>Kopiuj do {0}</value>
   </data>
+  <data name="CloneToFolderCaptionText" xml:space="preserve">
+    <value>Sklonuj do {0}</value>
+  </data>
   <data name="CreateShortcut" xml:space="preserve">
     <value>Utwórz skrót</value>
   </data>
@@ -1713,7 +1716,7 @@
     <value>Kolumny</value>
   </data>
   <data name="Cards" xml:space="preserve">
-    <value>Cards</value>
+    <value>Karty</value>
   </data>
   <data name="OpenFoldersInNewTab" xml:space="preserve">
     <value>Otwieraj foldery w nowej karcie</value>
@@ -1827,16 +1830,16 @@
     <value>Zarejestruj ten program do ponownego uruchomienia</value>
   </data>
   <data name="StartWindow" xml:space="preserve">
-    <value>Start window</value>
+    <value>Okno startowe</value>
   </data>
   <data name="NormalWindow" xml:space="preserve">
-    <value>Normal window</value>
+    <value>Okno normalne</value>
   </data>
   <data name="Minimized" xml:space="preserve">
-    <value>Minimized</value>
+    <value>Zminimalizowane</value>
   </data>
   <data name="Maximized" xml:space="preserve">
-    <value>Maximized</value>
+    <value>Zmaksymalizowane</value>
   </data>
   <data name="RunAsAdministrator" xml:space="preserve">
     <value>Uruchom jako administrator</value>
@@ -2070,7 +2073,7 @@
     <value>Przywróć wszystkie elementy</value>
   </data>
   <data name="ConfirmRestoreSelectionBinDialogContent" xml:space="preserve">
-    <value>Czy chcesz przywrócić {0} element(ów)?</value>
+    <value>Czy chcesz przywrócić {0, plural, one {wybrany element} few {{0} wybrane elementy} many {{0} wybranych elementów} other {{0} wybranych elementów}}?</value>
   </data>
   <data name="ConfirmRestoreSelectionBinDialogTitle" xml:space="preserve">
     <value>Przywróć zaznaczone</value>
@@ -2092,6 +2095,12 @@
   </data>
   <data name="ArchivePassword" xml:space="preserve">
     <value>Hasło do archiwum</value>
+  </data>
+  <data name="Encoding" xml:space="preserve">
+    <value>Kodowanie</value>
+  </data>
+  <data name="EncodingDetected" xml:space="preserve">
+    <value>{0} (wykrytych)</value>
   </data>
   <data name="ExtractToPath" xml:space="preserve">
     <value>Ścieżka</value>
@@ -2135,7 +2144,7 @@
   <data name="SplittingSize" xml:space="preserve">
     <value>Rozmiar po podziale</value>
   </data>
-  <data name="Do not split" xml:space="preserve">
+  <data name="DoNotSplit" xml:space="preserve">
     <value>Nie dziel</value>
   </data>
   <data name="CD" xml:space="preserve">
@@ -2192,11 +2201,14 @@
   <data name="EditSettingsFile" xml:space="preserve">
     <value>Edytuj plik ustawień</value>
   </data>
-  <data name="WhatsNew" xml:space="preserve">
-    <value>Co nowego</value>
+  <data name="EditSettingsFileDescription" xml:space="preserve">
+    <value>Otwórz plik ustawień w domyślnym edytorze</value>
   </data>
-  <data name="WhatsNewDescription" xml:space="preserve">
-    <value>Open Release Notes</value>
+  <data name="ReleaseNotes" xml:space="preserve">
+    <value>Lista zmian</value>
+  </data>
+  <data name="ReleaseNotesDescription" xml:space="preserve">
+    <value>Otwórz listę zmian</value>
   </data>
   <data name="CannotCreateShortcutDialogTitle" xml:space="preserve">
     <value>Tworzenie skrótu w tej lokalizacji wymaga uprawnień administratora</value>
@@ -2406,7 +2418,7 @@
     <value>Przełącz, czy wyświetlić pasek boczny</value>
   </data>
   <data name="CopyItemDescription" xml:space="preserve">
-    <value>Kopiuj element(y) do schowka</value>
+    <value>Skopiuj {0, plural, one {element} other {elementy}} do schowka</value>
   </data>
   <data name="CopyPathDescription" xml:space="preserve">
     <value>Skopiuj ścieżkę wybranych elementów do schowka</value>
@@ -2421,25 +2433,25 @@
     <value>Skopiuj ścieżkę wybranych elementów do schowka z cudzysłowami</value>
   </data>
   <data name="CutItemDescription" xml:space="preserve">
-    <value>Wytnij element(y) do schowka</value>
+    <value>Wytnij {0, plural, one {element} other {elementy}} do schowka</value>
   </data>
   <data name="PasteItemDescription" xml:space="preserve">
-    <value>Wklej element(y) ze schowka do bieżącego folderu</value>
+    <value>Wklej elementy ze schowka do bieżącego folderu</value>
   </data>
   <data name="PasteShortcutDescription" xml:space="preserve">
-    <value>Wklej element(y) ze schowka do bieżącego folderu jako skróty</value>
+    <value>Wklej elementy ze schowka do bieżącego folderu jako skróty</value>
   </data>
   <data name="PasteItemToSelectionDescription" xml:space="preserve">
-    <value>Wklej element(y) ze schowka do wybranego folderu</value>
+    <value>Wklej elementy ze schowka do wybranego folderu</value>
   </data>
   <data name="DeleteItemDescription" xml:space="preserve">
-    <value>Usuń element(y)</value>
+    <value>Usuń {0, plural, one {element} other{elementy}}</value>
   </data>
   <data name="CreateFolderDescription" xml:space="preserve">
     <value>Utwórz nowy folder</value>
   </data>
   <data name="CreateShortcutDescription" xml:space="preserve">
-    <value>Utwórz nowy skrót do zaznaczonych elementów</value>
+    <value>Utwórz {0, plural, one {nowy skrót} few {nowe skróty} many {nowe skróty} other {nowe skróty}} do {0, plural, one {wybranego elementu} few {wybranych elementów} many {wybranych elementów} other {wybranych elementów}}</value>
   </data>
   <data name="CreateShortcutFromDialogDescription" xml:space="preserve">
     <value>Utwórz nowy skrót do dowolnego elementu</value>
@@ -2451,16 +2463,16 @@
     <value>Otwórz menu "Formatuj dysk" dla wybranego elementu</value>
   </data>
   <data name="RestoreRecycleBinDescription" xml:space="preserve">
-    <value>Przywróć zaznaczone elementy z kosza</value>
+    <value>Przywróć {0, plural, one {wybrany przedmiot} few {wybrane przedmioty} many {wybrane przedmioty} other {wybrane przedmioty}} z kosza</value>
   </data>
   <data name="RestoreAllRecycleBinDescription" xml:space="preserve">
     <value>Przywróć wszystkie elementy z kosza</value>
   </data>
   <data name="OpenItemDescription" xml:space="preserve">
-    <value>Otwórz element(y)</value>
+    <value>Otwórz {0, plural, one {element} other {elementy}}</value>
   </data>
   <data name="OpenItemWithApplicationPickerDescription" xml:space="preserve">
-    <value>Otwórz element(y) za pomocą wybranej aplikacji</value>
+    <value>Otwórz {0, plural, one {element} few {elementy} many {elementy} other {elementy}} w wybranej aplikacji</value>
   </data>
   <data name="OpenParentFolderDescription" xml:space="preserve">
     <value>Otwórz folder nadrzędny dla wyszukanego elementu</value>
@@ -2484,19 +2496,19 @@
     <value>Przełącz wybór zaznaczenia</value>
   </data>
   <data name="ShareItemDescription" xml:space="preserve">
-    <value>Udostępnij wybrane pliki innym</value>
+    <value>Udostępnij {0, plural, one {wybrany plik} few {wybrane pliki} many {wybrane pliki} other {pliki}} z innymi</value>
   </data>
   <data name="PinToStartDescription" xml:space="preserve">
-    <value>Przypnij element(y) do menu Start</value>
+    <value>Przypnij {0, plural, one {element} other {elementy}} do menu Start</value>
   </data>
   <data name="UnpinFromStartDescription" xml:space="preserve">
-    <value>Odepnij element(y) z menu Start</value>
+    <value>Odepnij {0, plural, one {element} other {elementy}} z menu Start</value>
   </data>
   <data name="PinFolderToSidebarDescription" xml:space="preserve">
-    <value>Przypnij folder(y) do panelu bocznego</value>
+    <value>Przypnij {0, plural, one {folder} other {foldery}} do paska bocznego</value>
   </data>
   <data name="UnpinFolderFromSidebarDescription" xml:space="preserve">
-    <value>Odepnij folder(y) z panelu bocznego</value>
+    <value>Odepnij {0, plural, one {folder} other {foldery}} z paska bocznego</value>
   </data>
   <data name="SetAsWallpaperBackgroundDescription" xml:space="preserve">
     <value>Ustaw zaznaczony obraz jako tło pulpitu</value>
@@ -2511,13 +2523,13 @@
     <value>Ustaw wybrane zdjęcie jako tło aplikacji</value>
   </data>
   <data name="InstallFontDescription" xml:space="preserve">
-    <value>Zainstaluj wybrane czcionki</value>
+    <value>Zainstaluj {0, plural, one {wybraną czcionkę} other {wybrane czcionki}}</value>
   </data>
   <data name="InstallInfDriverDescription" xml:space="preserve">
-    <value>Zainstaluj sterownik(i) używając wybranych plików inf</value>
+    <value>Zainstaluj {0, plural, one {sterownik} other {sterowniki}} używając {0, plural, one {wybranego pliku} other {wybrane pliki}} inf</value>
   </data>
   <data name="InstallCertificateDescription" xml:space="preserve">
-    <value>Zainstaluj wybrane certyfikaty</value>
+    <value>Zainstaluj {0, plural, one {wybrany certyfikat} other {wybrane certyfikaty}}</value>
   </data>
   <data name="RunAsAdminDescription" xml:space="preserve">
     <value>Uruchom wybraną aplikację jako administrator</value>
@@ -2532,28 +2544,28 @@
     <value>Uruchom podgląd w wyskakującym oknie</value>
   </data>
   <data name="CompressIntoArchiveDescription" xml:space="preserve">
-    <value>Utwórz archiwum z wybranymi elementami</value>
+    <value>Stwórz archiwum z {0, plural, one {wybranym przedmiotem} other {wybranymi przedmiotami}}</value>
   </data>
   <data name="CompressIntoSevenZipDescription" xml:space="preserve">
-    <value>Utwórz archiwum 7z z wybranymi elementami</value>
+    <value>Stwórz archiwum 7z z {0, plural, one {wybranym przedmiotem} other {wybranymi przedmiotami}}</value>
   </data>
   <data name="CompressIntoZipDescription" xml:space="preserve">
-    <value>Utwórz archiwum zip z wybranymi elementami</value>
+    <value>Stwórz archiwum zip z {0, plural, one {wybranym przedmiotem} other {wybranymi przedmiotami}}</value>
   </data>
   <data name="DecompressArchiveDescription" xml:space="preserve">
-    <value>Wypakuj elementy z wybranego archiwum(ów) do dowolnego folderu</value>
+    <value>Wyodrębnij elementy z {0, plural, one {wybranego archiwum} other {wybranych archiwów}} do dowolnego folderu</value>
   </data>
   <data name="DecompressArchiveHereDescription" xml:space="preserve">
-    <value>Wypakuj elementy z wybranego archiwum(ów) do obecnego folderu</value>
+    <value>Wyodrębnij elementy z {0, plural, one {wybranego archiwum} other {wybranych archiwów}} do obecnego folderu</value>
   </data>
   <data name="DecompressArchiveToChildFolderDescription" xml:space="preserve">
-    <value>Wypakuj elementy z wybranego archiwum(ów) do nowego folderu</value>
+    <value>Wyodrębnij elementy z {0, plural, one {wybranego archiwum} other {wybranych archiwów}} do nowego folderu</value>
   </data>
   <data name="RotateLeftDescription" xml:space="preserve">
-    <value>Obróć wybrane obrazy w lewo</value>
+    <value>Obróć {0, plural, one {wybrany obraz} other {wybrane obrazy}} w lewo</value>
   </data>
   <data name="RotateRightDescription" xml:space="preserve">
-    <value>Obróć wybrane obrazy w prawo</value>
+    <value>Obróć {0, plural, one {wybrany obraz} other {wybrane obrazy}} w prawo</value>
   </data>
   <data name="OpenSettingsDescription" xml:space="preserve">
     <value>Otwórz stronę ustawień</value>
@@ -2574,7 +2586,7 @@
     <value>Przełącz na widok szczegółowy</value>
   </data>
   <data name="LayoutCardsDescription" xml:space="preserve">
-    <value>Switch to cards view</value>
+    <value>Przełącz na widok kart</value>
   </data>
   <data name="LayoutListDescription" xml:space="preserve">
     <value>Przełącz na widok listy</value>
@@ -2989,7 +3001,7 @@
     <value>Usuń na stałe</value>
   </data>
   <data name="DeleteItemPermanentlyDescription" xml:space="preserve">
-    <value>Usuń element(y) na stałe</value>
+    <value>Permanentnie usuń {0, plural, one {element} other {elementy}}</value>
   </data>
   <data name="PlayAllDescription" xml:space="preserve">
     <value>Odtwórz wybrane pliki multimedialne</value>
@@ -3106,7 +3118,7 @@
     <value>Przełącz na nową gałąź</value>
   </data>
   <data name="CreateFolderWithSelectionDescription" xml:space="preserve">
-    <value>Utwórz folder z aktualnie wybranymi elementami</value>
+    <value>Utwórz folder z obecnie {0, plural, one {wybranym przedmiotem} other {wybranymi przedmiotami}}</value>
   </data>
   <data name="OpenProperties" xml:space="preserve">
     <value>Otwórz właściwości</value>
@@ -3137,6 +3149,9 @@
   </data>
   <data name="GitFetchDescription" xml:space="preserve">
     <value>Uruchom git fetch</value>
+  </data>
+  <data name="GitCloneDescription" xml:space="preserve">
+    <value>Sklonuj repozytorium git</value>
   </data>
   <data name="GitPullDescription" xml:space="preserve">
     <value>Uruchom git pull</value>
@@ -3214,17 +3229,17 @@
   <data name="CannotReachGitHubError" xml:space="preserve">
     <value>Pliki nie mogą teraz uzyskać dostępu do GitHub.</value>
   </data>
-  <data name="OpenInVSCode" xml:space="preserve">
-    <value>Otwórz folder w VS Code</value>
+  <data name="OpenInIDE" xml:space="preserve">
+    <value>Otwórz folder w {0}</value>
   </data>
-  <data name="OpenInVSCodeDescription" xml:space="preserve">
-    <value>Otwórz bieżącą ścieżkę w Visual Studio Code</value>
+  <data name="OpenInIDEDescription" xml:space="preserve">
+    <value>Otwórz bieżący katalog w {0}</value>
   </data>
-  <data name="OpenRepoInVSCode" xml:space="preserve">
-    <value>Otwórz repozytorium w VS Code</value>
+  <data name="OpenRepoInIDE" xml:space="preserve">
+    <value>Otwórz repozytorium w {0}</value>
   </data>
-  <data name="OpenRepoInVSCodeDescription" xml:space="preserve">
-    <value>Otwórz źródło repozytorium Git w Visual Studio Code</value>
+  <data name="OpenRepoInIDEDescription" xml:space="preserve">
+    <value>Otwórz źródło repozytorium git w {0}</value>
   </data>
   <data name="CopyCode" xml:space="preserve">
     <value>Skopiuj kod</value>
@@ -3465,6 +3480,70 @@
     <value>Kompresowanie {0} plików z "{1}" do "{2}"</value>
     <comment>Shown in a StatusCenter card.</comment>
   </data>
+  <data name="StatusCenter_GitCloneCanceled_Header" xml:space="preserve">
+    <value>Anulowano klonowanie {0} do "{1}"</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_GitCloneCanceled_SubHeader" xml:space="preserve">
+    <value>Anulowano klonowanie {0} z "{1}" do "{2}"</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_GitCloneComplete_Header" xml:space="preserve">
+    <value>Sklonowano "{0}" do "{1}"</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_GitCloneComplete_SubHeader" xml:space="preserve">
+    <value>Sklonowano {0} z "{1}" do "{2}"</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_GitCloneFailed_Header" xml:space="preserve">
+    <value>Błąd klonowania "{0}" do "{1}"</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_GitCloneFailed_SubHeader" xml:space="preserve">
+    <value>Nie udało się sklonować {0} z "{1}" do "{2}"</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_GitCloneInProgress_Header" xml:space="preserve">
+    <value>Klonowanie "{0}" do "{1}"</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_GitCloneInProgress_SubHeader" xml:space="preserve">
+    <value>Klonowanie {0} z "{1}" do "{2}"</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_InstallFontCanceled_Header" xml:space="preserve">
+    <value>Anulowano instalację {0} czcionki/-ek</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_InstallFontCanceled_SubHeader" xml:space="preserve">
+    <value>Anulowano usuwanie {0} czcionki/-ek z "{1}"</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_InstallFontComplete_Header" xml:space="preserve">
+    <value>Zainstalowano {0} czcionkę/-i</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_InstallFontComplete_SubHeader" xml:space="preserve">
+    <value>Zainstalowano {0} czcionkę/-ek z "{1}"</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_InstallFontFailed_Header" xml:space="preserve">
+    <value>Błąd instalacji {0} czcionki/-ek</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_InstallFontFailed_SubHeader" xml:space="preserve">
+    <value>Nie udało się usunąć {0} czcionki/-ek z "{1}"</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_InstallFontInProgress_Header" xml:space="preserve">
+    <value>Instalowanie {0} czcionki/-ek</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
+  <data name="StatusCenter_InstallFontInProgress_SubHeader" xml:space="preserve">
+    <value>Instalowanie {0} czcionki/-ek z "{1}"</value>
+    <comment>Shown in a StatusCenter card.</comment>
+  </data>
   <data name="StatusCenter_CopyCanceled_Header" xml:space="preserve">
     <value>Anulowano kopiowanie {0} plik(ów) do "{1}"</value>
     <comment>Shown in a StatusCenter card.</comment>
@@ -3606,7 +3685,7 @@
     <comment>Shown in a StatusCenter card.</comment>
   </data>
   <data name="StatusCenter_ProcessedItems_Header" xml:space="preserve">
-    <value>{0}/{1} plików przetworzone</value>
+    <value>Przetworzono {0}/{1} {0, plural, one {element} other {elementów}}</value>
     <comment>Shown in a StatusCenter card. Used as "8/20 items processed"</comment>
   </data>
   <data name="UnblockDownloadedFile" xml:space="preserve">
@@ -3623,6 +3702,9 @@
   </data>
   <data name="FailedToSetBackground" xml:space="preserve">
     <value>Nie udało się ustawić tapety tła</value>
+  </data>
+  <data name="FailedToOpenSettingsFile" xml:space="preserve">
+    <value>Nie udało się otworzyć pliku ustawień</value>
   </data>
   <data name="GitDeleteBranch" xml:space="preserve">
     <value>Usuń gałąź Git</value>
@@ -3649,7 +3731,7 @@
     <value>Wystąpił błąd podczas stosowania tego tagu</value>
   </data>
   <data name="DecompressArchiveHereSmartDescription" xml:space="preserve">
-    <value>Wypakuj elementy z wybranych archiwów do bieżącego folderu dla jednoelementowych archiwów lub do nowego folderu dla wieloelementowych archiwów</value>
+    <value>Wypakuj elementy z {0, plural, one {wybranego archiwum} other {wybranych archiwów}} do obecnego folderu dla archiwum z jednym elementem, lub do nowego folderu dla archiwum z wieloma elementami</value>
   </data>
   <data name="ExtractHereSmart" xml:space="preserve">
     <value>Wypakuj tutaj (Inteligentnie)</value>
@@ -3875,6 +3957,10 @@
     <value>Plik ICO</value>
     <comment>This is the friendly name for ICO files.</comment>
   </data>
+  <data name="IclFileCapitalized" xml:space="preserve">
+    <value>Plik ICL</value>
+    <comment>This is the friendly name for ICL files.</comment>
+  </data>
   <data name="ZipFileCapitalized" xml:space="preserve">
     <value>Plik zip</value>
     <comment>This is the friendly name for ZIP files.</comment>
@@ -3966,7 +4052,7 @@
     <value>Przejdź do strony głównej</value>
   </data>
   <data name="ShowHomeButton" xml:space="preserve">
-    <value>Show home button in address bar</value>
+    <value>Pokaż przycisk strony głównej na pasku adresu</value>
   </data>
   <data name="Toolbars" xml:space="preserve">
     <value>Paski narzędzi</value>
@@ -3978,7 +4064,7 @@
     <value>Masowa zmiana nazw</value>
   </data>
   <data name="CompressContents" xml:space="preserve">
-    <value>Compress contents</value>
+    <value>Skompresuj zawartość</value>
   </data>
   <data name="ShowCreateAlternateDataStream" xml:space="preserve">
     <value>Pokaż opcję tworzenia alternatywnego strumienia danych</value>
@@ -3987,7 +4073,7 @@
     <value>Pokaż alternatywne strumienie danych</value>
   </data>
   <data name="CreateAlternateDataStreamDescription" xml:space="preserve">
-    <value>Utwórz alternatywny strumień danych dla wybranych elementów</value>
+    <value>Utwórz alternatywny strumień danych dla {0, plural, one {wybranego przedmiotu} other {wybranych przedmiotów}}</value>
   </data>
   <data name="EnterDataStreamName" xml:space="preserve">
     <value>Wprowadź nazwę strumienia danych</value>
@@ -4008,35 +4094,121 @@
     <value>Zarządzaj tagami</value>
   </data>
   <data name="Available" xml:space="preserve">
-    <value>Available</value>
+    <value>Dostępne</value>
   </data>
   <data name="Total" xml:space="preserve">
-    <value>Total</value>
+    <value>Razem</value>
   </data>
   <data name="AlwaysSwitchToNewlyOpenedTab" xml:space="preserve">
-    <value>Always switch focus to newly created tab</value>
+    <value>Zawsze przełącz fokus na nowo utworzoną kartę</value>
   </data>
   <data name="ToggleShelfPane" xml:space="preserve">
-    <value>Toggle the shelf pane</value>
+    <value>Przełącz panel półki</value>
   </data>
   <data name="ToggleShelfPaneDescription" xml:space="preserve">
-    <value>Toggle the shelf pane visibility</value>
+    <value>Przełącz widoczność panelu półki</value>
   </data>
   <data name="ShowShelfPaneButtonInAddressBar" xml:space="preserve">
-    <value>Show shelf pane toggle in address bar</value>
+    <value>Pokaż przełącznik panelu półki na pasku adresu</value>
   </data>
   <data name="Shelf" xml:space="preserve">
-    <value>Shelf</value>
+    <value>Półka</value>
     <comment>'Shelf' refers to the Shelf Pane feature, where users can conveniently drag and drop files for quick access and perform bulk actions with ease.</comment>
   </data>
   <data name="ClearItems" xml:space="preserve">
-    <value>Clear items</value>
+    <value>Wyczyść zawartość</value>
   </data>
   <data name="RemoveFromShelf" xml:space="preserve">
-    <value>Remove from shelf</value>
+    <value>Usuń z półki</value>
   </data>
   <data name="AddToShelf" xml:space="preserve">
-    <value>Add to shelf</value>
+    <value>Dodaj do półki</value>
     <comment>Tooltip that displays when dragging items to the Shelf Pane</comment>
+  </data>
+  <data name="EnterHashToCompare" xml:space="preserve">
+    <value>Wprowadź kod hash do porównania</value>
+    <comment>Placeholder that appears in the compare hash text box</comment>
+  </data>
+  <data name="HashesMatch" xml:space="preserve">
+    <value>Pasuje do {0}</value>
+    <comment>Appears when two compared hashes match, e.g. "Matches SHA256"</comment>
+  </data>
+  <data name="HashesDoNotMatch" xml:space="preserve">
+    <value>Nie znaleziono dopasowań</value>
+    <comment>Appears when two compared hashes don't match</comment>
+  </data>
+  <data name="PathOrAlias" xml:space="preserve">
+    <value>Ścieżka lub alias</value>
+  </data>
+  <data name="InvalidPath" xml:space="preserve">
+    <value>Nieprawidłowa ścieżka</value>
+  </data>
+  <data name="TestIntegration" xml:space="preserve">
+    <value>Integracja testowa</value>
+  </data>
+  <data name="IDENotLocatedContent" xml:space="preserve">
+    <value>Nie można zlokalizować {0}. Sprawdź ustawienia i spróbuj ponownie.</value>
+  </data>
+  <data name="IDENotLocatedTitle" xml:space="preserve">
+    <value>Nie można odnaleźć skonfigurowanego IDE</value>
+  </data>
+  <data name="OpenSettings" xml:space="preserve">
+    <value>Otwórz ustawienia</value>
+  </data>
+  <data name="VisualStudioCode" xml:space="preserve">
+    <value>Visual Studio Code</value>
+  </data>
+  <data name="IDEPathPlaceholder" xml:space="preserve">
+    <value>Wprowadź ścieżkę lub alias uruchamiania</value>
+  </data>
+  <data name="InvalidIDENameError" xml:space="preserve">
+    <value>Wprowadź nazwę IDE</value>
+  </data>
+  <data name="CloneRepo" xml:space="preserve">
+    <value>Sklonuj repozytorium</value>
+    <comment>Clone repo dialog title</comment>
+  </data>
+  <data name="Clone" xml:space="preserve">
+    <value>Sklonuj</value>
+    <comment>Primary action button in the clone repo dialog</comment>
+  </data>
+  <data name="RepositoryURL" xml:space="preserve">
+    <value>Adres URL repozytorium</value>
+    <comment>URL textbox header in the clone repo dialog</comment>
+  </data>
+  <data name="CannotCloneRepoTitle" xml:space="preserve">
+    <value>Nie można sklonować repozytorium</value>
+    <comment>Cannot clone repo dialog title</comment>
+  </data>
+  <data name="CompareFile" xml:space="preserve">
+    <value>Porównaj plik</value>
+    <comment>Button that appears in file hash properties that allows the user to compare two files</comment>
+  </data>
+  <data name="SizeFormat" xml:space="preserve">
+    <value>Format rozmiaru</value>
+  </data>
+  <data name="Binary" xml:space="preserve">
+    <value>Binarny</value>
+  </data>
+  <data name="Decimal" xml:space="preserve">
+    <value>Dziesiętny</value>
+  </data>
+  <data name="EnableOmnibar" xml:space="preserve">
+    <value>Włącz Omnipasek</value>
+  </data>
+  <data name="SectionsHiddenMessage" xml:space="preserve">
+    <value>Możesz dodać sekcje do paska bocznego, klikając prawym przyciskiem myszy i wybierając sekcje, które chcesz dodać</value>
+  </data>
+  <data name="EmptyShelfText" xml:space="preserve">
+    <value>Przeciągnij tutaj pliki lub foldery, aby korzystać z nich w różnych kartach</value>
+  </data>
+  <data name="OmnibarPathModeTextPlaceholder" xml:space="preserve">
+    <value>Enter a path to navigate to...</value>
+  </data>
+  <data name="OmnibarCommandPaletteModeTextPlaceholder" xml:space="preserve">
+    <value>Find features and commands...</value>
+  </data>
+  <data name="OmnibarSearchModeTextPlaceholder" xml:space="preserve">
+    <value>Search for files and folders...</value>
   </data>
 </root>

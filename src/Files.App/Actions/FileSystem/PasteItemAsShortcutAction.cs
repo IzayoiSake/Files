@@ -3,7 +3,7 @@
 
 namespace Files.App.Actions
 {
-	internal sealed class PasteItemAsShortcutAction : ObservableObject, IAction
+	internal sealed partial class PasteItemAsShortcutAction : ObservableObject, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -42,7 +42,9 @@ namespace Files.App.Actions
 				App.AppModel.IsPasteEnabled &&
 				context.PageType != ContentPageTypes.Home &&
 				context.PageType != ContentPageTypes.RecycleBin &&
-				context.PageType != ContentPageTypes.SearchResults;
+				context.PageType != ContentPageTypes.SearchResults &&
+				context.PageType != ContentPageTypes.ReleaseNotes &&
+				context.PageType != ContentPageTypes.Settings;
 		}
 
 		private void Context_PropertyChanged(object? sender, PropertyChangedEventArgs e)

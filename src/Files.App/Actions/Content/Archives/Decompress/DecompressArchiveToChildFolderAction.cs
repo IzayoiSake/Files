@@ -9,13 +9,13 @@ using Windows.Storage;
 
 namespace Files.App.Actions
 {
-	internal sealed class DecompressArchiveToChildFolderAction : BaseDecompressArchiveAction
+	internal sealed partial class DecompressArchiveToChildFolderAction : BaseDecompressArchiveAction
 	{
 		public override string Label
 			=> ComputeLabel();
 
 		public override string Description
-			=> "DecompressArchiveToChildFolderDescription".GetLocalizedResource();
+			=> Strings.DecompressArchiveToChildFolderDescription.GetLocalizedFormatResource(context.SelectedItems.Count);
 
 		public DecompressArchiveToChildFolderAction()
 		{
@@ -71,6 +71,7 @@ namespace Files.App.Actions
 			switch (e.PropertyName)
 			{
 				case nameof(IContentPageContext.SelectedItems):
+				case nameof(IContentPageContext.Folder):
 					{
 						if (IsContextPageTypeAdaptedToCommand())
 						{
@@ -86,11 +87,11 @@ namespace Files.App.Actions
 		private string ComputeLabel()
 		{
 			if (context.SelectedItems == null || context.SelectedItems.Count == 0)
-				return string.Format("BaseLayoutItemContextFlyoutExtractToChildFolder".GetLocalizedResource(), string.Empty);
+				return string.Format(Strings.BaseLayoutItemContextFlyoutExtractToChildFolder.GetLocalizedResource(), string.Empty);
 
 			return context.SelectedItems.Count > 1
-				? string.Format("BaseLayoutItemContextFlyoutExtractToChildFolder".GetLocalizedResource(), "*")
-				: string.Format("BaseLayoutItemContextFlyoutExtractToChildFolder".GetLocalizedResource(), SystemIO.Path.GetFileNameWithoutExtension(context.SelectedItems.First().Name));
+				? string.Format(Strings.BaseLayoutItemContextFlyoutExtractToChildFolder.GetLocalizedResource(), "*")
+				: string.Format(Strings.BaseLayoutItemContextFlyoutExtractToChildFolder.GetLocalizedResource(), SystemIO.Path.GetFileNameWithoutExtension(context.SelectedItems.First().Name));
 		}
 	}
 }

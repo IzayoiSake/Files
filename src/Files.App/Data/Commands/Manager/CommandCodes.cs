@@ -112,12 +112,13 @@ namespace Files.App.Data.Commands
 		RotateRight,
 
 		// Open
-		OpenInVSCode,
-		OpenRepoInVSCode,
+		OpenInIDE,
+		OpenRepoInIDE,
 		OpenProperties,
 		OpenReleaseNotes,
 		OpenClassicProperties,
 		OpenSettings,
+		OpenSettingsFile,
 		OpenStorageSense,
 		OpenStorageSenseFromHome,
 		OpenStorageSenseFromSidebar,
@@ -230,6 +231,7 @@ namespace Files.App.Data.Commands
 		PlayAll,
 
 		// Git
+		GitClone,
 		GitFetch,
 		GitInit,
 		GitPull,

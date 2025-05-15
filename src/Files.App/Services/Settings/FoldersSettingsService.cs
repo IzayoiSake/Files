@@ -3,7 +3,7 @@
 
 namespace Files.App.Services.Settings
 {
-	internal sealed class FoldersSettingsService : BaseObservableJsonSettings, IFoldersSettingsService
+	internal sealed partial class FoldersSettingsService : BaseObservableJsonSettings, IFoldersSettingsService
 	{
 		public FoldersSettingsService(ISettingsSharingContext settingsSharingContext)
 		{
@@ -104,6 +104,13 @@ namespace Files.App.Services.Settings
 		public bool ShowCheckboxesWhenSelectingItems
 		{
 			get => Get(true);
+			set => Set(value);
+		}
+
+		/// <inheritdoc/>
+		public SizeUnitTypes SizeUnitFormat
+		{
+			get => Get(SizeUnitTypes.BinaryUnits);
 			set => Set(value);
 		}
 

@@ -21,6 +21,8 @@ namespace Files.App.Actions
 			ContentPageContext.ShellPage is not null &&
 			ContentPageContext.PageType != ContentPageTypes.RecycleBin &&
 			ContentPageContext.PageType != ContentPageTypes.ZipFolder &&
+			ContentPageContext.PageType != ContentPageTypes.ReleaseNotes &&
+			ContentPageContext.PageType != ContentPageTypes.Settings &&
 			(ContentPageContext.ShellPage?.SlimContentPage?.SelectedItemsPropertiesViewModel?.IsCompatibleToSetAsWindowsWallpaper ?? false);
 
 		public BaseSetAsAction()
@@ -34,9 +36,9 @@ namespace Files.App.Actions
 		{
 			var errorDialog = new ContentDialog()
 			{
-				Title = "FailedToSetBackground".GetLocalizedResource(),
+				Title = Strings.FailedToSetBackground.GetLocalizedResource(),
 				Content = message,
-				PrimaryButtonText = "OK".GetLocalizedResource(),
+				PrimaryButtonText = Strings.OK.GetLocalizedResource(),
 			};
 
 			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))

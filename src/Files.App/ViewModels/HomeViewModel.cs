@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace Files.App.ViewModels
 {
-	public sealed class HomeViewModel : ObservableObject, IDisposable
+	public sealed partial class HomeViewModel : ObservableObject, IDisposable
 	{
 		// Dependency injections
 
@@ -18,13 +18,13 @@ namespace Files.App.ViewModels
 
 		// Commands
 
-		public ICommand HomePageLoadedCommand { get; }
+		public ICommand ReloadWidgetsCommand { get; }
 
 		// Constructor
 
 		public HomeViewModel()
 		{
-			HomePageLoadedCommand = new RelayCommand<RoutedEventArgs>(ExecuteHomePageLoadedCommand);
+			ReloadWidgetsCommand = new AsyncRelayCommand(ExecuteReloadWidgetsCommand);
 		}
 
 		// Methods
@@ -115,9 +115,10 @@ namespace Files.App.ViewModels
 			ReloadWidgets();
 		}
 
-		public Task RefreshWidgetProperties()
+		public async Task RefreshWidgetProperties()
 		{
-			return Task.WhenAll(WidgetItems.Select(w => w.WidgetItemModel.RefreshWidgetAsync()));
+			foreach (var viewModel in WidgetItems.Select(x => x.WidgetItemModel))
+				await viewModel.RefreshWidgetAsync();
 		}
 
 		private bool InsertWidget(WidgetContainerItem widgetModel, int atIndex)
@@ -181,9 +182,10 @@ namespace Files.App.ViewModels
 
 		// Command methods
 
-		private void ExecuteHomePageLoadedCommand(RoutedEventArgs? e)
+		private async Task ExecuteReloadWidgetsCommand()
 		{
 			ReloadWidgets();
+			await RefreshWidgetProperties();
 		}
 
 		// Disposer

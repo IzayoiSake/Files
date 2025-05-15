@@ -110,6 +110,7 @@ namespace Files.App.Data.Commands
 		IRichCommand OpenStorageSenseFromHome { get; }
 		IRichCommand OpenStorageSenseFromSidebar { get; }
 		IRichCommand OpenSettings { get; }
+		IRichCommand OpenSettingsFile { get; }
 		IRichCommand OpenTerminal { get; }
 		IRichCommand OpenTerminalAsAdmin { get; }
 		IRichCommand OpenTerminalFromSidebar { get; }
@@ -210,6 +211,7 @@ namespace Files.App.Data.Commands
 
 		IRichCommand PlayAll { get; }
 
+		IRichCommand GitClone { get; }
 		IRichCommand GitFetch { get; }
 		IRichCommand GitInit { get; }
 		IRichCommand GitPull { get; }

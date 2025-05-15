@@ -76,11 +76,6 @@ namespace Files.App.Helpers
 			IntPtr hEvent
 		);
 
-		[DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-		public static extern int GetDpiForWindow(
-			IntPtr hwnd
-		);
-
 		[DllImport("ole32.dll")]
 		public static extern uint CoWaitForMultipleObjects(
 			uint dwFlags,
@@ -226,23 +221,6 @@ namespace Files.App.Helpers
 			int bufferSize,
 			uint flags,
 			IntPtr keyboardLayout
-		);
-
-		[DllImport("user32.dll")]
-		public static extern bool GetKeyboardState(
-			byte[] lpKeyState
-		);
-
-		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern IntPtr GetKeyboardLayout
-		(
-			uint idThread
-		);
-
-		[DllImport("user32.dll")]
-		public static extern uint MapVirtualKey(
-			uint code,
-			uint mapType
 		);
 
 		[DllImport("user32.dll")]
@@ -490,8 +468,5 @@ namespace Files.App.Helpers
 			IntPtr hToken,
 			out IntPtr pszPath
 		);
-
-		[DllImport("shell32.dll", EntryPoint = "SHUpdateRecycleBinIcon", CharSet = CharSet.Unicode, SetLastError = true)]
-		public static extern void SHUpdateRecycleBinIcon();
 	}
 }

@@ -42,6 +42,8 @@ namespace Files.App.Views
 			AppInstance.InstanceViewModel.IsPageTypeLibrary = false;
 			AppInstance.InstanceViewModel.GitRepositoryPath = null;
 			AppInstance.InstanceViewModel.IsGitRepository = false;
+			AppInstance.InstanceViewModel.IsPageTypeReleaseNotes = false;
+			AppInstance.InstanceViewModel.IsPageTypeSettings = false;
 			AppInstance.ToolbarViewModel.CanRefresh = true;
 			AppInstance.ToolbarViewModel.CanGoBack = AppInstance.CanNavigateBackward;
 			AppInstance.ToolbarViewModel.CanGoForward = AppInstance.CanNavigateForward;
@@ -57,7 +59,7 @@ namespace Files.App.Views
 
 			string componentLabel =
 				parameters?.NavPathParam == "Home"
-					? "Home".GetLocalizedResource()
+					? Strings.Home.GetLocalizedResource()
 					: parameters?.NavPathParam
 				?? string.Empty;
 
@@ -70,8 +72,6 @@ namespace Files.App.Views
 			};
 
 			AppInstance.ToolbarViewModel.PathComponents.Add(item);
-
-			await ViewModel.RefreshWidgetProperties();
 
 			base.OnNavigatedTo(e);
 		}

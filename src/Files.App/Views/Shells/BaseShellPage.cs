@@ -47,7 +47,7 @@ namespace Files.App.Views.Shells
 
 		protected readonly ICommandManager commands = Ioc.Default.GetRequiredService<ICommandManager>();
 
-		public AddressToolbarViewModel ToolbarViewModel { get; } = new AddressToolbarViewModel();
+		public NavigationToolbarViewModel ToolbarViewModel { get; } = new NavigationToolbarViewModel();
 
 		public IBaseLayoutPage SlimContentPage => ContentPage;
 
@@ -233,7 +233,7 @@ namespace Files.App.Views.Shells
 			if (ContentPage is null)
 				return;
 
-			var directoryItemCountLocalization = "Items".GetLocalizedFormatResource(ShellViewModel.FilesAndFolders.Count);
+			var directoryItemCountLocalization = Strings.Items.GetLocalizedFormatResource(ShellViewModel.FilesAndFolders.Count);
 
 			BranchItem? headBranch = headBranch = InstanceViewModel.IsGitRepository
 					? await GitHelpers.GetRepositoryHead(InstanceViewModel.GitRepositoryPath)
@@ -422,7 +422,7 @@ namespace Files.App.Views.Shells
 
 		protected async void ShellPage_ToolbarPathItemLoaded(object sender, ToolbarPathItemLoadedEventArgs e)
 		{
-			await ToolbarViewModel.SetPathBoxDropDownFlyoutAsync(e.OpenedFlyout, e.Item, this);
+			await ToolbarViewModel.SetPathBoxDropDownFlyoutAsync(e.OpenedFlyout, e.Item);
 		}
 
 		protected async void ShellPage_ToolbarFlyoutOpening(object sender, ToolbarFlyoutOpeningEventArgs e)
@@ -430,7 +430,7 @@ namespace Files.App.Views.Shells
 			var pathBoxItem = ((Button)e.OpeningFlyout.Target).DataContext as PathBoxItem;
 
 			if (pathBoxItem is not null)
-				await ToolbarViewModel.SetPathBoxDropDownFlyoutAsync(e.OpeningFlyout, pathBoxItem, this);
+				await ToolbarViewModel.SetPathBoxDropDownFlyoutAsync(e.OpeningFlyout, pathBoxItem);
 		}
 
 		protected async void NavigationToolbar_QuerySubmitted(object sender, ToolbarQuerySubmittedEventArgs e)
@@ -587,7 +587,9 @@ namespace Files.App.Views.Shells
 			foreach (PageStackEntry entry in ItemDisplay.BackStack.ToList())
 			{
 				if (entry.Parameter is NavigationArguments args &&
-					args.NavPathParam is not null and not "Home")
+					args.NavPathParam is not null and not "Home" &&
+					args.NavPathParam is not null and not "ReleaseNotes" &&
+					args.NavPathParam is not null and not "Settings")
 				{
 					var correctPageType = FolderSettings.GetLayoutType(args.NavPathParam, false);
 					if (!entry.SourcePageType.Equals(correctPageType))
@@ -603,7 +605,9 @@ namespace Files.App.Views.Shells
 			foreach (PageStackEntry entry in ItemDisplay.ForwardStack.ToList())
 			{
 				if (entry.Parameter is NavigationArguments args &&
-					args.NavPathParam is not null and not "Home")
+					args.NavPathParam is not null and not "Home" &&
+					args.NavPathParam is not null and not "ReleaseNotes" &&
+					args.NavPathParam is not null and not "Settings")
 				{
 					var correctPageType = FolderSettings.GetLayoutType(args.NavPathParam, false);
 					if (!entry.SourcePageType.Equals(correctPageType))
@@ -759,7 +763,7 @@ namespace Files.App.Views.Shells
 		protected void SelectSidebarItemFromPath(Type incomingSourcePageType = null)
 		{
 			if (incomingSourcePageType == typeof(HomePage) && incomingSourcePageType is not null)
-				ToolbarViewModel.PathControlDisplayText = "Home".GetLocalizedResource();
+				ToolbarViewModel.PathControlDisplayText = Strings.Home.GetLocalizedResource();
 		}
 
 		protected void SetLoadingIndicatorForTabs(bool isLoading)
@@ -801,6 +805,8 @@ namespace Files.App.Views.Shells
 		public abstract void Up_Click();
 
 		public abstract void NavigateHome();
+
+		public abstract void NavigateToReleaseNotes();
 
 		public abstract void NavigateToPath(string? navigationPath, Type? sourcePageType, NavigationArguments? navArgs = null);
 

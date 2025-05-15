@@ -3,7 +3,7 @@
 
 namespace Files.App.Services.Settings
 {
-	internal sealed class GeneralSettingsService : BaseObservableJsonSettings, IGeneralSettingsService
+	internal sealed partial class GeneralSettingsService : BaseObservableJsonSettings, IGeneralSettingsService
 	{
 		public GeneralSettingsService(ISettingsSharingContext settingsSharingContext)
 		{
@@ -364,6 +364,12 @@ namespace Files.App.Services.Settings
 		}
 
 		public bool ShowShelfPane
+		{
+			get => Get(false);
+			set => Set(value);
+		}
+
+		public bool EnableOmnibar
 		{
 			get => Get(false);
 			set => Set(value);

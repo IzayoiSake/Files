@@ -6,7 +6,7 @@ using Windows.Foundation.Metadata;
 
 namespace Files.App.Actions
 {
-	internal sealed class CreateAlternateDataStreamAction : BaseUIAction, IAction
+	internal sealed partial class CreateAlternateDataStreamAction : BaseUIAction, IAction
 	{
 		private readonly IContentPageContext context;
 
@@ -17,7 +17,7 @@ namespace Files.App.Actions
 			=> Strings.CreateAlternateDataStream.GetLocalizedResource();
 
 		public string Description
-			=> Strings.CreateAlternateDataStreamDescription.GetLocalizedResource();
+			=> Strings.CreateAlternateDataStreamDescription.GetLocalizedFormatResource(context.SelectedItems.Count);
 
 		public RichGlyph Glyph
 			=> new RichGlyph(themedIconStyle: "App.ThemedIcons.AltDataStream");
